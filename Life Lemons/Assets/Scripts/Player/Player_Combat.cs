@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public enum PlayerStates {collect, shoot};
 
-public class Player_Combat : MonoBehaviour
+public class Player_Combat : MonoBehaviour, IDamagable
 {
 	public PlayerStates playerState = PlayerStates.collect;
 	public float ammoPercentage = 100.0f;
@@ -14,9 +14,9 @@ public class Player_Combat : MonoBehaviour
 
 	private Animator anim;
 	private Transform ammoLevelLemonjuice;
-	private const float ammoSpriteMaxScale = 0.25f;
+	private const float ammoSpriteMaxScale = 0.25f; // Maximum Scale value of sprite. Used for calculation of ammo percenatge UI scale values.
 	private float ammoCostPerShot = 5.0f;
-	private float projectileSpeed = 50.0f;
+	private float projectileSpeed = 25.0f;
 	private int malfunctionDamage = 1;
 	private float malfunctionRepairTime = 2;
 
@@ -111,13 +111,13 @@ public class Player_Combat : MonoBehaviour
 		CheckGameOver();
 	}
 
-	private void CheckGameOver()
+	public void CheckGameOver()
 	{
 		if (health == 0)
 		{
 			// GameOver.
-
 			Destroy(gameObject);
+			GameManager.EndGame();
 		}
 	}
 

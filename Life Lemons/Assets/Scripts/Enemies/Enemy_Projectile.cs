@@ -8,7 +8,7 @@ public class Enemy_Projectile : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.name == "Player")
+		if (other.tag == "Player")
 		{
 			other.gameObject.GetComponent<Player_Combat>().TakeDamage(damage); // Damage the player.
 			Destroy(gameObject); // Despawn self.
