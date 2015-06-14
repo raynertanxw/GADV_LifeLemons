@@ -7,18 +7,18 @@ public enum PlayerStates {collect, shoot};
 public class Player_Combat : MonoBehaviour, IDamagable
 {
 	public PlayerStates playerState = PlayerStates.collect;
-	public float ammoPercentage = 100.0f;
-	public int health = 10;
+	public float ammoPercentage;
+	public int health;
 	public GameObject playerProjectile;
-	public bool hasMalfunction = false;
+	public bool hasMalfunction;
+	public float ammoCostPerShot;
+	public float projectileSpeed;
+	public int malfunctionDamage;
+	public float malfunctionRepairTime;
 
 	private Animator anim;
 	private Transform ammoLevelLemonjuice;
 	private const float ammoSpriteMaxScale = 0.25f; // Maximum Scale value of sprite. Used for calculation of ammo percenatge UI scale values.
-	private float ammoCostPerShot = 5.0f;
-	private float projectileSpeed = 25.0f;
-	private int malfunctionDamage = 1;
-	private float malfunctionRepairTime = 2;
 
 	// UI elements
 	private Text textPlayerHealth;
@@ -33,6 +33,8 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		textPlayerHealth.text = "Health: " + health;
 		textPlayerAmmo = GameObject.Find("Text_Player_Ammo").GetComponent<Text>();
 		UpdateAmmoUI();
+
+		hasMalfunction = false;
 	}
 
 	void Update()
