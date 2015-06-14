@@ -1,44 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
+public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 {
 	public int health;
 	public GameObject enemyProjectile;
-	public Transform projectileSpawn;
+	public Transform projectileLeftSpawn;
+	public Transform projectileRightSpawn;
 	public float rateOfFire;
 	public float projectileSpeed;
-
-	private Animator anim;
-
-	void Awake()
-	{
-		anim = gameObject.GetComponent<Animator>();
-	}
-
+	
+	//private Animator anim;
+	
 	void Start()
 	{
 		StartCoroutine(shootAtPlayer());
 	}
-
+	
 	private IEnumerator shootAtPlayer()
 	{
 		while (GameManager.instance.GameOver == false)
 		{
 			yield return new WaitForSeconds(rateOfFire);
-			Shoot();
+			ShootLeft();
+			ShootRight();
 		}
 	}
-
-	private void Shoot()
+	
+	private void ShootLeft()
 	{
-		// Play shooting animation.
-		anim.SetTrigger("Shoot");
-
-		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileSpawn.position, transform.rotation);
+		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileLeftSpawn.position, transform.rotation);
 		projectile.GetComponent<Rigidbody2D>().velocity = Utilities.RotationZ2DirectionVec(transform.rotation.eulerAngles.z) * projectileSpeed;
 	}
 
+	private void ShootRight()
+	{
+		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileRightSpawn.position, transform.rotation);
+		projectile.GetComponent<Rigidbody2D>().velocity = Utilities.RotationZ2DirectionVec(transform.rotation.eulerAngles.z) * projectileSpeed;
+	}
+	
 	// For Player Projectiles to call.
 	public void TakeDamage(int damage)
 	{
