@@ -5,11 +5,11 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 {
 	public int health;
 	public GameObject enemyProjectile;
+	public Transform projectileSpawn;
 	public float rateOfFire;
+	public float projectileSpeed;
 
 	//private Animator anim;
-	private const float ammoSpriteMaxScale = 0.25f;
-	private float projectileSpeed = 50.0f;
 
 	void Start()
 	{
@@ -18,7 +18,7 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 
 	private IEnumerator shootAtPlayer()
 	{
-		while (true)
+		while (GameManager.instance.GameOver == false)
 		{
 			yield return new WaitForSeconds(rateOfFire);
 			Shoot();
@@ -27,7 +27,8 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 
 	private void Shoot()
 	{
-		Debug.Log("Shoot");
+		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileSpawn.position, transform.rotation);
+		projectile.GetComponent<Rigidbody2D>().velocity = Utilities.RotationZ2DirectionVec(transform.rotation.eulerAngles.z) * projectileSpeed;
 	}
 
 	// For Player Projectiles to call.

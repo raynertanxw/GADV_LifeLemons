@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager instance = null;
+	public bool GameOver;
 
 	void Awake()
 	{
@@ -15,10 +16,15 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+
+		GameManager.instance.GameOver = false;
 	}
 
 	public static void EndGame()
 	{
+		// Set GameOver to true.
+		GameManager.instance.GameOver = true;
+
 		// Deactivate all objects.
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		foreach (GameObject enemy in enemies)

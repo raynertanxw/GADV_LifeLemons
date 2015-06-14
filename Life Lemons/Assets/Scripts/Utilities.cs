@@ -29,6 +29,15 @@ public static class Utilities
 		return angle;
 	}
 
+	// Calculates a normalized vector direction from z rotation.
+	public static Vector2 RotationZ2DirectionVec(float rotationZ)
+	{
+		Vector2 directionVec = new Vector2();
+		directionVec.y = Mathf.Sin(rotationZ * Mathf.Deg2Rad);
+		directionVec.x = Mathf.Cos(rotationZ * Mathf.Deg2Rad);
+		return directionVec;
+	}
+
 	// Get the mouseposition and convert it to a vector 3 in world space.
 	public static Vector3 MousePosInWorldSpace()
 	{
