@@ -1,14 +1,14 @@
 # =============== #
 # Unity generated #
 # =============== #
-Neon/Temp/
-Neon/Library/
+Life\ Lemons/Temp/
+Life\ Lemons/Library/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
-Neon/ExportedObj/
-Neon/obj/
+Life\ Lemons/ExportedObj/
+Life\ Lemons/obj/
 *.svd
 *.userprefs
 *.csproj
@@ -30,4 +30,3 @@ Neon/obj/
 ehthumbs.db
 Thumbs.db
 #*.meta
-#*.metadata
