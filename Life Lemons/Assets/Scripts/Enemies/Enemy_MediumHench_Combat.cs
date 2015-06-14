@@ -10,7 +10,12 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	public float rateOfFire;
 	public float projectileSpeed;
 	
-	//private Animator anim;
+	private Animator anim;
+
+	void Awake()
+	{
+		anim = gameObject.GetComponent<Animator>();
+	}
 	
 	void Start()
 	{
@@ -22,11 +27,19 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 		while (GameManager.instance.GameOver == false)
 		{
 			yield return new WaitForSeconds(rateOfFire);
-			ShootLeft();
-			ShootRight();
+			Shoot();
 		}
 	}
-	
+
+	private void Shoot()
+	{
+		// Play the shooting animation.
+		anim.SetTrigger("Shoot");
+
+		ShootLeft();
+		ShootRight();
+	}
+
 	private void ShootLeft()
 	{
 		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileLeftSpawn.position, transform.rotation);
