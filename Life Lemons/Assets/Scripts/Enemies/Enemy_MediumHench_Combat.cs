@@ -24,10 +24,11 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	
 	private IEnumerator shootAtPlayer()
 	{
+		yield return new WaitForSeconds(rateOfFire);
 		while (GameManager.instance.GameOver == false)
 		{
-			yield return new WaitForSeconds(rateOfFire);
 			Shoot();
+			yield return new WaitForSeconds(rateOfFire);
 		}
 	}
 
