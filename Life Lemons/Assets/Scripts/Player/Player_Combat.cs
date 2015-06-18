@@ -8,6 +8,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 {
 	public PlayerStates playerState = PlayerStates.collect;
 	public float ammoPercentage;
+	public int maxHealth;
 	public int health;
 	public GameObject playerProjectile;
 	public bool hasMalfunction;
@@ -16,9 +17,12 @@ public class Player_Combat : MonoBehaviour, IDamagable
 	public int malfunctionDamage;
 	public float malfunctionRepairTime;
 
+	public Sprite[] chassisDamageStates, glassDamageStates, blasterDamageStates, funnelDamageStates;
+
 	private Animator anim;
 	private Transform ammoLevelLemonjuice;
 	private const float ammoSpriteMaxScale = 0.25f; // Maximum Scale value of sprite. Used for calculation of ammo percenatge UI scale values.
+	private SpriteRenderer chassisSpriteRen, glassSpriteRen, blasterSpriteRen, funnelSpriteRen;
 
 	// UI elements
 	private Text textPlayerHealth;
@@ -28,6 +32,10 @@ public class Player_Combat : MonoBehaviour, IDamagable
 	{
 		anim = gameObject.GetComponent<Animator>();
 		ammoLevelLemonjuice = transform.FindChild("Ammo_Level_Indicator");
+		chassisSpriteRen = transform.FindChild("Lemonator_Chassis").GetComponent<SpriteRenderer>();
+		glassSpriteRen = transform.FindChild("Lemonator_Glass").GetComponent<SpriteRenderer>();
+		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
+		funnelSpriteRen = transform.FindChild("Lemonator_Funnel").GetComponent<SpriteRenderer>();
 
 		textPlayerHealth = GameObject.Find("Text_Player_Health").GetComponent<Text>();
 		textPlayerHealth.text = "Health: " + health;
@@ -35,6 +43,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		UpdateAmmoUI();
 
 		hasMalfunction = false;
+		health = maxHealth;
 	}
 
 	void Update()
@@ -109,7 +118,16 @@ public class Player_Combat : MonoBehaviour, IDamagable
 	public void TakeDamage(int damage)
 	{
 		health -= damage;
+		// Update UI elements.
 		textPlayerHealth.text = "Health: " + health;
+		int healthState = health * 3 / maxHealth;
+		// As Take damage is only called after the player takes damage, it will never be full health.
+		// Hench, healthState will always be 0-2 as health will always be < maxHealth*3 and never resulting in >2 when divided by maxHealth.
+		chassisSpriteRen.sprite = chassisDamageStates[healthState];
+		glassSpriteRen.sprite = glassDamageStates[healthState];
+		blasterSpriteRen.sprite = blasterDamageStates[healthState];
+		funnelSpriteRen.sprite = funnelDamageStates[healthState];
+
 		CheckGameOver();
 	}
 
