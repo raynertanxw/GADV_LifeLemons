@@ -27,7 +27,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 	void Awake()
 	{
 		anim = gameObject.GetComponent<Animator>();
-		ammoLevelLemonjuice = transform.FindChild("Ammo_Level_Lemonjuice");
+		ammoLevelLemonjuice = transform.FindChild("Ammo_Level_Indicator");
 
 		textPlayerHealth = GameObject.Find("Text_Player_Health").GetComponent<Text>();
 		textPlayerHealth.text = "Health: " + health;

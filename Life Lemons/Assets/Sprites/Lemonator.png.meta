@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1c371cde3c3654f23959df6fc9df7342
-timeCreated: 1434622050
+timeCreated: 1434623774
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -70,8 +70,8 @@ TextureImporter:
         y: 1356
         width: 520
         height: 610
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 9
+      pivot: {x: .5, y: .409999996}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Lemonator_Chassis_2
       rect:
@@ -80,8 +80,8 @@ TextureImporter:
         y: 1358
         width: 520
         height: 610
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 9
+      pivot: {x: .5, y: .409999996}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Lemonator_Funnel_1
       rect:
@@ -178,10 +178,10 @@ TextureImporter:
         serializedVersion: 2
         x: 153
         y: 51
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: .5, y: .5}
+        width: 241
+        height: 241
+      alignment: 4
+      pivot: {x: 0, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Lemonator_Chassis_3
       rect:
@@ -190,8 +190,8 @@ TextureImporter:
         y: 1357
         width: 520
         height: 610
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 9
+      pivot: {x: .5, y: .409999996}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

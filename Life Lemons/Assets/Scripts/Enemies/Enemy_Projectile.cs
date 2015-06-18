@@ -13,7 +13,7 @@ public class Enemy_Projectile : MonoBehaviour
 			other.gameObject.GetComponent<Player_Combat>().TakeDamage(damage); // Damage the player.
 			Destroy(gameObject); // Despawn self.
 		}
-		else if (other.name == "Capture_Funnel")
+		else if (other.name == "Lemonator_Funnel")
 		{
 			if (other.gameObject.GetComponentInParent<Player_Combat>().playerState == PlayerStates.collect)
 			{
