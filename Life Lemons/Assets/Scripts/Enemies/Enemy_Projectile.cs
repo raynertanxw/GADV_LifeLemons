@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Enemy_Projectile : MonoBehaviour
 {
+	public bool destroySelfOnHit;
 	private int damage = 1;
 	private float ammoVolume = 10.0f;
 
@@ -11,9 +12,12 @@ public class Enemy_Projectile : MonoBehaviour
 		if (other.tag == "Player")
 		{
 			other.gameObject.GetComponent<Player_Combat>().TakeDamage(damage); // Damage the player.
-			Destroy(gameObject); // Despawn self.
+			if (destroySelfOnHit == true)
+			{
+				Destroy(gameObject); // Despawn self.
+			}
 		}
-		else if (other.name == "Lemonator_Funnel")
+		else if (other.name == "Lemonator_Funnel" && destroySelfOnHit == true)
 		{
 			if (other.gameObject.GetComponentInParent<Player_Combat>().playerState == PlayerStates.collect)
 			{
