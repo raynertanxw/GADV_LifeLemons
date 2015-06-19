@@ -10,11 +10,5 @@ public class Environment_Boundary : MonoBehaviour
 		{
 			Destroy(col.gameObject);
 		}
-
-		if (col.gameObject.tag == "Player")
-		{
-			Destroy(col.gameObject);
-			GameManager.EndGame();
-		}
 	}
 }

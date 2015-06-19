@@ -43,6 +43,6 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		spawner.SpawnQuadCircleStraf(1);
+
 	}
 }

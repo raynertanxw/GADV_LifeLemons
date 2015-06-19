@@ -20,6 +20,21 @@ public class Enemy_Spawner : MonoBehaviour
 		spawnPoints = childTransforms.ToArray();
 	}
 
+	// Spawn a single lemon mafia at one of the 16 waypoints with default movement speed.
+	public void SpawnFollow(int type, int spawnPoint)
+	{
+		GameObject enemy = (GameObject)Instantiate(EnemyPrefabs[type], spawnPoints[spawnPoint], Quaternion.identity);
+		enemy.GetComponent<Enemy_Movement>().movementState = EnemyMovementStates.follow;
+	}
+
+	// Spawn a single lemon mafia at one of the 16 waypoints with default movement speed. Strafe behaviour.
+	public void SpawnStrafe(int type, int spawnPoint, Vector3[] waypointArray)
+	{
+		GameObject enemy = (GameObject)Instantiate(EnemyPrefabs[type], spawnPoints[spawnPoint], Quaternion.identity);
+		enemy.GetComponent<Enemy_Movement>().movementState = EnemyMovementStates.strafing;
+		enemy.GetComponent<Enemy_Movement>().strafingWaypoints = waypointArray;
+	}
+
 	// Spawn a circle strafing formation all of same type, with default radius.
 	public void SpawnQuadCircleStraf(int type)
 	{
