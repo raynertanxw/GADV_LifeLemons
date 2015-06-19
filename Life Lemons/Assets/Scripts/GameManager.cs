@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 	public static GameManager instance = null;
 	public bool GameOver;
 
+	private Enemy_Spawner spawner;
+
 	void Awake()
 	{
 		if (instance == null)
@@ -18,6 +20,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		GameManager.instance.GameOver = false;
+
+		spawner = GameObject.Find("Enemy_Spawner").GetComponent<Enemy_Spawner>();
 	}
 
 	public static void EndGame()
@@ -35,5 +39,10 @@ public class GameManager : MonoBehaviour
 				script.enabled = false;
 			}
 		}
+	}
+
+	void Start()
+	{
+		spawner.SpawnQuadCircleStraf(1);
 	}
 }
