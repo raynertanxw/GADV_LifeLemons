@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
+using System.IO;
+using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class Utilities
 {
@@ -45,5 +48,52 @@ public static class Utilities
 		pos.z = -1.0f;
 		pos = Camera.main.ScreenToWorldPoint(pos);
 		return pos;
+	}
+
+	// Uses txtFileToStringArray to read the level.txt file and obtain the string array of instructions for the level. 
+	public static string[] getLevelTxtInstructions(string levelName)
+	{
+		string[] rawStringArray = txtFileToStringArray(Application.dataPath + "/Levels/" + levelName + ".txt");
+		if (rawStringArray != null)
+		{
+			return rawStringArray;
+		}
+		else
+		{
+			Debug.Log("Error in reading file: " + levelName);
+			return null;
+		}
+	}
+	
+	// Read in the txt file named filename, return a string array of each line in the txt file seperated by \n.
+	public static string[] txtFileToStringArray(string fileName)
+	{
+		try
+		{
+			List<string> stringList = new List<string>();
+			string currentLine;
+
+			StreamReader sr = new StreamReader(fileName);
+
+			// Read the first line first. do-while loop to ensure first line is read first. If any of the lines are null, stop reading.
+			do
+			{
+				currentLine = sr.ReadLine();
+				if (currentLine != null)
+				{
+					stringList.Add(currentLine);
+				}
+			}
+			while (currentLine != null);
+
+			sr.Close();
+
+			return stringList.ToArray();
+		}
+		catch (IOException e)
+		{
+			Debug.Log(e.Message);
+			return null;
+		}
 	}
 }

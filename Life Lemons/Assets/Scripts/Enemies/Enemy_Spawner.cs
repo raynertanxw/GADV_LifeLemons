@@ -36,7 +36,7 @@ public class Enemy_Spawner : MonoBehaviour
 	}
 
 	// Spawn a circle strafing formation all of same type, with default radius.
-	public void SpawnQuadCircleStraf(int type)
+	public void SpawnQuadCircleStrafe(int type)
 	{
 		GameObject enemy1 = (GameObject)Instantiate(EnemyPrefabs[type], spawnPoints[1], Quaternion.identity);
 		enemy1.GetComponent<Enemy_Movement>().circleStrafingTargetAngle = 90;
@@ -53,7 +53,7 @@ public class Enemy_Spawner : MonoBehaviour
 	}
 
 	// Spawn a circle strafing formation all of different type, with default radius.
-	public void SpawnQuadCircleStraf(int type1, int type2, int type3, int type4)
+	public void SpawnQuadCircleStrafe(int type1, int type2, int type3, int type4)
 	{
 		GameObject enemy1 = (GameObject)Instantiate(EnemyPrefabs[type1], spawnPoints[1], Quaternion.identity);
 		enemy1.GetComponent<Enemy_Movement>().circleStrafingTargetAngle = 90;
