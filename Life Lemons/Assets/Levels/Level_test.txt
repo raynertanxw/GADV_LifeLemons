@@ -1,6 +1,7 @@
-SpawnFollow, 2, 1, 5
-SpawnQuadCircleStrafe, 1, 5
-SpawnStrafe, 0, 2, (-16,0), (16,0), 20
+SpawnFollow, 2, 1, 0
+SpawnQuadCircleStrafe, 0, 0, 1, 1, 10
+SpawnQuadCircleStrafe, 1, 0
+SpawnStrafe, 0, 2, (-16, 0), (16, 0), 20
 SpawnFollow, 2, 9, 0
 SpawnFollow, 2, 13, 0
 SpawnFollow, 1, 0, 0
