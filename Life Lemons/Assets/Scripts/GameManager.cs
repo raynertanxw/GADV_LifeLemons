@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager instance = null;
 	public bool GameOver;
+	public int NumOfEnemiesRemaining;
+	public bool LastWaveHasSpawned;
+	public int currentLoadedLevel;
 
 	private Enemy_Spawner spawner;
 
@@ -21,8 +24,20 @@ public class GameManager : MonoBehaviour
 		}
 
 		GameManager.instance.GameOver = false;
+		NumOfEnemiesRemaining = 0;
+		LastWaveHasSpawned = false;
 
 		spawner = GameObject.Find("Enemy_Spawner").GetComponent<Enemy_Spawner>();
+	}
+
+	// For enemy gameobjects to call and deduct themselves from the count.
+	public void UpdateEnemyCount()
+	{
+		GameManager.instance.NumOfEnemiesRemaining--;
+		if (GameManager.instance.NumOfEnemiesRemaining == 0 && GameManager.instance.LastWaveHasSpawned == true)
+		{
+			EndGame();
+		}
 	}
 
 	public static void EndGame()
@@ -40,12 +55,48 @@ public class GameManager : MonoBehaviour
 				script.enabled = false;
 			}
 		}
+
+		// Check if player has cleared the level.
+		if (GameManager.instance.NumOfEnemiesRemaining == 0)
+		{
+			if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
+			{
+				if (GameManager.instance.currentLoadedLevel > PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL))
+				{
+					PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, GameManager.instance.currentLoadedLevel);
+				}
+			}
+			else
+			{
+				PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 0);
+			}
+		}
 	}
 
 	void Start()
 	{
-		// DEBUG TESTING OF LEVEL LOADING
-		LoadLevelEnemies("Level_test");
+		int highestClearedLevel;
+		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
+		{
+			highestClearedLevel = PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL);
+			if (highestClearedLevel < Constants.NumOfLevels)
+			{
+				// Load the next level after the highest cleared.
+				LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(highestClearedLevel + 1));
+				currentLoadedLevel = highestClearedLevel + 1;
+			}
+			else
+			{
+				// Load the final level
+				LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(Constants.NumOfLevels));
+				currentLoadedLevel = Constants.NumOfLevels;
+			}
+		}
+		else
+		{
+			//Load tutotial script.
+			Debug.Log("Tutorial");
+		}
 	}
 
 	void LoadLevelEnemies(string levelName)
@@ -113,6 +164,7 @@ public class GameManager : MonoBehaviour
 				else
 				{
 					spawner.SpawnFollow(int.Parse(instructuion[1]), int.Parse(instructuion[2]));
+					GameManager.instance.NumOfEnemiesRemaining++;
 				}
 				break;
 
@@ -162,6 +214,7 @@ public class GameManager : MonoBehaviour
 					}
 
 					spawner.SpawnStrafe(int.Parse(instructuion[1]), int.Parse(instructuion[2]), waypoints);
+					GameManager.instance.NumOfEnemiesRemaining++;
 				}
 				break;
 
@@ -188,6 +241,7 @@ public class GameManager : MonoBehaviour
 					else
 					{
 						spawner.SpawnQuadCircleStrafe(int.Parse(instructuion[1]));
+						GameManager.instance.NumOfEnemiesRemaining += 4;
 					}
 				}
 				// Second Method Overload variant, where the individual types are specified.
@@ -221,6 +275,7 @@ public class GameManager : MonoBehaviour
 					if (legalSyntax == true)
 					{
 						spawner.SpawnQuadCircleStrafe(int.Parse(instructuion[1]), int.Parse(instructuion[2]), int.Parse(instructuion[3]), int.Parse(instructuion[4]));
+						GameManager.instance.NumOfEnemiesRemaining += 4;
 					}
 				}
 				// Otherwise, illegal syntax.
@@ -246,5 +301,7 @@ public class GameManager : MonoBehaviour
 				yield return new WaitForSeconds(float.Parse(instructuion[instructuion.Length-1]));
 			}
 		}
+
+		GameManager.instance.LastWaveHasSpawned = true;
 	}
 }

@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
+public class Tutorial_NormalHenchCombat : MonoBehaviour, IDamagable
 {
 	public int health;
 	public GameObject enemyProjectile;
-	public Transform projectileLeftSpawn;
-	public Transform projectileRightSpawn;
+	public Transform projectileSpawn;
 	public float rateOfFire;
 	public float projectileSpeed;
 	
 	private Animator anim;
-
+	
 	void Awake()
 	{
 		anim = gameObject.GetComponent<Animator>();
@@ -25,31 +24,19 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	private IEnumerator shootAtPlayer()
 	{
 		yield return new WaitForSeconds(rateOfFire);
-		while (GameManager.instance.GameOver == false)
+		while (true)
 		{
 			Shoot();
 			yield return new WaitForSeconds(rateOfFire);
 		}
 	}
-
+	
 	private void Shoot()
 	{
-		// Play the shooting animation.
+		// Play shooting animation.
 		anim.SetTrigger("Shoot");
-
-		ShootLeft();
-		ShootRight();
-	}
-
-	private void ShootLeft()
-	{
-		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileLeftSpawn.position, transform.rotation);
-		projectile.GetComponent<Rigidbody2D>().velocity = Utilities.RotationZ2DirectionVec(transform.rotation.eulerAngles.z) * projectileSpeed;
-	}
-
-	private void ShootRight()
-	{
-		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileRightSpawn.position, transform.rotation);
+		
+		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileSpawn.position, transform.rotation);
 		projectile.GetComponent<Rigidbody2D>().velocity = Utilities.RotationZ2DirectionVec(transform.rotation.eulerAngles.z) * projectileSpeed;
 	}
 	
@@ -65,7 +52,7 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 		if (health == 0)
 		{
 			// Update the total enemy count in GameManager.
-			GameManager.instance.UpdateEnemyCount();
+			Tutorial_GameManager.instance.EndTutorial();
 			// Destroy the enemy object.
 			Destroy(gameObject);
 		}

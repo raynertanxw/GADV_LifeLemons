@@ -66,6 +66,8 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	{
 		if (health == 0)
 		{
+			// Update the total enemy count in GameManager.
+			GameManager.instance.UpdateEnemyCount();
 			// Destroy the enemy object.
 			Destroy(gameObject);
 		}
