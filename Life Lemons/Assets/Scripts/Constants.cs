@@ -12,6 +12,7 @@ public static class Constants
 	// Scene filename strings.
 	public static string MainMenuScene = "Main_Menu";
 	public static string LevelScene = "Level_Scene";
+	public static string TutorialScene = "Tutorial_Level";
 
 	// Animation parameter names.
 	public static string MainMenuToSettings = "MainMenuToSettings";

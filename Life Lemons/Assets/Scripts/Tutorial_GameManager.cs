@@ -20,6 +20,7 @@ public class Tutorial_GameManager : MonoBehaviour
 	public void EndTutorial()
 	{
 		// Switch to Main Level_scene.
+		Debug.Log("TUTORIAL END");
 	}
 	
 	void Start()

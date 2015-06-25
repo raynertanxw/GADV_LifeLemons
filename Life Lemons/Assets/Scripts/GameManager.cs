@@ -94,8 +94,8 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			//Load tutotial script.
-			Debug.Log("Tutorial");
+			//Load tutotial scene.
+			Application.LoadLevel(Constants.TutorialScene);
 		}
 	}
 
