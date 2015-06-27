@@ -43,10 +43,17 @@ public class GameManager : MonoBehaviour
 				if (paused == false)
 				{
 					paused = true;
+					Time.timeScale = 0;
 					anim.SetTrigger(Constants.TransitionToPause);
 				}
 			}
 		}
+	}
+
+	public static void Resume()
+	{
+		GameManager.instance.paused = false;
+		Time.timeScale = 1;
 	}
 
 	// For enemy gameobjects to call and deduct themselves from the count.

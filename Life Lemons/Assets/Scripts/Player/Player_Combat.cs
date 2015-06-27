@@ -56,6 +56,9 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	void Update()
 	{
+		// If the game is paused, immediately return to do nothing.
+		if(Time.timeScale == 0)return;
+
 		if (hasMalfunction == false)
 		{
 			if (Input.GetKeyDown(KeyCode.Q))

@@ -12,7 +12,7 @@ public class PauseButtonActions : MonoBehaviour
 	
 	public void ButtonResume()
 	{
-		GameManager.instance.paused = false;
+		GameManager.Resume();
 		anim.SetTrigger(Constants.TransitionFromPause);
 	}
 	

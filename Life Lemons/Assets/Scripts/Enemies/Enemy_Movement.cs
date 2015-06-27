@@ -35,6 +35,9 @@ public class Enemy_Movement : MonoBehaviour
 	
 	void Update()
 	{
+		// If the game is paused, immediately return to do nothing.
+		if(Time.timeScale == 0)return;
+
 		// Handling movement of the enemy.
 		switch (movementState)
 		{

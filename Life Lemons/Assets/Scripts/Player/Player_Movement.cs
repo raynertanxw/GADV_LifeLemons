@@ -16,6 +16,9 @@ public class Player_Movement : MonoBehaviour
 
 	void Update()
 	{
+		// If the game is paused, immediately return to do nothing.
+		if(Time.timeScale == 0)return;
+
 		// Check if the player has a malfunction before allowing it to move.
 		if (playerCombat.hasMalfunction == false)
 		{
