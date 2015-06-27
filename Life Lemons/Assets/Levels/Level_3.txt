@@ -1,0 +1,5 @@
+SpawnFollow, 1, 5, 0
+SpawnFollow, 1, 9, 10
+SpawnFollow, 2, 1, 8
+SpawnFollow, 0, 11, 4
+SpawnFollow, 0, 7, 0

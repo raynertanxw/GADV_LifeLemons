@@ -3,7 +3,7 @@ using System.Collections;
 
 public static class Constants
 {
-	public static int NumOfLevels = 2;
+	public static int NumOfLevels = 5;
 
 	// Save data strings.
 	public static string HIGHEST_CLEARED_LEVEL = "HIGHEST_CLEARED_LEVEL";
