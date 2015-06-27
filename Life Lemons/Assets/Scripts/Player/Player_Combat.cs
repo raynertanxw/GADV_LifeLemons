@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public enum PlayerStates {collect, shoot};
@@ -25,8 +26,9 @@ public class Player_Combat : MonoBehaviour, IDamagable
 	private SpriteRenderer chassisSpriteRen, glassSpriteRen, blasterSpriteRen, funnelSpriteRen;
 
 	// UI elements
-	private Text textPlayerHealth;
 	private Text textPlayerAmmo;
+	private Image[] healthHearts;
+	public Sprite emptyHeart;
 
 	void Awake()
 	{
@@ -37,10 +39,16 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
 		funnelSpriteRen = transform.FindChild("Lemonator_Funnel").GetComponent<SpriteRenderer>();
 
-		textPlayerHealth = GameObject.Find("Text_Player_Health").GetComponent<Text>();
-		textPlayerHealth.text = "Health: " + health;
 		textPlayerAmmo = GameObject.Find("Text_Player_Ammo").GetComponent<Text>();
 		UpdateAmmoUI();
+
+		List<Image> heartsList = new List<Image>();
+		Transform health_hearts = GameObject.Find("Health_Hearts").transform;
+		foreach (Transform heart in health_hearts)
+		{
+			heartsList.Add(heart.gameObject.GetComponent<Image>());
+		}
+		healthHearts = heartsList.ToArray();
 
 		hasMalfunction = false;
 		health = maxHealth;
@@ -118,8 +126,20 @@ public class Player_Combat : MonoBehaviour, IDamagable
 	public void TakeDamage(int damage)
 	{
 		health -= damage;
+
 		// Update UI elements.
-		textPlayerHealth.text = "Health: " + health;
+		UpdateHealthUI(damage);
+
+		CheckGameOver();
+	}
+
+	private void UpdateHealthUI(int lostHearts)
+	{
+		for (int i = health+lostHearts; i > health; i--)
+		{
+			healthHearts[i-1].sprite = emptyHeart;
+		}
+
 		int healthState = health * 3 / maxHealth;
 		// As Take damage is only called after the player takes damage, it will never be full health.
 		// Hench, healthState will always be 0-2 as health will always be < maxHealth*3 and never resulting in >2 when divided by maxHealth.
@@ -127,8 +147,6 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		glassSpriteRen.sprite = glassDamageStates[healthState];
 		blasterSpriteRen.sprite = blasterDamageStates[healthState];
 		funnelSpriteRen.sprite = funnelDamageStates[healthState];
-
-		CheckGameOver();
 	}
 
 	public void CheckGameOver()
