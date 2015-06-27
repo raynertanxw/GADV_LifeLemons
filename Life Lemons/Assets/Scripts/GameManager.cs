@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 0);
+				PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 1);
 			}
 		}
 	}

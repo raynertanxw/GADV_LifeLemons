@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Tutorial_NormalHenchCombat : MonoBehaviour, IDamagable
 {
+	public bool canShoot = false;
+
 	public int health;
 	public GameObject enemyProjectile;
 	public Transform projectileSpawn;
@@ -23,15 +25,22 @@ public class Tutorial_NormalHenchCombat : MonoBehaviour, IDamagable
 	
 	private IEnumerator shootAtPlayer()
 	{
-		yield return new WaitForSeconds(rateOfFire);
-		while (true)
+		while (canShoot == false)
 		{
-			Shoot();
+			yield return null;
+		}
+
+		while (true)
+		{	
+			if (canShoot == true)
+			{
+				Shoot();
+			}
 			yield return new WaitForSeconds(rateOfFire);
 		}
 	}
 	
-	private void Shoot()
+	public void Shoot()
 	{
 		// Play shooting animation.
 		anim.SetTrigger("Shoot");
