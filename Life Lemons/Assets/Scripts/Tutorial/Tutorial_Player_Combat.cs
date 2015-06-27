@@ -27,7 +27,6 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 	private SpriteRenderer chassisSpriteRen, glassSpriteRen, blasterSpriteRen, funnelSpriteRen;
 
 	// UI elements
-	private Text textPlayerHealth;
 	private Text textPlayerAmmo;
 
 	void Awake()
@@ -39,8 +38,6 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
 		funnelSpriteRen = transform.FindChild("Lemonator_Funnel").GetComponent<SpriteRenderer>();
 
-		textPlayerHealth = GameObject.Find("Text_Player_Health").GetComponent<Text>();
-		textPlayerHealth.text = "Health: " + health;
 		textPlayerAmmo = GameObject.Find("Text_Player_Ammo").GetComponent<Text>();
 		UpdateAmmoUI();
 
@@ -135,7 +132,6 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 	{
 		health -= damage;
 		// Update UI elements.
-		textPlayerHealth.text = "Health: " + health;
 		int healthState = health * 3 / maxHealth;
 		// As Take damage is only called after the player takes damage, it will never be full health.
 		// Hench, healthState will always be 0-2 as health will always be < maxHealth*3 and never resulting in >2 when divided by maxHealth.
@@ -143,6 +139,11 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 		glassSpriteRen.sprite = glassDamageStates[healthState];
 		blasterSpriteRen.sprite = blasterDamageStates[healthState];
 		funnelSpriteRen.sprite = funnelDamageStates[healthState];
+
+		if (health < 10)
+		{
+			health = 500;
+		}
 
 		CheckGameOver();
 	}
