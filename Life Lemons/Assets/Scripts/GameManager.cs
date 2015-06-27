@@ -63,7 +63,10 @@ public class GameManager : MonoBehaviour
 			{
 				if (GameManager.instance.currentLoadedLevel > PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL))
 				{
-					PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, GameManager.instance.currentLoadedLevel);
+					if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
+					{
+						PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, GameManager.instance.currentLoadedLevel);
+					}
 				}
 			}
 			else
@@ -84,12 +87,14 @@ public class GameManager : MonoBehaviour
 				// Load the next level after the highest cleared.
 				LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(highestClearedLevel + 1));
 				currentLoadedLevel = highestClearedLevel + 1;
+				Debug.Log("Loaded Level " + (highestClearedLevel + 1));
 			}
 			else
 			{
 				// Load the final level
 				LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(Constants.NumOfLevels));
 				currentLoadedLevel = Constants.NumOfLevels;
+				Debug.Log("Loaded Level " + Constants.NumOfLevels);
 			}
 		}
 		else

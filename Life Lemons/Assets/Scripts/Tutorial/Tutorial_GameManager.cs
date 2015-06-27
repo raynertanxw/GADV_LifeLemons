@@ -282,7 +282,7 @@ public class Tutorial_GameManager : MonoBehaviour
 		else
 		{
 			//Load level scene.
-			PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 1);
+			PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 0);
 			Application.LoadLevel(Constants.LevelScene);
 		}
 	}
