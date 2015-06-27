@@ -17,6 +17,8 @@ public static class Constants
 	// Animation parameter names.
 	public static string MainMenuToSettings = "MainMenuToSettings";
 	public static string SettingsToMainMenu = "SettingsToMainMenu";
+	public static string MainMenuToUpgrade = "MainMenuToUpgrade";
+	public static string UpgradeToMainMenu = "UpgradeToMainMenu";
 
 	// Other strings.
 	public static string LevelFileNamePrefix = "Level_";

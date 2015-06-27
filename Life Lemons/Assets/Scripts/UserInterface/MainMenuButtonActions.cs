@@ -22,7 +22,7 @@ public class MainMenuButtonActions : MonoBehaviour
 
 	public void ButtonUpgrade()
 	{
-
+		anim.SetTrigger(Constants.MainMenuToUpgrade);
 	}
 
 	public void ButtonSettings()
