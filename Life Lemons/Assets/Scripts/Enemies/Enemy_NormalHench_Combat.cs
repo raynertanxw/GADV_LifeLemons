@@ -34,7 +34,7 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 	private void Shoot()
 	{
 		// Play shooting animation.
-		anim.SetTrigger("Shoot");
+		anim.SetTrigger(Constants.Shoot);
 
 		GameObject projectile = (GameObject)Instantiate(enemyProjectile, projectileSpawn.position, transform.rotation);
 		projectile.GetComponent<Rigidbody2D>().velocity = Utilities.RotationZ2DirectionVec(transform.rotation.eulerAngles.z) * projectileSpeed;

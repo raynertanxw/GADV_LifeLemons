@@ -35,7 +35,7 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	private void Shoot()
 	{
 		// Play the shooting animation.
-		anim.SetTrigger("Shoot");
+		anim.SetTrigger(Constants.Shoot);
 
 		ShootLeft();
 		ShootRight();

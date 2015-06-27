@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 		GameManager.instance.GameOver = true;
 
 		// Deactivate all objects.
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.tagEnemy);
 		foreach (GameObject enemy in enemies)
 		{
 			MonoBehaviour[] scripts = enemy.GetComponents<MonoBehaviour>();

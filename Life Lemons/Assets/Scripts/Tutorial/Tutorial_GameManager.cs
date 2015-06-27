@@ -31,7 +31,7 @@ public class Tutorial_GameManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 
-		player = GameObject.FindWithTag("Player");
+		player = GameObject.FindWithTag(Constants.tagPlayer);
 		tutText = GameObject.Find("Tutorial Text").GetComponent<Text>();
 		nextButton = GameObject.Find("Tutorial_Button_Next").GetComponent<Button>();
 		// Disable next button.

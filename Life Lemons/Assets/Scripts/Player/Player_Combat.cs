@@ -64,12 +64,12 @@ public class Player_Combat : MonoBehaviour, IDamagable
 				{
 				case PlayerStates.collect:
 					playerState = PlayerStates.shoot;
-					anim.SetTrigger("toggle_shoot");
+					anim.SetTrigger(Constants.toggle_shoot);
 					break;
 
 				case PlayerStates.shoot:
 					playerState = PlayerStates.collect;
-					anim.SetTrigger("toggle_collect");
+					anim.SetTrigger(Constants.toggle_collect);
 					break;
 
 				default:

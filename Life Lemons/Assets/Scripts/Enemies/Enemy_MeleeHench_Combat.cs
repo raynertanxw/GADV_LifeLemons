@@ -15,7 +15,7 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	void Awake()
 	{
 		anim = gameObject.GetComponent<Animator>();
-		player = GameObject.FindGameObjectWithTag("Player").transform;
+		player = GameObject.FindGameObjectWithTag(Constants.tagPlayer).transform;
 	}
 	
 	void Start()
@@ -45,12 +45,12 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	{
 		if (punchLeft == true)
 		{
-			anim.SetTrigger("PunchLeft");
+			anim.SetTrigger(Constants.PunchLeft);
 			punchLeft = false;
 		}
 		else
 		{
-			anim.SetTrigger("PunchRight");
+			anim.SetTrigger(Constants.PunchRight);
 			punchLeft = true;
 		}
 	}

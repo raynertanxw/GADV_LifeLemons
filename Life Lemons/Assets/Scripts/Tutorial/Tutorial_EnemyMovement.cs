@@ -8,7 +8,7 @@ public class Tutorial_EnemyMovement : MonoBehaviour
 	
 	void Awake()
 	{
-		player = GameObject.FindGameObjectWithTag("Player");
+		player = GameObject.FindGameObjectWithTag(Constants.tagPlayer);
 	}
 	
 	void Update()
