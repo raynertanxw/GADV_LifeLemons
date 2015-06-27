@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 
@@ -9,8 +10,10 @@ public class GameManager : MonoBehaviour
 	public int NumOfEnemiesRemaining;
 	public bool LastWaveHasSpawned;
 	public int currentLoadedLevel;
+	public bool paused = false;
 
 	private Enemy_Spawner spawner;
+	public Animator anim;
 
 	void Awake()
 	{
@@ -28,6 +31,22 @@ public class GameManager : MonoBehaviour
 		LastWaveHasSpawned = false;
 
 		spawner = GameObject.Find("Enemy_Spawner").GetComponent<Enemy_Spawner>();
+		anim = GameObject.Find("Canvas").GetComponent<Animator>();
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.P))
+		{
+			if (GameManager.instance.GameOver == false)
+			{
+				if (paused == false)
+				{
+					paused = true;
+					anim.SetTrigger(Constants.TransitionToPause);
+				}
+			}
+		}
 	}
 
 	// For enemy gameobjects to call and deduct themselves from the count.
@@ -73,6 +92,15 @@ public class GameManager : MonoBehaviour
 			{
 				PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 1);
 			}
+
+			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "NEXTLEVEL";
+			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
+		}
+		// Otherwise player failed level.
+		else
+		{
+			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "RETRY";
+			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
 		}
 	}
 

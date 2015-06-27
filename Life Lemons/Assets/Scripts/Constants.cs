@@ -20,6 +20,14 @@ public static class Constants
 	public static string MainMenuToUpgrade = "MainMenuToUpgrade";
 	public static string UpgradeToMainMenu = "UpgradeToMainMenu";
 
+	public static string FadeInGameOver = "FadeInGameOver";
+	public static string GameOverToLevelSelect = "GameOverToLevelSelect";
+	public static string LevelSelectToGameOver = "LevelSelectToGameOver";
+	public static string PauseToLevelSelect = "PauseToLevelSelect";
+	public static string LevelSelectToPause = "LevelSelectToPause";
+	public static string TransitionToPause = "TransitionToPause";
+	public static string TransitionFromPause = "TransitionFromPause";
+
 	// Other Animation parameter names.
 	public static string toggle_shoot = "toggle_shoot";
 	public static string toggle_collect = "toggle_collect";
