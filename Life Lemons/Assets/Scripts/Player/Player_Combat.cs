@@ -60,7 +60,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		if(Time.timeScale == 0)return;
 
 		// If the game is over don't do anything.
-		if(GameManager.instance.gameObject == true)return;
+		if(GameManager.instance.GameOver == true)return;
 
 		if (hasMalfunction == false)
 		{
