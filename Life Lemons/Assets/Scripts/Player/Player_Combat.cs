@@ -160,8 +160,8 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		if (health == 0)
 		{
 			// GameOver.
-			Destroy(gameObject);
 			GameManager.EndGame();
+			Destroy(gameObject);
 		}
 	}
 

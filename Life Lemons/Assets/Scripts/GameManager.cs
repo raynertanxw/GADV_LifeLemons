@@ -68,9 +68,6 @@ public class GameManager : MonoBehaviour
 
 	public static void EndGame()
 	{
-		// Prevent repeated calls of end game in case player clears the level and gets killed anyway.
-		if(GameManager.instance.gameObject == true)return;
-
 		// Set GameOver to true.
 		GameManager.instance.GameOver = true;
 
