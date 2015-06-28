@@ -19,6 +19,9 @@ public class Player_Movement : MonoBehaviour
 		// If the game is paused, immediately return to do nothing.
 		if(Time.timeScale == 0)return;
 
+		// If the game is over don't do anything.
+		if(GameManager.instance.gameObject == true)return;
+
 		// Check if the player has a malfunction before allowing it to move.
 		if (playerCombat.hasMalfunction == false)
 		{

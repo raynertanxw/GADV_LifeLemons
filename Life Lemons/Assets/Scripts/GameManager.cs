@@ -102,12 +102,14 @@ public class GameManager : MonoBehaviour
 
 			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "NEXTLEVEL";
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
+			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "LEVEL ClEARED!";
 		}
 		// Otherwise player failed level.
 		else
 		{
 			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "RETRY";
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
+			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "GAME OVER!";
 		}
 	}
 

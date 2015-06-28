@@ -38,6 +38,9 @@ public class Enemy_Movement : MonoBehaviour
 		// If the game is paused, immediately return to do nothing.
 		if(Time.timeScale == 0)return;
 
+		// Stop moving when the game is over.
+		if(GameManager.instance.GameOver == true)return;
+
 		// Handling movement of the enemy.
 		switch (movementState)
 		{

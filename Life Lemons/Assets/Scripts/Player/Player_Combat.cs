@@ -59,6 +59,9 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		// If the game is paused, immediately return to do nothing.
 		if(Time.timeScale == 0)return;
 
+		// If the game is over don't do anything.
+		if(GameManager.instance.gameObject == true)return;
+
 		if (hasMalfunction == false)
 		{
 			if (Input.GetKeyDown(KeyCode.Q))
