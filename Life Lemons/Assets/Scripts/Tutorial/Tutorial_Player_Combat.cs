@@ -13,11 +13,8 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 	public int maxHealth;
 	public int health;
 	public GameObject playerProjectile;
-	public bool hasMalfunction;
 	public float ammoCostPerShot;
 	public float projectileSpeed;
-	public int malfunctionDamage;
-	public float malfunctionRepairTime;
 
 	public Sprite[] chassisDamageStates, glassDamageStates, blasterDamageStates, funnelDamageStates;
 
@@ -38,42 +35,37 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
 		funnelSpriteRen = transform.FindChild("Lemonator_Funnel").GetComponent<SpriteRenderer>();
 
-		textPlayerAmmo = GameObject.Find("Text_Player_Ammo").GetComponent<Text>();
 		UpdateAmmoUI();
 
-		hasMalfunction = false;
 		health = maxHealth;
 	}
 
 	void Update()
 	{
-		if (hasMalfunction == false)
+		if (Input.GetKeyDown(KeyCode.Q) && canSwitch == true)
 		{
-			if (Input.GetKeyDown(KeyCode.Q) && canSwitch == true)
+			switch (playerState)
 			{
-				switch (playerState)
-				{
-				case PlayerStates.collect:
-					playerState = PlayerStates.shoot;
-					anim.SetTrigger(Constants.toggle_shoot);
-					break;
+			case PlayerStates.collect:
+				playerState = PlayerStates.shoot;
+				anim.SetTrigger(Constants.toggle_shoot);
+				break;
 
-				case PlayerStates.shoot:
-					playerState = PlayerStates.collect;
-					anim.SetTrigger(Constants.toggle_collect);
-					break;
+			case PlayerStates.shoot:
+				playerState = PlayerStates.collect;
+				anim.SetTrigger(Constants.toggle_collect);
+				break;
 
-				default:
-					break;
-				}
+			default:
+				break;
 			}
+		}
 
-			if (Input.GetMouseButtonDown(0)) // Left Click.
+		if (Input.GetMouseButtonDown(0)) // Left Click.
+		{
+			if (playerState == PlayerStates.shoot && canShoot == true)
 			{
-				if (playerState == PlayerStates.shoot && canShoot == true)
-				{
-					Shoot();
-				}
+				Shoot();
 			}
 		}
 	}
@@ -86,7 +78,6 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 			newScale = 0f;
 		}
 		ammoLevelLemonjuice.localScale = new Vector3(newScale, ammoSpriteMaxScale, 1f);
-		textPlayerAmmo.text = "Ammo: " + ammoPercentage + "%";
 	}
 
 	void Shoot()
@@ -168,19 +159,5 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 			ammoPercentage += ammoVolume;
 			UpdateAmmoUI();
 		}
-		else
-		{
-			Debug.Log("malfunction");
-			// Damage player.
-			TakeDamage(malfunctionDamage);
-			hasMalfunction = true;
-			StartCoroutine("repairMalfunction");
-		}
-	}
-
-	private IEnumerator repairMalfunction()
-	{
-		yield return new WaitForSeconds(malfunctionRepairTime);
-		hasMalfunction = false;
 	}
 }

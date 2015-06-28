@@ -16,6 +16,7 @@ public class Tutorial_GameManager : MonoBehaviour
 	//Universal.
 	private bool nextButtonClicked = false;
 	public GameObject EnemeyPrefab;
+	public GameObject PlayerPrefab;
 	// Tutorial Segment 1.
 	private float Tutorial_totalZRotationOfPlayer = 0.0f;
 	private float Tutorial_zRotationOfPreviousFrame = 0.0f;
@@ -31,7 +32,7 @@ public class Tutorial_GameManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 
-		player = GameObject.FindWithTag(Constants.tagPlayer);
+		player = (GameObject) Instantiate(PlayerPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
 		tutText = GameObject.Find("Tutorial Text").GetComponent<Text>();
 		nextButton = GameObject.Find("Tutorial_Button_Next").GetComponent<Button>();
 		// Disable next button.
@@ -57,9 +58,21 @@ public class Tutorial_GameManager : MonoBehaviour
 	IEnumerator TutorialSequence()
 	{
 		// SEGMENT 1
-		tutText.text = "Welcome! This is you: the E-Lemonator!\n\nUse the mouse cursor to rotate.\nYou will always face the cursor.\nTry turning three full circles.";
+		tutText.text = "Welcome! This is you: the E-Lemonator!\n\nUse the mouse cursor to rotate.\nYou will always face the cursor.";
 
 		yield return null; // Delay the coroutine until it runs in the first update so accurate player rotation can be recorded.
+
+		nextButton.gameObject.SetActive(true);
+		
+		while (nextButtonClicked == false)
+		{
+			yield return null;
+		}
+		
+		nextButtonClicked = false; // Reset the button clicked status.
+		nextButton.gameObject.SetActive(false); // Hide the button again.
+
+		tutText.text = "Try turning three full circles.";
 
 		// Detect three full rotation.
 		Tutorial_zRotationOfPreviousFrame = player.transform.rotation.eulerAngles.z;
@@ -213,6 +226,7 @@ public class Tutorial_GameManager : MonoBehaviour
 		enemy.GetComponent<Tutorial_NormalHenchCombat>().canShoot = true;
 
 		bool playerCaughtAmmo = false;
+		player.GetComponent<Tutorial_Player_Combat>().caughtLemonOnce = false; // In case player caught ammo by accident during first shot.
 		while (playerCaughtAmmo == false)
 		{
 			if (player.GetComponent<Tutorial_Player_Combat>().caughtLemonOnce == true)

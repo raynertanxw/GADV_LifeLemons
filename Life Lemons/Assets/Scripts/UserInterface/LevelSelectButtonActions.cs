@@ -21,6 +21,12 @@ public class LevelSelectButtonActions : MonoBehaviour
 			anim.SetTrigger(Constants.LevelSelectToPause);
 		}
 	}
+
+	public void ButtonTutorial()
+	{
+		Time.timeScale = 1f; // Reset the time scale.
+		Application.LoadLevel(Constants.TutorialScene);
+	}
 	
 	public void ButtonPrev()
 	{
