@@ -243,7 +243,7 @@ public class Tutorial_GameManager : MonoBehaviour
 		// SEGMENT 4.
 
 		enemy.GetComponent<Tutorial_NormalHenchCombat>().canShoot = false;
-		tutText.text = "Good job you caught one!\nNow to retalliate! However, you still cannot shoot.\nYou are now in collect mode. Press Q to switch to shooting mode.";
+		tutText.text = "Good job you caught one!\nNow to retaliate! However, you still cannot shoot.\nYou are now in collect mode. Press Q to switch to shooting mode.";
 
 		player.GetComponent<Tutorial_Player_Combat>().canSwitch = true;
 
