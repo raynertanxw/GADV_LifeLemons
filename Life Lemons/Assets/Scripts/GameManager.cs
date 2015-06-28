@@ -68,10 +68,13 @@ public class GameManager : MonoBehaviour
 
 	public static void EndGame()
 	{
+		// Prevent repeated calls of end game in case player clears the level and gets killed anyway.
+		if(GameManager.instance.gameObject == true)return;
+
 		// Set GameOver to true.
 		GameManager.instance.GameOver = true;
 
-		// Deactivate all objects.
+		// Deactivate all enemies.
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.tagEnemy);
 		foreach (GameObject enemy in enemies)
 		{
@@ -80,6 +83,13 @@ public class GameManager : MonoBehaviour
 			{
 				script.enabled = false;
 			}
+		}
+
+		// Destroy all projectiles.
+		GameObject[] projectiles = GameObject.FindGameObjectsWithTag(Constants.tagProjectile);
+		foreach (GameObject projectile in projectiles)
+		{
+			Destroy(projectile);
 		}
 
 		// Check if player has cleared the level.
