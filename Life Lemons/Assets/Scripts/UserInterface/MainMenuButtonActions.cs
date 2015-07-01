@@ -12,7 +12,16 @@ public class MainMenuButtonActions : MonoBehaviour
 
 	public void ButtonStart()
 	{
-		Application.LoadLevel(Constants.LevelScene);
+		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
+		{
+			// Load Level Scene.
+			Application.LoadLevel(Constants.LevelScene);
+		}
+		else
+		{
+			//Load tutotial scene.
+			Application.LoadLevel(Constants.TutorialScene);
+		}
 	}
 
 	public void ButtonEndless()
