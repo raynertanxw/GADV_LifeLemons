@@ -27,6 +27,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	// UI elements
 	private Text textPlayerAmmo;
+	private RectTransform imagePlayerAmmoRectTransform;
 	private Image[] healthHearts;
 	public Sprite emptyHeart;
 
@@ -40,6 +41,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		funnelSpriteRen = transform.FindChild("Lemonator_Funnel").GetComponent<SpriteRenderer>();
 
 		textPlayerAmmo = GameObject.Find("Text_Player_Ammo").GetComponent<Text>();
+		imagePlayerAmmoRectTransform = GameObject.Find("Ammo_Indicator_LemonJuice_Level").GetComponent<RectTransform>();
 		UpdateAmmoUI();
 
 		List<Image> heartsList = new List<Image>();
@@ -100,8 +102,13 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		{
 			newScale = 0f;
 		}
+
+		// Update player ammo indicator.
 		ammoLevelLemonjuice.localScale = new Vector3(newScale, ammoSpriteMaxScale, 1f);
-		textPlayerAmmo.text = "Ammo: " + ammoPercentage + "%";
+
+		// Update UI ammo indicator.
+		textPlayerAmmo.text = ammoPercentage + "%";
+		imagePlayerAmmoRectTransform.localScale = new Vector3(1f, ammoPercentage / 100.0f, 1f);
 	}
 
 	void Shoot()
@@ -175,6 +182,9 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		}
 		else
 		{
+			ammoPercentage = 100f;
+			UpdateAmmoUI();
+
 			Debug.Log("malfunction");
 			// Damage player.
 			TakeDamage(malfunctionDamage);
