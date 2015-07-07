@@ -46,4 +46,5 @@ public static class Constants
 
 	// Other strings.
 	public static string LevelFileNamePrefix = "Level_";
+	public static string LevelButtonNamePrefix = "LevelButton_Level_";
 }

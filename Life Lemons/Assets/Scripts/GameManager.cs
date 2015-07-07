@@ -89,6 +89,9 @@ public class GameManager : MonoBehaviour
 			Destroy(projectile);
 		}
 
+		// Unlock the next level in level select.
+		GameObject.Find(Constants.LevelButtonNamePrefix + (GameManager.instance.currentLoadedLevel + 1).ToString()).GetComponent<Button>().interactable = true;
+
 		// Check if player has cleared the level.
 		if (GameManager.instance.NumOfEnemiesRemaining == 0)
 		{

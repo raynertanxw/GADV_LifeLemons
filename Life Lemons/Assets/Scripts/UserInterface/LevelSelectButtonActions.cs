@@ -11,6 +11,15 @@ public class LevelSelectButtonActions : MonoBehaviour
 	{
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
 		levelPanelAnim = GameObject.Find("LevelSelectPanel").GetComponent<Animator>();
+
+		// Disabled non-unlocked levels.
+		// The highest unlocked level that the player can select is highest cleared level + 1 (only next level is unlocked).
+		for (int i = PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL) + 2; i < Constants.NumOfLevels + 1; i++)
+		{
+			Debug.Log(i);
+			Button currentButton = GameObject.Find(Constants.LevelButtonNamePrefix + i.ToString()).GetComponent<Button>();
+			currentButton.interactable = false;
+		}
 	}
 	
 	public void ButtonBack()
