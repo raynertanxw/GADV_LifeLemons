@@ -23,6 +23,8 @@ public class PauseButtonActions : MonoBehaviour
 	
 	public void ButtonMainMenu()
 	{
+		// Reset timescale.
+		GameManager.Resume();
 		Application.LoadLevel(Constants.MainMenuScene);
 	}
 }

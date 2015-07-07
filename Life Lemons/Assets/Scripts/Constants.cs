@@ -8,6 +8,7 @@ public static class Constants
 	// Save data strings.
 	public static string HIGHEST_CLEARED_LEVEL = "HIGHEST_CLEARED_LEVEL";
 	public static string NUM_OF_QUARTERS = "NUM_OF_QUARTERS";
+	public static string SELECTED_LEVEL = "SELECTED_LEVEL";
 
 	// Scene filename strings.
 	public static string MainMenuScene = "Main_Menu";

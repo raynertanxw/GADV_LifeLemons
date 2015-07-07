@@ -44,5 +44,8 @@ public class LevelSelectButtonActions : MonoBehaviour
 	public void LoadLevel(int levelID)
 	{
 		Debug.Log(levelID);
+		PlayerPrefs.SetInt(Constants.SELECTED_LEVEL, levelID);
+		GameManager.Resume(); // To reset timescale.
+		Application.LoadLevel(Constants.LevelScene);
 	}
 }

@@ -107,6 +107,14 @@ public class GameManager : MonoBehaviour
 				PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 1);
 			}
 
+			if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL))
+			{
+				if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
+				{
+					PlayerPrefs.SetInt(Constants.SELECTED_LEVEL, GameManager.instance.currentLoadedLevel + 1);
+				}
+			}
+
 			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "NEXT LEVEL";
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
 			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "LEVEL CLEARED!";
@@ -122,29 +130,40 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		int highestClearedLevel;
-		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
+		if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL))
 		{
-			highestClearedLevel = PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL);
-			if (highestClearedLevel < Constants.NumOfLevels)
-			{
-				// Load the next level after the highest cleared.
-				LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(highestClearedLevel + 1));
-				currentLoadedLevel = highestClearedLevel + 1;
-				Debug.Log("Loaded Level " + (highestClearedLevel + 1));
-			}
-			else
-			{
-				// Load the final level
-				LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(Constants.NumOfLevels));
-				currentLoadedLevel = Constants.NumOfLevels;
-				Debug.Log("Loaded Level " + Constants.NumOfLevels);
-			}
+			int selectedLevel = PlayerPrefs.GetInt(Constants.SELECTED_LEVEL);
+			// Load the next level after the highest cleared.
+			LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(selectedLevel));
+			currentLoadedLevel = selectedLevel;
+			Debug.Log("Loaded Level " + (selectedLevel));
 		}
 		else
 		{
-			//Load tutotial scene.
-			Application.LoadLevel(Constants.TutorialScene);
+			int highestClearedLevel;
+			if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
+			{
+				highestClearedLevel = PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL);
+				if (highestClearedLevel < Constants.NumOfLevels)
+				{
+					// Load the next level after the highest cleared.
+					LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(highestClearedLevel + 1));
+					currentLoadedLevel = highestClearedLevel + 1;
+					Debug.Log("Loaded Level " + (highestClearedLevel + 1));
+				}
+				else
+				{
+					// Load the final level
+					LoadLevelEnemies(Constants.LevelFileNamePrefix + Convert.ToString(Constants.NumOfLevels));
+					currentLoadedLevel = Constants.NumOfLevels;
+					Debug.Log("Loaded Level " + Constants.NumOfLevels);
+				}
+			}
+			else
+			{
+				//Load tutotial scene.
+				Application.LoadLevel(Constants.TutorialScene);
+			}
 		}
 	}
 

@@ -8,6 +8,11 @@ public class MainMenuButtonActions : MonoBehaviour
 	void Awake()
 	{
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
+		PlayerPrefs.DeleteKey(Constants.SELECTED_LEVEL); // Ensure that select level key is deleted everytime player starts game of moves back to menu.
+		if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL) == false)
+		{
+			Debug.Log("SELECTED_LEVEL key successfully deleted");
+		}
 	}
 
 	public void ButtonStart()
