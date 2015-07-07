@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class LevelSelectButtonActions : MonoBehaviour
 {
 	private Animator anim;
+	private Animator levelPanelAnim;
 	
 	void Awake()
 	{
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
+		levelPanelAnim = GameObject.Find("LevelSelectPanel").GetComponent<Animator>();
 	}
 	
 	public void ButtonBack()
@@ -30,11 +33,16 @@ public class LevelSelectButtonActions : MonoBehaviour
 	
 	public void ButtonPrev()
 	{
-		Debug.Log("PREV");
+		levelPanelAnim.SetTrigger(Constants.ScrollPrevious);
 	}
 	
 	public void ButtonNext()
 	{
-		Debug.Log("NEXT");
+		levelPanelAnim.SetTrigger(Constants.ScrollNext);
+	}
+
+	public void LoadLevel(int levelID)
+	{
+		Debug.Log(levelID);
 	}
 }

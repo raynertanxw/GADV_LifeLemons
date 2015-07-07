@@ -3,7 +3,7 @@ using System.Collections;
 
 public static class Constants
 {
-	public static int NumOfLevels = 5;
+	public static int NumOfLevels = 6;
 
 	// Save data strings.
 	public static string HIGHEST_CLEARED_LEVEL = "HIGHEST_CLEARED_LEVEL";
@@ -27,6 +27,9 @@ public static class Constants
 	public static string LevelSelectToPause = "LevelSelectToPause";
 	public static string TransitionToPause = "TransitionToPause";
 	public static string TransitionFromPause = "TransitionFromPause";
+
+	public static string ScrollNext = "ScrollNext";
+	public static string ScrollPrevious = "ScrollPrevious";
 
 	// Other Animation parameter names.
 	public static string toggle_shoot = "toggle_shoot";
