@@ -36,6 +36,7 @@ public static class Constants
 	public static string toggle_shoot = "toggle_shoot";
 	public static string toggle_collect = "toggle_collect";
 	public static string Shoot = "Shoot";
+	public static string Die = "Die";
 	public static string PunchLeft = "PunchLeft";
 	public static string PunchRight = "PunchRight";
 
@@ -43,6 +44,13 @@ public static class Constants
 	public static string tagEnemy = "Enemy";
 	public static string tagPlayer = "Player";
 	public static string tagProjectile = "Projectile";
+
+	// Couroutine names.
+	public static string shootAtPlayer = "shootAtPlayer";
+	public static string punchAtPlayer = "punchAtPlayer";
+
+	// Sprite Renderer Sorting Layer Names.
+	public static string DeadEnemy = "DeadEnemy";
 
 	// Other strings.
 	public static string LevelFileNamePrefix = "Level_";

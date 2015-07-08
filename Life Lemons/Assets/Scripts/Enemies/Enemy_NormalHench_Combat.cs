@@ -25,7 +25,7 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 
 	void Start()
 	{
-		StartCoroutine(shootAtPlayer());
+		StartCoroutine(Constants.shootAtPlayer);
 	}
 
 	private IEnumerator shootAtPlayer()
@@ -58,10 +58,36 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 	{
 		if (health == 0)
 		{
+			// Stop shooting coroutine.
+			StopCoroutine(Constants.shootAtPlayer);
+
 			// Update the total enemy count in GameManager.
 			GameManager.instance.UpdateEnemyCount();
-			// Destroy the enemy object.
-			Destroy(gameObject);
+
+			// Disable all attached scripts and collider.
+			gameObject.GetComponent<Enemy_Movement>().enabled = false;
+			gameObject.GetComponent<Collider2D>().enabled = false;
+
+			// Change sprite renderer sorting layer to that of DeadEnemy so player will be rendered on top of them.
+			int orderNum = ++GameManager.instance.totalNumEnemies; // Cache the totalNumEnemies AFTER incrementing.
+			// Set all child sprites to orderNum to avoid sprite odering issues from instances of same prefab.
+			for (int i = 0; i < transform.childCount; i++)
+			{
+				transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = Constants.DeadEnemy;
+			}
+
+			// Play Death Aniamtion.
+			anim.SetTrigger(Constants.Die);
+
+			// Disable self.
+			this.enabled = false;
 		}
+	}
+
+	// For animation to call.
+	public void DestroySelf()
+	{
+		// Destroy the enemy object.
+		Destroy(gameObject);
 	}
 }
