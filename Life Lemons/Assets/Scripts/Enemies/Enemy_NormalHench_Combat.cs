@@ -14,6 +14,13 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 	void Awake()
 	{
 		anim = gameObject.GetComponent<Animator>();
+
+		int orderNum = ++GameManager.instance.totalNumEnemies; // Cache the totalNumEnemies AFTER incrementing.
+		// Set all child sprites to orderNum to avoid sprite odering issues from instances of same prefab.
+		for (int i = 0; i < transform.childCount; i++)
+		{
+			transform.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = orderNum;
+		}
 	}
 
 	void Start()

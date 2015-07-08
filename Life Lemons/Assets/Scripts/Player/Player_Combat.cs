@@ -24,6 +24,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 	private Transform ammoLevelLemonjuice;
 	private const float ammoSpriteMaxScale = 0.25f; // Maximum Scale value of sprite. Used for calculation of ammo percenatge UI scale values.
 	private SpriteRenderer chassisSpriteRen, glassSpriteRen, blasterSpriteRen, funnelSpriteRen;
+	private SpriteRenderer lemonJuiceSpriteRen;
 
 	// UI elements
 	private Text textPlayerAmmo;
@@ -39,6 +40,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		glassSpriteRen = transform.FindChild("Lemonator_Glass").GetComponent<SpriteRenderer>();
 		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
 		funnelSpriteRen = transform.FindChild("Lemonator_Funnel").GetComponent<SpriteRenderer>();
+		lemonJuiceSpriteRen = transform.FindChild("Ammo_Level_Indicator").GetComponent<SpriteRenderer>();
 
 		textPlayerAmmo = GameObject.Find("Text_Player_Ammo").GetComponent<Text>();
 		imagePlayerAmmoRectTransform = GameObject.Find("Ammo_Indicator_LemonJuice_Level").GetComponent<RectTransform>();
@@ -148,6 +150,9 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	private void UpdateHealthUI(int lostHearts)
 	{
+		// Flash Red.
+		StartCoroutine(showHurt());
+
 		for (int i = health+lostHearts; i > health; i--)
 		{
 			healthHearts[i-1].sprite = emptyHeart;
@@ -160,6 +165,21 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		glassSpriteRen.sprite = glassDamageStates[healthState];
 		blasterSpriteRen.sprite = blasterDamageStates[healthState];
 		funnelSpriteRen.sprite = funnelDamageStates[healthState];
+	}
+
+	IEnumerator showHurt()
+	{
+		chassisSpriteRen.color = Color.red;
+		glassSpriteRen.color = Color.red;
+		blasterSpriteRen.color = Color.red;
+		funnelSpriteRen.color = Color.red;
+		lemonJuiceSpriteRen.color = Color.red;
+		yield return new WaitForSeconds(0.1f);
+		chassisSpriteRen.color = Color.white;
+		glassSpriteRen.color = Color.white;
+		blasterSpriteRen.color = Color.white;
+		funnelSpriteRen.color = Color.white;
+		lemonJuiceSpriteRen.color = Color.white;
 	}
 
 	public void CheckGameOver()

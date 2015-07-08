@@ -16,6 +16,13 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	{
 		anim = gameObject.GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag(Constants.tagPlayer).transform;
+
+		int orderNum = ++GameManager.instance.totalNumEnemies; // Cache the totalNumEnemies AFTER incrementing.
+		// Set all child sprites to orderNum to avoid sprite odering issues from instances of same prefab.
+		for (int i = 0; i < transform.childCount; i++)
+		{
+			transform.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = orderNum;
+		}
 	}
 	
 	void Start()

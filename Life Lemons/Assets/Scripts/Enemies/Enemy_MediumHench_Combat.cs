@@ -11,10 +11,19 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	public float projectileSpeed;
 	
 	private Animator anim;
+	private SpriteRenderer spriteRen;
 
 	void Awake()
 	{
 		anim = gameObject.GetComponent<Animator>();
+		spriteRen = transform.FindChild("MediumHenchBody").GetComponent<SpriteRenderer>();
+
+		int orderNum = ++GameManager.instance.totalNumEnemies; // Cache the totalNumEnemies AFTER incrementing.
+		// Set all child sprites to orderNum to avoid sprite odering issues from instances of same prefab.
+		for (int i = 0; i < transform.childCount; i++)
+		{
+			transform.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = orderNum;
+		}
 	}
 	
 	void Start()
@@ -59,7 +68,7 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 		health -= damage;
 		CheckGameOver();
 	}
-	
+
 	public void CheckGameOver()
 	{
 		if (health == 0)
@@ -69,5 +78,16 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 			// Destroy the enemy object.
 			Destroy(gameObject);
 		}
+		else
+		{
+			StartCoroutine(showHurt());
+		}
+	}
+
+	IEnumerator showHurt()
+	{
+		spriteRen.color = Color.red;
+		yield return new WaitForSeconds(0.1f);
+		spriteRen.color = Color.white;
 	}
 }

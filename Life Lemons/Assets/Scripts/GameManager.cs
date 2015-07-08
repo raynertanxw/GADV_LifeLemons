@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager instance = null;
 	public bool GameOver;
 	public int NumOfEnemiesRemaining;
+	public int totalNumEnemies; // Used for difference in sorting order for enemy layer.
 	public bool LastWaveHasSpawned;
 	public int currentLoadedLevel;
 	public bool paused = false;
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
 
 		GameManager.instance.GameOver = false;
 		NumOfEnemiesRemaining = 0;
+		totalNumEnemies = 0;
 		LastWaveHasSpawned = false;
 
 		spawner = GameObject.Find("Enemy_Spawner").GetComponent<Enemy_Spawner>();
