@@ -68,9 +68,7 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 			gameObject.GetComponent<Enemy_Movement>().enabled = false;
 			gameObject.GetComponent<Collider2D>().enabled = false;
 
-			// Change sprite renderer sorting layer to that of DeadEnemy so player will be rendered on top of them.
-			int orderNum = ++GameManager.instance.totalNumEnemies; // Cache the totalNumEnemies AFTER incrementing.
-			// Set all child sprites to orderNum to avoid sprite odering issues from instances of same prefab.
+			// Set all child sprites to DeadEnemy Soritng Layer so player will be rendered on top.
 			for (int i = 0; i < transform.childCount; i++)
 			{
 				transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = Constants.DeadEnemy;

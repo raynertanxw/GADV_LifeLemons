@@ -28,7 +28,7 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	
 	void Start()
 	{
-		StartCoroutine(shootAtPlayer());
+		StartCoroutine(Constants.shootAtPlayer);
 	}
 	
 	private IEnumerator shootAtPlayer()
@@ -73,10 +73,27 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	{
 		if (health == 0)
 		{
+			// Stop shooting coroutine.
+			StopCoroutine(Constants.shootAtPlayer);
+
 			// Update the total enemy count in GameManager.
 			GameManager.instance.UpdateEnemyCount();
-			// Destroy the enemy object.
-			Destroy(gameObject);
+
+			// Disable all attached scripts and collider.
+			gameObject.GetComponent<Enemy_Movement>().enabled = false;
+			gameObject.GetComponent<Collider2D>().enabled = false;
+			
+			// Set all child sprites to DeadEnemy Soritng Layer so player will be rendered on top.
+			for (int i = 0; i < transform.childCount; i++)
+			{
+				transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = Constants.DeadEnemy;
+			}
+			
+			// Play Death Aniamtion.
+			anim.SetTrigger(Constants.Die);
+			
+			// Disable self.
+			this.enabled = false;
 		}
 		else
 		{
@@ -84,8 +101,16 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 		}
 	}
 
+	// For animation to call.
+	public void DestroySelf()
+	{
+		// Destroy the enemy object.
+		Destroy(gameObject);
+	}
+
 	IEnumerator showHurt()
 	{
+		Debug.Log("Hurt");
 		spriteRen.color = Color.red;
 		yield return new WaitForSeconds(0.1f);
 		spriteRen.color = Color.white;
