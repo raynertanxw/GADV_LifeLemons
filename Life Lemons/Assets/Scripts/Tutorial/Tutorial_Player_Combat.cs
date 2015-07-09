@@ -22,6 +22,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 	private Transform ammoLevelLemonjuice;
 	private const float ammoSpriteMaxScale = 0.25f; // Maximum Scale value of sprite. Used for calculation of ammo percenatge UI scale values.
 	private SpriteRenderer chassisSpriteRen, glassSpriteRen, blasterSpriteRen, funnelSpriteRen;
+	private SpriteRenderer lemonJuiceSpriteRen;
 
 	// UI elements
 	private Text textPlayerAmmo;
@@ -34,6 +35,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 		glassSpriteRen = transform.FindChild("Lemonator_Glass").GetComponent<SpriteRenderer>();
 		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
 		funnelSpriteRen = transform.FindChild("Lemonator_Funnel").GetComponent<SpriteRenderer>();
+		lemonJuiceSpriteRen = transform.FindChild("Ammo_Level_Indicator").GetComponent<SpriteRenderer>();
 
 		UpdateAmmoUI();
 
@@ -121,6 +123,9 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 	// For enemy projectiles to call.
 	public void TakeDamage(int damage)
 	{
+		// Flash Red.
+		StartCoroutine(showHurt());
+
 		health -= damage;
 		// Update UI elements.
 		int healthState = health * 3 / maxHealth;
@@ -147,6 +152,21 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 			Destroy(gameObject);
 			GameManager.EndGame();
 		}
+	}
+
+	IEnumerator showHurt()
+	{
+		chassisSpriteRen.color = Color.red;
+		glassSpriteRen.color = Color.red;
+		blasterSpriteRen.color = Color.red;
+		funnelSpriteRen.color = Color.red;
+		lemonJuiceSpriteRen.color = Color.red;
+		yield return new WaitForSeconds(0.1f);
+		chassisSpriteRen.color = Color.white;
+		glassSpriteRen.color = Color.white;
+		blasterSpriteRen.color = Color.white;
+		funnelSpriteRen.color = Color.white;
+		lemonJuiceSpriteRen.color = Color.white;
 	}
 
 	// For enemy projectiles to call.

@@ -55,15 +55,39 @@ public class Tutorial_NormalHenchCombat : MonoBehaviour, IDamagable
 		health -= damage;
 		CheckGameOver();
 	}
+
+	// For animation to call.
+	public void DestroySelf()
+	{
+		// Destroy the enemy object.
+		Destroy(gameObject);
+	}
 	
 	public void CheckGameOver()
 	{
 		if (health == 0)
 		{
+			// Stop shooting coroutine.
+			StopCoroutine(Constants.shootAtPlayer);
+
 			// Update the total enemy count in GameManager.
 			Tutorial_GameManager.instance.EndTutorial();
-			// Destroy the enemy object.
-			Destroy(gameObject);
+
+			// Disable all attached scripts and collider.
+			gameObject.GetComponent<Tutorial_EnemyMovement>().enabled = false;
+			gameObject.GetComponent<Collider2D>().enabled = false;
+			
+			// Set all child sprites to DeadEnemy Soritng Layer so player will be rendered on top.
+			for (int i = 0; i < transform.childCount; i++)
+			{
+				transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = Constants.DeadEnemy;
+			}
+			
+			// Play Death Aniamtion.
+			anim.SetTrigger(Constants.Die);
+			
+			// Disable self.
+			this.enabled = false;
 		}
 	}
 }
