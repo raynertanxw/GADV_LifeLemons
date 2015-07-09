@@ -9,9 +9,12 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	public Transform projectileRightSpawn;
 	public float rateOfFire;
 	public float projectileSpeed;
+	public int numQuarters;
+	public GameObject quarter;
 	
 	private Animator anim;
 	private SpriteRenderer spriteRen;
+	private float quarterSpawnPosOffset = 1.0f;
 
 	void Awake()
 	{
@@ -106,6 +109,16 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	{
 		// Destroy the enemy object.
 		Destroy(gameObject);
+	}
+
+	// For animation to call.
+	public void SpawnQuarters()
+	{
+		for (int i = 0; i < numQuarters; i++)
+		{
+			Vector3 offSet = new Vector3(Random.Range(-quarterSpawnPosOffset, quarterSpawnPosOffset), Random.Range(-quarterSpawnPosOffset, quarterSpawnPosOffset) ,0.0f);
+			Instantiate(quarter, transform.position + offSet, Quaternion.identity);
+		}
 	}
 
 	IEnumerator showHurt()
