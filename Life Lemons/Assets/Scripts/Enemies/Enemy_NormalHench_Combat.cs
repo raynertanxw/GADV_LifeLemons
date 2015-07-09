@@ -10,10 +10,12 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 	public float projectileSpeed;
 
 	private Animator anim;
+	private SpriteRenderer spriteRen;
 
 	void Awake()
 	{
 		anim = gameObject.GetComponent<Animator>();
+		spriteRen = transform.FindChild("NormalHench_Body").GetComponent<SpriteRenderer>();
 
 		int orderNum = ++GameManager.instance.totalNumEnemies; // Cache the totalNumEnemies AFTER incrementing.
 		// Set all child sprites to orderNum to avoid sprite odering issues from instances of same prefab.
@@ -80,6 +82,10 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 			// Disable self.
 			this.enabled = false;
 		}
+		else
+		{
+			StartCoroutine(showHurt());
+		}
 	}
 
 	// For animation to call.
@@ -87,5 +93,12 @@ public class Enemy_NormalHench_Combat : MonoBehaviour, IDamagable
 	{
 		// Destroy the enemy object.
 		Destroy(gameObject);
+	}
+
+	IEnumerator showHurt()
+	{
+		spriteRen.color = Color.red;
+		yield return new WaitForSeconds(0.1f);
+		spriteRen.color = Color.white;
 	}
 }

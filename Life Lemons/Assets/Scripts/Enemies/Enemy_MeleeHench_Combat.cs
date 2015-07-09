@@ -8,6 +8,7 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	public float maxFiringRange;
 
 	private Animator anim;
+	private SpriteRenderer spriteRen;
 	private Transform player; // Reference to the player.
 	private Vector3 distanceFromPlayer;
 	private bool punchLeft = true;
@@ -16,6 +17,7 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	{
 		anim = gameObject.GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag(Constants.tagPlayer).transform;
+		spriteRen = transform.FindChild("MeleeHench_Body").GetComponent<SpriteRenderer>();
 
 		int orderNum = ++GameManager.instance.totalNumEnemies; // Cache the totalNumEnemies AFTER incrementing.
 		// Set all child sprites to orderNum to avoid sprite odering issues from instances of same prefab.
@@ -97,6 +99,10 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 			// Disable self.
 			this.enabled = false;
 		}
+		else
+		{
+			StartCoroutine(showHurt());
+		}
 	}
 
 	// For animation to call.
@@ -104,5 +110,12 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	{
 		// Destroy the enemy object.
 		Destroy(gameObject);
+	}
+
+	IEnumerator showHurt()
+	{
+		spriteRen.color = Color.red;
+		yield return new WaitForSeconds(0.1f);
+		spriteRen.color = Color.white;
 	}
 }
