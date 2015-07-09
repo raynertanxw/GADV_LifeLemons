@@ -27,7 +27,7 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	
 	void Start()
 	{
-		StartCoroutine(punchAtPlayer());
+		StartCoroutine(Constants.punchAtPlayer);
 	}
 	
 	private IEnumerator punchAtPlayer()
@@ -73,10 +73,36 @@ public class Enemy_MeleeHench_Combat : MonoBehaviour, IDamagable
 	{
 		if (health == 0)
 		{
+			// Stop shooting coroutine.
+			StopCoroutine(Constants.punchAtPlayer);
+
 			// Update the total enemy count in GameManager.
 			GameManager.instance.UpdateEnemyCount();
-			// Destroy the enemy object.
-			Destroy(gameObject);
+
+			// Disable all attached scripts and collider.
+			gameObject.GetComponent<Enemy_Movement>().enabled = false;
+			gameObject.GetComponent<Collider2D>().enabled = false;
+			transform.FindChild("MeleeHench_Knuckle_Left").GetComponent<Collider2D>().enabled = false;
+			transform.FindChild("MeleeHench_Knuckle_Right").GetComponent<Collider2D>().enabled = false;
+
+			// Set all child sprites to DeadEnemy Soritng Layer so player will be rendered on top.
+			for (int i = 0; i < transform.childCount; i++)
+			{
+				transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = Constants.DeadEnemy;
+			}
+			
+			// Play Death Aniamtion.
+			anim.SetTrigger(Constants.Die);
+			
+			// Disable self.
+			this.enabled = false;
 		}
+	}
+
+	// For animation to call.
+	public void DestroySelf()
+	{
+		// Destroy the enemy object.
+		Destroy(gameObject);
 	}
 }

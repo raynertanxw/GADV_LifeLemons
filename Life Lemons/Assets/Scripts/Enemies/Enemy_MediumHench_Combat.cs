@@ -110,7 +110,6 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 
 	IEnumerator showHurt()
 	{
-		Debug.Log("Hurt");
 		spriteRen.color = Color.red;
 		yield return new WaitForSeconds(0.1f);
 		spriteRen.color = Color.white;
