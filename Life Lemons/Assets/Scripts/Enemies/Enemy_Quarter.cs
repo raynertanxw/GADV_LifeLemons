@@ -48,6 +48,16 @@ public class Enemy_Quarter : MonoBehaviour
 			yield return new WaitForSeconds(0.8f);
 		}
 
+		for (int i = 0; i < 10; i++)
+		{
+			orgColor.a = 0.0f;
+			spriteRen.color = orgColor;
+			yield return new WaitForSeconds(0.2f);
+			orgColor.a = 1.0f;
+			spriteRen.color = orgColor;
+			yield return new WaitForSeconds(0.2f);
+		}
+
 		Destroy(gameObject); // Despawn self.
 	}
 }
