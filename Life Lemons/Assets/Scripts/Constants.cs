@@ -48,6 +48,7 @@ public static class Constants
 	// Couroutine names.
 	public static string shootAtPlayer = "shootAtPlayer";
 	public static string punchAtPlayer = "punchAtPlayer";
+	public static string fadeOutLevelText = "fadeOutLevelText";
 
 	// Sprite Renderer Sorting Layer Names.
 	public static string DeadEnemy = "DeadEnemy";

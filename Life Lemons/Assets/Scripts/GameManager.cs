@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
 	public bool paused = false;
 
 	private Enemy_Spawner spawner;
-	public Animator anim;
+	private Animator anim;
+	private Text levelNameText;
 
 	void Awake()
 	{
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
 
 		spawner = GameObject.Find("Enemy_Spawner").GetComponent<Enemy_Spawner>();
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
+		levelNameText = GameObject.Find("Level_Name_Text").GetComponent<Text>();
 	}
 
 	void Update()
@@ -47,6 +49,12 @@ public class GameManager : MonoBehaviour
 					paused = true;
 					Time.timeScale = 0;
 					anim.SetTrigger(Constants.TransitionToPause);
+
+					// Show the level name.
+					StopCoroutine(Constants.fadeOutLevelText);
+					Color orgColor = levelNameText.color;
+					orgColor.a = 1.0f;
+					levelNameText.color = orgColor;
 				}
 			}
 		}
@@ -56,6 +64,8 @@ public class GameManager : MonoBehaviour
 	{
 		GameManager.instance.paused = false;
 		Time.timeScale = 1;
+
+		GameManager.instance.StartCoroutine(Constants.fadeOutLevelText);
 	}
 
 	// For enemy gameobjects to call and deduct themselves from the count.
@@ -170,6 +180,10 @@ public class GameManager : MonoBehaviour
 				Application.LoadLevel(Constants.TutorialScene);
 			}
 		}
+
+		// Set level name text.
+		levelNameText.text = "Level " + currentLoadedLevel;
+		StartCoroutine(Constants.fadeOutLevelText);
 	}
 
 	void LoadLevelEnemies(string levelName)
@@ -184,6 +198,24 @@ public class GameManager : MonoBehaviour
 		{
 			Debug.Log("Error loading " + levelName);
 		}
+	}
+
+	IEnumerator fadeOutLevelText()
+	{
+		yield return new WaitForSeconds(1.0f);
+
+		Color orgColor = levelNameText.color;
+
+		while (levelNameText.color.a != 0)
+		{
+			orgColor.a -= Time.deltaTime / 0.5f;
+			levelNameText.color = orgColor;
+			yield return null;
+		}
+
+		levelNameText.gameObject.SetActive(false);
+		orgColor.a = 1.0f;
+		levelNameText.color = orgColor;
 	}
 
 	IEnumerator SpawnWaveSet(string[] waveSet)
