@@ -18,5 +18,6 @@ public class SettingsButtonActions : MonoBehaviour
 	public void ButtonResetData()
 	{
 		PlayerPrefs.DeleteAll();
+		GameObject.Find("Upgrade Panel").GetComponent<UpgradeButtonActions>().resetAllUpgradeUI();
 	}
 }
