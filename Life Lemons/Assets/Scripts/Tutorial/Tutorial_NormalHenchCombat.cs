@@ -10,8 +10,11 @@ public class Tutorial_NormalHenchCombat : MonoBehaviour, IDamagable
 	public Transform projectileSpawn;
 	public float rateOfFire;
 	public float projectileSpeed;
+	public int numQuarters;
+	public GameObject quarter;
 	
 	private Animator anim;
+	private float quarterSpawnPosOffset = 1.0f;
 	
 	void Awake()
 	{
@@ -61,6 +64,16 @@ public class Tutorial_NormalHenchCombat : MonoBehaviour, IDamagable
 	{
 		// Destroy the enemy object.
 		Destroy(gameObject);
+	}
+
+	// For animation to call.
+	public void SpawnQuarters()
+	{
+		for (int i = 0; i < numQuarters; i++)
+		{
+			Vector3 offSet = new Vector3(Random.Range(-quarterSpawnPosOffset, quarterSpawnPosOffset), Random.Range(-quarterSpawnPosOffset, quarterSpawnPosOffset) ,0.0f);
+			Instantiate(quarter, transform.position + offSet, Quaternion.identity);
+		}
 	}
 	
 	public void CheckGameOver()
