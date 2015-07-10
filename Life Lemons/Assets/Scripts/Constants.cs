@@ -10,6 +10,13 @@ public static class Constants
 	public static string NUM_OF_QUARTERS = "NUM_OF_QUARTERS";
 	public static string SELECTED_LEVEL = "SELECTED_LEVEL";
 
+	public static string UPGRADE_DEFENSE_HEALTH = "UPGRADE_DEFENSE_HEALTH";
+	public static string UPGRADE_DEFENSE_MOVEMENT_SPEED = "UPGRADE_DEFENSE_MOVEMENT_SPEED";
+	public static string UPGRADE_DEFENSE_REPAIR_TIME = "UPGRADE_DEFENSE_REPAIR_TIME";
+	public static string UPGRADE_OFFENSE_BULLET_SPEED = "UPGRADE_OFFENSE_BULLET_SPEED";
+	public static string UPGRADE_OFFENSE_AMMO_COST = "UPGRADE_OFFENSE_AMMO_COST";
+	public static string UPGRADE_OFFENSE_CONVERSION_RATE = "UPGRADE_OFFENSE_CONVERSION_RATE";
+
 	// Scene filename strings.
 	public static string MainMenuScene = "Main_Menu";
 	public static string LevelScene = "Level_Scene";
@@ -31,6 +38,9 @@ public static class Constants
 
 	public static string ScrollNext = "ScrollNext";
 	public static string ScrollPrevious = "ScrollPrevious";
+
+	public static string OffenseToDefense = "OffenseToDefense";
+	public static string DefenseToOffense = "DefenseToOffense";
 
 	// Other Animation parameter names.
 	public static string toggle_shoot = "toggle_shoot";
