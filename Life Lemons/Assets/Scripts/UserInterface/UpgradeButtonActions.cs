@@ -13,12 +13,20 @@ public class UpgradeButtonActions : MonoBehaviour
 	private Text totalQuarterCountText;
 	private int[] statCost;
 
+	private RectTransform upgradeConfirmPanel;
+	private Text upgradeConfirmText;
+	private string confirmKeyName; // Key name for the confirm upgrade panel.
+	private int confirmStatNum; // Stat number for the confirm upgrade panel.
+
 	void Awake()
 	{
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
 		upgradeAnim = GameObject.Find("Upgrade Panel").GetComponent<Animator>();
 
 		totalQuarterCountText = GameObject.Find("Upgrade_QuaterAmount_Text").GetComponent<Text>();
+		upgradeConfirmPanel = GameObject.Find("Upgrade_Confirm_Panel").GetComponent<RectTransform>();
+		upgradeConfirmText = GameObject.Find("Upgrade_Confirm_Text").GetComponent<Text>();
+		dismissConfirmPanel();
 
 		statCost = new int[6];
 
@@ -161,11 +169,21 @@ public class UpgradeButtonActions : MonoBehaviour
 		{
 			GameObject.Find(statNamePrefix + "UpgradeCost_Text").GetComponent<Text>().text = "MAX";
 			GameObject.Find(statNamePrefix + "AddButton").GetComponent<Button>().interactable = false;
+			GameObject.Find(statNamePrefix + "AddButton_Text").GetComponent<Text>().text = "MAX";
 		}
 		else
 		{
 			GameObject.Find(statNamePrefix + "UpgradeCost_Text").GetComponent<Text>().text = statCost[statNum].ToString();
-			GameObject.Find(statNamePrefix + "AddButton").GetComponent<Button>().interactable = true;
+			if (statCost[statNum] > totalQuarterCount)
+			{
+				GameObject.Find(statNamePrefix + "AddButton").GetComponent<Button>().interactable = false;
+				GameObject.Find(statNamePrefix + "AddButton_Text").GetComponent<Text>().text = "INSUFFICIENT";
+			}
+			else
+			{
+				GameObject.Find(statNamePrefix + "AddButton").GetComponent<Button>().interactable = true;
+				GameObject.Find(statNamePrefix + "AddButton_Text").GetComponent<Text>().text = "UPGRADE";
+			}
 		}
 	}
 
@@ -177,30 +195,38 @@ public class UpgradeButtonActions : MonoBehaviour
 			return;
 		}
 
+		string confirmStatName = "";
+
 		switch (statNum)
 		{
 		case 0:
-			PlayerPrefs.SetInt(Constants.UPGRADE_OFFENSE_BULLET_SPEED, (PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_BULLET_SPEED) + 1));
+			confirmKeyName = Constants.UPGRADE_OFFENSE_BULLET_SPEED;
+			confirmStatName = "Bullet Speed";
 			break;
 		
 		case 1:
-			PlayerPrefs.SetInt(Constants.UPGRADE_OFFENSE_AMMO_COST, (PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_AMMO_COST) + 1));
+			confirmKeyName = Constants.UPGRADE_OFFENSE_AMMO_COST;
+			confirmStatName = "Ammo Cost Reduction";
 			break;
 		
 		case 2:
-			PlayerPrefs.SetInt(Constants.UPGRADE_OFFENSE_CONVERSION_RATE, (PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_CONVERSION_RATE) + 1));
+			confirmKeyName = Constants.UPGRADE_OFFENSE_CONVERSION_RATE;
+			confirmStatName = "Lemon Conversion Rate";
 			break;
 		
 		case 3:
-			PlayerPrefs.SetInt(Constants.UPGRADE_DEFENSE_HEALTH, (PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_HEALTH) + 1));
+			confirmKeyName = Constants.UPGRADE_DEFENSE_HEALTH;
+			confirmStatName = "Health";
 			break;
 		
 		case 4:
-			PlayerPrefs.SetInt(Constants.UPGRADE_DEFENSE_MOVEMENT_SPEED, (PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_MOVEMENT_SPEED) + 1));
+			confirmKeyName = Constants.UPGRADE_DEFENSE_MOVEMENT_SPEED;
+			confirmStatName = "Movement Speed";
 			break;
 		
 		case 5:
-			PlayerPrefs.SetInt(Constants.UPGRADE_DEFENSE_REPAIR_TIME, (PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_REPAIR_TIME) + 1));
+			confirmKeyName = Constants.UPGRADE_DEFENSE_REPAIR_TIME;
+			confirmStatName = "Malfunction Repair Time";
 			break;
 		
 		default:
@@ -208,9 +234,29 @@ public class UpgradeButtonActions : MonoBehaviour
 			break;
 		}
 
-		PlayerPrefs.SetInt(Constants.NUM_OF_QUARTERS, totalQuarterCount - statCost[statNum]);
-		updateQuarterCount();
-		updateStatUI(statNum);
+		confirmStatNum = statNum;
+		upgradeConfirmText.text = "Upgrade " + confirmStatName +"\nFor " + statCost[confirmStatNum] + " quarters?";
+
+		presentConfirmPanel();
+	}
+
+	public void confirmStatUpgrade()
+	{
+		PlayerPrefs.SetInt(confirmKeyName, (PlayerPrefs.GetInt(confirmKeyName) + 1));
+		PlayerPrefs.SetInt(Constants.NUM_OF_QUARTERS, totalQuarterCount - statCost[confirmStatNum]);
+		resetAllUpgradeUI();
+
+		dismissConfirmPanel();
+	}
+
+	public void presentConfirmPanel()
+	{
+		upgradeConfirmPanel.localScale = new Vector3(1,1,1);
+	}
+
+	public void dismissConfirmPanel()
+	{
+		upgradeConfirmPanel.localScale = new Vector3(0,1,1);
 	}
 
 	public void resetAllUpgradeUI()
