@@ -3,13 +3,20 @@ using System.Collections;
 
 public class Player_Movement : MonoBehaviour
 {
-	public float speed = 10.0f; // Movement Speed.
+	public float speed; // Movement Speed.
 
 	private Player_Combat playerCombat;
 	private Vector2 directionVec;
 
 	void Awake()
 	{
+		// Setting up of values affected by upgrade.
+		if (PlayerPrefs.HasKey(Constants.UPGRADE_DEFENSE_MOVEMENT_SPEED))
+		{
+			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_MOVEMENT_SPEED);
+			speed += statPoint;
+		}
+
 		// Reference to PlayerCombat script to check for malfunction states.
 		playerCombat = gameObject.GetComponent<Player_Combat>();
 	}

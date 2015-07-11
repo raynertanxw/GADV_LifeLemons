@@ -22,6 +22,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	private Animator anim;
 	private Transform ammoLevelLemonjuice;
+	private Transform projectileSpawn;
 	private const float ammoSpriteMaxScale = 0.25f; // Maximum Scale value of sprite. Used for calculation of ammo percenatge UI scale values.
 	private SpriteRenderer chassisSpriteRen, glassSpriteRen, blasterSpriteRen, funnelSpriteRen;
 	private SpriteRenderer lemonJuiceSpriteRen;
@@ -34,8 +35,34 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	void Awake()
 	{
+		// Setting up of values affected by upgrade.
+		if (PlayerPrefs.HasKey(Constants.UPGRADE_OFFENSE_BULLET_SPEED))
+		{
+			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_BULLET_SPEED);
+			projectileSpeed += (statPoint * 2);
+		}
+
+		if (PlayerPrefs.HasKey(Constants.UPGRADE_OFFENSE_AMMO_COST))
+		{
+			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_AMMO_COST);
+			ammoCostPerShot -= (statPoint * 0.5f);
+		}
+
+		if (PlayerPrefs.HasKey(Constants.UPGRADE_DEFENSE_HEALTH))
+		{
+			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_HEALTH);
+			maxHealth += statPoint;
+		}
+
+		if (PlayerPrefs.HasKey(Constants.UPGRADE_DEFENSE_REPAIR_TIME))
+		{
+			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_REPAIR_TIME);
+			malfunctionRepairTime -= (statPoint * 0.3f);
+		}
+
 		anim = gameObject.GetComponent<Animator>();
 		ammoLevelLemonjuice = transform.FindChild("Ammo_Level_Indicator");
+		projectileSpawn = transform.FindChild("Projectile_Spawn");
 		chassisSpriteRen = transform.FindChild("Lemonator_Chassis").GetComponent<SpriteRenderer>();
 		glassSpriteRen = transform.FindChild("Lemonator_Glass").GetComponent<SpriteRenderer>();
 		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
@@ -56,6 +83,12 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 		hasMalfunction = false;
 		health = maxHealth;
+
+		// Hide hearts according to max health.
+		for (int i = maxHealth; i < 10; i++)
+		{
+			healthHearts[i].enabled = false;
+		}
 	}
 
 	void Update()
@@ -109,7 +142,10 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		ammoLevelLemonjuice.localScale = new Vector3(newScale, ammoSpriteMaxScale, 1f);
 
 		// Update UI ammo indicator.
-		textPlayerAmmo.text = ammoPercentage + "%";
+		if (ammoPercentage % 1 != 0)
+			textPlayerAmmo.text = ammoPercentage + "%";
+		else
+			textPlayerAmmo.text = ammoPercentage + ".0%";
 		imagePlayerAmmoRectTransform.localScale = new Vector3(1f, ammoPercentage / 100.0f, 1f);
 	}
 
@@ -128,7 +164,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 			Vector3 velocity = new Vector3(x, y, 0f) * projectileSpeed;
 
 			playerRotation.z += 90f;
-			GameObject projectile = (GameObject)Instantiate(playerProjectile, transform.position, Quaternion.Euler(playerRotation));
+			GameObject projectile = (GameObject)Instantiate(playerProjectile, projectileSpawn.position, Quaternion.Euler(playerRotation));
 			projectile.GetComponent<Rigidbody2D>().velocity = velocity;
 		}
 		else

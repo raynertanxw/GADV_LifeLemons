@@ -13,12 +13,22 @@ public class GameManager : MonoBehaviour
 	public int currentLoadedLevel;
 	public bool paused = false;
 
+	// Stat related variables.
+	public float ammoConversionRate;
+
 	private Enemy_Spawner spawner;
 	private Animator anim;
 	private Text levelNameText;
 
 	void Awake()
 	{
+		ammoConversionRate = 5.0f;
+		if (PlayerPrefs.HasKey(Constants.UPGRADE_OFFENSE_CONVERSION_RATE))
+		{
+			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_CONVERSION_RATE);
+			ammoConversionRate += statPoint;
+		}
+
 		if (instance == null)
 		{
 			instance = this;

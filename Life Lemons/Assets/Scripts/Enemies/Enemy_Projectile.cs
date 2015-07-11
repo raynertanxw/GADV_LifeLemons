@@ -5,7 +5,6 @@ public class Enemy_Projectile : MonoBehaviour
 {
 	public bool destroySelfOnHit;
 	private int damage = 1;
-	private float ammoVolume = 10.0f;
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
@@ -21,7 +20,7 @@ public class Enemy_Projectile : MonoBehaviour
 		{
 			if (other.gameObject.GetComponentInParent<Player_Combat>().playerState == PlayerStates.collect)
 			{
-				other.gameObject.GetComponentInParent<Player_Combat>().CollectAmmo(ammoVolume); // Add ammo to the player.
+				other.gameObject.GetComponentInParent<Player_Combat>().CollectAmmo(GameManager.instance.ammoConversionRate); // Add ammo to the player.
 				Destroy(gameObject); // Despawn self.
 			}
 		}

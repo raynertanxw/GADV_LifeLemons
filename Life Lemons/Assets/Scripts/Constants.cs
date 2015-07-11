@@ -9,13 +9,13 @@ public static class Constants
 	public static string HIGHEST_CLEARED_LEVEL = "HIGHEST_CLEARED_LEVEL";
 	public static string NUM_OF_QUARTERS = "NUM_OF_QUARTERS";
 	public static string SELECTED_LEVEL = "SELECTED_LEVEL";
-
-	public static string UPGRADE_DEFENSE_HEALTH = "UPGRADE_DEFENSE_HEALTH";
-	public static string UPGRADE_DEFENSE_MOVEMENT_SPEED = "UPGRADE_DEFENSE_MOVEMENT_SPEED";
-	public static string UPGRADE_DEFENSE_REPAIR_TIME = "UPGRADE_DEFENSE_REPAIR_TIME";
+	
 	public static string UPGRADE_OFFENSE_BULLET_SPEED = "UPGRADE_OFFENSE_BULLET_SPEED";
 	public static string UPGRADE_OFFENSE_AMMO_COST = "UPGRADE_OFFENSE_AMMO_COST";
 	public static string UPGRADE_OFFENSE_CONVERSION_RATE = "UPGRADE_OFFENSE_CONVERSION_RATE";
+	public static string UPGRADE_DEFENSE_HEALTH = "UPGRADE_DEFENSE_HEALTH";
+	public static string UPGRADE_DEFENSE_MOVEMENT_SPEED = "UPGRADE_DEFENSE_MOVEMENT_SPEED";
+	public static string UPGRADE_DEFENSE_REPAIR_TIME = "UPGRADE_DEFENSE_REPAIR_TIME";
 
 	// Scene filename strings.
 	public static string MainMenuScene = "Main_Menu";
