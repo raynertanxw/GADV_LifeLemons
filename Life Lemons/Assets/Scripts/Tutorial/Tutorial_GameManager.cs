@@ -127,21 +127,11 @@ public class Tutorial_GameManager : MonoBehaviour
 		bool movedRight = false;
 		while (movedLeft == false || movedRight == false)
 		{
-			if (movedLeft == false)
-			{
-				if (player.transform.position.x < -1.0f)
-				{
-					movedLeft = true;
-				}
-			}
+			if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+				movedLeft = true;
+			if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+				movedRight = true;
 
-			if (movedRight == false)
-			{
-				if (player.transform.position.x > 1.0f)
-				{
-					movedRight = true;
-				}
-			}
 			yield return null;
 		}
 
@@ -150,21 +140,10 @@ public class Tutorial_GameManager : MonoBehaviour
 		bool movedDown = false;
 		while (movedUp == false || movedDown == false)
 		{
-			if (movedUp == false)
-			{
-				if (player.transform.position.y > 1.0f)
-				{
-					movedUp = true;
-				}
-			}
-
-			if (movedDown == false)
-			{
-				if (player.transform.position.y < -1.0f)
-				{
-					movedDown = true;
-				}
-			}
+			if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+				movedUp = true;
+			if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+				movedDown = true;
 
 			yield return null;
 		}
@@ -243,7 +222,19 @@ public class Tutorial_GameManager : MonoBehaviour
 		// SEGMENT 4.
 
 		enemy.GetComponent<Tutorial_NormalHenchCombat>().canShoot = false;
-		tutText.text = "Good job you caught one!\nNow to retaliate! However, you still cannot shoot.\nYou are now in collect mode. Press Q to switch to shooting mode.";
+		tutText.text = "Good job you caught one!\nHowever, beware! If you convert more lemons than you can contain, you will malfunction.\nMalfunctioning not only damages you, but also paralyses you momentarily!";
+
+		nextButton.gameObject.SetActive(true);
+		
+		while (nextButtonClicked == false)
+		{
+			yield return null;
+		}
+		
+		nextButtonClicked = false; // Reset the button clicked status.
+		nextButton.gameObject.SetActive(false); // Hide the button again.
+
+		tutText.text = "Now to retaliate! However, you still cannot shoot.\nYou are now in collect mode. Press Q to switch to shooting mode.";
 
 		player.GetComponent<Tutorial_Player_Combat>().canSwitch = true;
 

@@ -20,6 +20,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 
 	private Animator anim;
 	private Transform ammoLevelLemonjuice;
+	private Transform projectileSpawn;
 	private const float ammoSpriteMaxScale = 0.25f; // Maximum Scale value of sprite. Used for calculation of ammo percenatge UI scale values.
 	private SpriteRenderer chassisSpriteRen, glassSpriteRen, blasterSpriteRen, funnelSpriteRen;
 	private SpriteRenderer lemonJuiceSpriteRen;
@@ -31,6 +32,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 	{
 		anim = gameObject.GetComponent<Animator>();
 		ammoLevelLemonjuice = transform.FindChild("Ammo_Level_Indicator");
+		projectileSpawn = transform.FindChild("Projectile_Spawn");
 		chassisSpriteRen = transform.FindChild("Lemonator_Chassis").GetComponent<SpriteRenderer>();
 		glassSpriteRen = transform.FindChild("Lemonator_Glass").GetComponent<SpriteRenderer>();
 		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
@@ -97,7 +99,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 			Vector3 velocity = new Vector3(x, y, 0f) * projectileSpeed;
 
 			playerRotation.z += 90f;
-			GameObject projectile = (GameObject)Instantiate(playerProjectile, transform.position, Quaternion.Euler(playerRotation));
+			GameObject projectile = (GameObject)Instantiate(playerProjectile, projectileSpawn.position, Quaternion.Euler(playerRotation));
 			projectile.GetComponent<Rigidbody2D>().velocity = velocity;
 		}
 		else
