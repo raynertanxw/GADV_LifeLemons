@@ -274,6 +274,20 @@ public class Tutorial_GameManager : MonoBehaviour
 
 	IEnumerator TutorialEndingSequence()
 	{
+		tutText.text = "Once e-lemonated, the Lemon Mafia will drop shiny Quarters which you can pick up by moving over them.\nThese can be used to upgrade your stats from the upgrade section, which you can access from the Main Menu.";
+
+		player.GetComponent<Tutorial_Player_Combat>().canShoot = false;
+
+		nextButton.gameObject.SetActive(true);
+		
+		while (nextButtonClicked == false)
+		{
+			yield return null;
+		}
+		
+		nextButtonClicked = false; // Reset the button clicked status.
+		nextButton.gameObject.SetActive(false); // Hide the button again.
+
 		tutText.text = "Congratulations! You are now ready for war against the Lemon Mafia.\nAll the best out there E-Lemonator!";
 
 		nextButton.gameObject.SetActive(true);
