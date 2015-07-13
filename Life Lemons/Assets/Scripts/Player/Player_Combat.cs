@@ -225,8 +225,16 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		{
 			// GameOver.
 			GameManager.EndGame();
-			Destroy(gameObject);
+
+			anim.SetTrigger(Constants.trigger_player_death);
 		}
+	}
+
+	// For animation to call.
+	public void DestroySelf()
+	{
+		// Destroy the enemy object.
+		Destroy(gameObject);
 	}
 
 	// For enemy projectiles to call.

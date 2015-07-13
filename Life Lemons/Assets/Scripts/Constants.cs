@@ -45,6 +45,7 @@ public static class Constants
 	// Other Animation parameter names.
 	public static string toggle_shoot = "toggle_shoot";
 	public static string toggle_collect = "toggle_collect";
+	public static string trigger_player_death = "trigger_player_death";
 	public static string Shoot = "Shoot";
 	public static string Die = "Die";
 	public static string PunchLeft = "PunchLeft";
