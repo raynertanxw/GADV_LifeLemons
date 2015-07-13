@@ -18,14 +18,14 @@ public class Player_Combat : MonoBehaviour, IDamagable
 	public int malfunctionDamage;
 	public float malfunctionRepairTime;
 
-	public Sprite[] chassisDamageStates, glassDamageStates, blasterDamageStates, funnelDamageStates;
+	public Sprite[] chassisDamageStates, glassDamageStates, blasterDamageStates, funnelDamageStates, malfunctionParticles;
 
 	private Animator anim;
 	private Transform ammoLevelLemonjuice;
 	private Transform projectileSpawn;
 	private const float ammoSpriteMaxScale = 0.25f; // Maximum Scale value of sprite. Used for calculation of ammo percenatge UI scale values.
 	private SpriteRenderer chassisSpriteRen, glassSpriteRen, blasterSpriteRen, funnelSpriteRen;
-	private SpriteRenderer lemonJuiceSpriteRen;
+	private SpriteRenderer lemonJuiceSpriteRen, malfunctionParticleSpriteRen;
 
 	// UI elements
 	private Text textPlayerAmmo;
@@ -68,6 +68,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		blasterSpriteRen = transform.FindChild("Lemonator_Blaster").GetComponent<SpriteRenderer>();
 		funnelSpriteRen = transform.FindChild("Lemonator_Funnel").GetComponent<SpriteRenderer>();
 		lemonJuiceSpriteRen = transform.FindChild("Ammo_Level_Indicator").GetComponent<SpriteRenderer>();
+		malfunctionParticleSpriteRen = transform.FindChild("Malfunction_Transform").GetComponent<SpriteRenderer>();
 
 		textPlayerAmmo = GameObject.Find("Text_Player_Ammo").GetComponent<Text>();
 		imagePlayerAmmoRectTransform = GameObject.Find("Ammo_Indicator_LemonJuice_Level").GetComponent<RectTransform>();
@@ -246,12 +247,27 @@ public class Player_Combat : MonoBehaviour, IDamagable
 			TakeDamage(malfunctionDamage);
 			hasMalfunction = true;
 			StartCoroutine("repairMalfunction");
+			StartCoroutine("animateMalfunction");
+		}
+	}
+
+	private IEnumerator animateMalfunction()
+	{
+		while (true)
+		{
+			for (int i = 0; i < malfunctionParticles.Length; i++)
+			{
+				malfunctionParticleSpriteRen.sprite = malfunctionParticles[i];
+				yield return new WaitForSeconds(0.1f);
+			}
 		}
 	}
 
 	private IEnumerator repairMalfunction()
 	{
 		yield return new WaitForSeconds(malfunctionRepairTime);
+		StopCoroutine("animateMalfunction");
+		malfunctionParticleSpriteRen.sprite = null;
 		hasMalfunction = false;
 	}
 }
