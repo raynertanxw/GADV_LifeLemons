@@ -459,10 +459,55 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator SpawnEndless()
 	{
+		// Spawn only follow type enemies for the first 20 seconds.
+//		for (int i = 0; i < 10; i++)
+//		{
+//			spawner.SpawnFollow(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16));
+//			yield return new WaitForSeconds(3.0f);
+//		}
+
 		while (GameManager.instance.GameOver == false)
 		{
-			Debug.Log("spawn");
-			yield return new WaitForSeconds(2.0f);
+			int spawnType = UnityEngine.Random.Range(0, 4);
+			float waveDelay = 0.0f;
+			switch (spawnType)
+			{
+			case 0:
+				spawner.SpawnFollow(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16));
+				waveDelay = 3.0f;
+				break;
+
+			case 1:
+				int numWaypoints = UnityEngine.Random.Range(2, 6);
+				Vector3[] waypointArray = new Vector3[numWaypoints];
+
+				// x = -16 to 16
+				// y = -8 to 8
+				for (int i = 0; i < numWaypoints; i++)
+				{
+					waypointArray[i] = new Vector3(UnityEngine.Random.Range(-16.0f, 16.0f), UnityEngine.Random.Range(-8.0f, 8.0f));
+				}
+
+				spawner.SpawnStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16), waypointArray);
+
+				waveDelay = 5.0f;
+				break;
+
+			case 2:
+				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 3));
+				waveDelay = 10.0f;
+				break;
+
+			case 3:
+				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3));
+				waveDelay = 15.0f;
+				break;
+
+			default:
+				Debug.Log("RANDOM GEN FOR SPAWN TYPE IN ENDLESS OUT OF RANGE");
+				break;
+			}
+			yield return new WaitForSeconds(waveDelay);
 		}
 	}
 }

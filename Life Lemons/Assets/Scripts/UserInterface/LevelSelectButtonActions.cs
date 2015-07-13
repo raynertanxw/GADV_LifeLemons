@@ -57,6 +57,9 @@ public class LevelSelectButtonActions : MonoBehaviour
 
 	public void ButtonEndless()
 	{
+		// Reset timescale.
+		GameManager.Resume();
+
 		Constants.gameMode = GameMode.endless;
 		// Load Level Scene.
 		Application.LoadLevel(Constants.LevelScene);
