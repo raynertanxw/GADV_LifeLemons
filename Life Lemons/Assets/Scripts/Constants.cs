@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum GameMode {normal, endless};
+
 public static class Constants
 {
 	public static int NumOfLevels = 30;
+	public static GameMode gameMode = GameMode.normal;
 
 	// Save data strings.
 	public static string HIGHEST_CLEARED_LEVEL = "HIGHEST_CLEARED_LEVEL";

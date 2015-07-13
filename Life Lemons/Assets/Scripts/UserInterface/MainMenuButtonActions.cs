@@ -17,6 +17,8 @@ public class MainMenuButtonActions : MonoBehaviour
 
 	public void ButtonStart()
 	{
+		Constants.gameMode = GameMode.normal;
+
 		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
 		{
 			// Load Level Scene.
@@ -31,7 +33,9 @@ public class MainMenuButtonActions : MonoBehaviour
 
 	public void ButtonEndless()
 	{
-
+		Constants.gameMode = GameMode.endless;
+		// Load Level Scene.
+		Application.LoadLevel(Constants.LevelScene);
 	}
 
 	public void ButtonUpgrade()

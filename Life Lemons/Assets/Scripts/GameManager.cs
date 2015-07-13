@@ -111,6 +111,15 @@ public class GameManager : MonoBehaviour
 			Destroy(projectile);
 		}
 
+		if (Constants.gameMode == GameMode.endless)
+		{
+			// Level can only end when player dies.
+			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "RETRY";
+			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
+			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "SOUR DEFEAT!";
+			return;
+		}
+
 		// Unlock the next level in level select.
 		GameObject.Find(Constants.LevelButtonNamePrefix + (GameManager.instance.currentLoadedLevel + 1).ToString()).GetComponent<Button>().interactable = true;
 
@@ -155,6 +164,17 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+		if (Constants.gameMode == GameMode.endless)
+		{
+			StartCoroutine(SpawnEndless());
+
+			// Set level name text.
+			levelNameText.text = "ENDLESS";
+			StartCoroutine(Constants.fadeOutLevelText);
+
+			return;
+		}
+
 		if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL))
 		{
 			int selectedLevel = PlayerPrefs.GetInt(Constants.SELECTED_LEVEL);
@@ -418,5 +438,14 @@ public class GameManager : MonoBehaviour
 		}
 
 		GameManager.instance.LastWaveHasSpawned = true;
+	}
+
+	IEnumerator SpawnEndless()
+	{
+		while (GameManager.instance.GameOver == false)
+		{
+			Debug.Log("spawn");
+			yield return new WaitForSeconds(2.0f);
+		}
 	}
 }
