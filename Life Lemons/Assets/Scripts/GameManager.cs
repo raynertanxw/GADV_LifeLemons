@@ -152,6 +152,23 @@ public class GameManager : MonoBehaviour
 			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "NEXT LEVEL";
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
 			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "LEVEL CLEARED!";
+
+			// Enable endless mode form level select after player cleared at least level 1.
+			if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
+			{
+				GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>().interactable = false;
+			}
+			else
+			{
+				if (PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL) < 1)
+				{
+					GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>().interactable = false;
+				}
+				else
+				{
+					GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>().interactable = true;
+				}
+			}
 		}
 		// Otherwise player failed level.
 		else

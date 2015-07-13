@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class MainMenuButtonActions : MonoBehaviour
@@ -12,6 +13,22 @@ public class MainMenuButtonActions : MonoBehaviour
 		if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL) == false)
 		{
 			Debug.Log("SELECTED_LEVEL key successfully deleted");
+		}
+
+		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
+		{
+			GameObject.Find("Button_Endless").GetComponent<Button>().interactable = false;
+		}
+		else
+		{
+			if (PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL) < 1)
+			{
+				GameObject.Find("Button_Endless").GetComponent<Button>().interactable = false;
+			}
+			else
+			{
+				GameObject.Find("Button_Endless").GetComponent<Button>().interactable = true;
+			}
 		}
 	}
 

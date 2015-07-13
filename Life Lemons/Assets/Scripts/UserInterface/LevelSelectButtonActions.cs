@@ -19,6 +19,22 @@ public class LevelSelectButtonActions : MonoBehaviour
 			Button currentButton = GameObject.Find(Constants.LevelButtonNamePrefix + i.ToString()).GetComponent<Button>();
 			currentButton.interactable = false;
 		}
+
+		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
+		{
+			GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>().interactable = false;
+		}
+		else
+		{
+			if (PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL) < 1)
+			{
+				GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>().interactable = false;
+			}
+			else
+			{
+				GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>().interactable = true;
+			}
+		}
 	}
 	
 	public void ButtonBack()
@@ -37,6 +53,13 @@ public class LevelSelectButtonActions : MonoBehaviour
 	{
 		Time.timeScale = 1f; // Reset the time scale.
 		Application.LoadLevel(Constants.TutorialScene);
+	}
+
+	public void ButtonEndless()
+	{
+		Constants.gameMode = GameMode.endless;
+		// Load Level Scene.
+		Application.LoadLevel(Constants.LevelScene);
 	}
 	
 	public void ButtonPrev()

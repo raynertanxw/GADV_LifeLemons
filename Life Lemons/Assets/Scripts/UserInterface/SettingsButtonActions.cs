@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SettingsButtonActions : MonoBehaviour
@@ -19,5 +20,21 @@ public class SettingsButtonActions : MonoBehaviour
 	{
 		PlayerPrefs.DeleteAll();
 		GameObject.Find("Upgrade Panel").GetComponent<UpgradeButtonActions>().resetAllUpgradeUI();
+
+		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
+		{
+			GameObject.Find("Button_Endless").GetComponent<Button>().interactable = false;
+		}
+		else
+		{
+			if (PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL) < 1)
+			{
+				GameObject.Find("Button_Endless").GetComponent<Button>().interactable = false;
+			}
+			else
+			{
+				GameObject.Find("Button_Endless").GetComponent<Button>().interactable = true;
+			}
+		}
 	}
 }
