@@ -301,6 +301,7 @@ public class Tutorial_GameManager : MonoBehaviour
 		else
 		{
 			//Load level scene.
+			Constants.gameMode = GameMode.normal;
 			PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 0);
 			Application.LoadLevel(Constants.LevelScene);
 		}
