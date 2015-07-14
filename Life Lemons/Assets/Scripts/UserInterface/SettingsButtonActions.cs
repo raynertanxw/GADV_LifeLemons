@@ -37,4 +37,9 @@ public class SettingsButtonActions : MonoBehaviour
 			}
 		}
 	}
+
+	public void ToggleFullScreen()
+	{
+		Screen.fullScreen = !Screen.fullScreen;
+	}
 }
