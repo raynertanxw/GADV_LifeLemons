@@ -148,7 +148,7 @@ public class Tutorial_GameManager : MonoBehaviour
 			yield return null;
 		}
 
-		tutText.text = "Good job! Click next to continue.";
+		tutText.text = "Good job!\nNote that you can press 'P' or 'Escape' to pause the game at anything.\nClick next to continue.";
 		nextButton.gameObject.SetActive(true);
 		
 		while (nextButtonClicked == false)
