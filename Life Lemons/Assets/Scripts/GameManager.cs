@@ -120,9 +120,6 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
-		// Unlock the next level in level select.
-		GameObject.Find(Constants.LevelButtonNamePrefix + (GameManager.instance.currentLoadedLevel + 1).ToString()).GetComponent<Button>().interactable = true;
-
 		// Check if player has cleared the level.
 		if (GameManager.instance.NumOfEnemiesRemaining == 0)
 		{
@@ -169,6 +166,9 @@ public class GameManager : MonoBehaviour
 					GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>().interactable = true;
 				}
 			}
+
+			// Unlock the next level in level select.
+			GameObject.Find(Constants.LevelButtonNamePrefix + (GameManager.instance.currentLoadedLevel + 1).ToString()).GetComponent<Button>().interactable = true;
 		}
 		// Otherwise player failed level.
 		else
