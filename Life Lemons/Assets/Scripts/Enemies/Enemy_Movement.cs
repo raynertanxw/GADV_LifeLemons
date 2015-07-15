@@ -20,7 +20,6 @@ public class Enemy_Movement : MonoBehaviour
 	// circleStrafing state variables.
 	public float circleStrafingRadius;
 	public float circleStrafingMovementSpeed;
-	public float circleStrafingTargetTolerence; // The maximum distance to the current targetVector.
 	public float circleStrafingTargetIncrement; // Increment of target angle (i.e. how fast the target position moves around the player).
 	public float circleStrafingTargetAngle; // The target angle of rotation used to calculate the target vector of the circle around the player.
 	public Vector3 circleStrafingTargetVector; // The target vector of the circle around the player.
@@ -32,12 +31,9 @@ public class Enemy_Movement : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag(Constants.tagPlayer);
 	}
-	
-	void Update()
-	{
-		// If the game is paused, immediately return to do nothing.
-		if(Time.timeScale == 0)return;
 
+	void FixedUpdate()
+	{
 		// Stop moving when the game is over.
 		if(GameManager.instance.GameOver == true)return;
 
@@ -51,7 +47,7 @@ public class Enemy_Movement : MonoBehaviour
 				transform.position += directionVec.normalized * followMovementSpeed * Time.deltaTime;
 			}
 			break;
-
+			
 		case EnemyMovementStates.strafing:
 			directionVec = strafingWaypoints[strafingWaypointIndex] - transform.position;
 			if (directionVec.magnitude < strafingWaypointTolerence)
@@ -67,31 +63,25 @@ public class Enemy_Movement : MonoBehaviour
 			{
 				transform.position += directionVec.normalized * strafingMovementSpeed * Time.deltaTime;
 			}
-
+			
 			directionVec = player.transform.position - transform.position; // For facing the player.
 			break;
-
+			
 		case EnemyMovementStates.circleStrafing:
-			// Calcuate the circleStrafingTargetVector.
-			circleStrafingTargetAngle = (circleStrafingTargetAngle + circleStrafingTargetIncrement) % 360;
+			circleStrafingTargetAngle = (circleStrafingTargetAngle + circleStrafingTargetIncrement * Time.deltaTime) % 360.0f;
 			circleStrafingTargetVector = Utilities.RotationZ2DirectionVec(circleStrafingTargetAngle) * circleStrafingRadius;
 			circleStrafingTargetVector = player.transform.position + circleStrafingTargetVector;
 
-			directionVec = circleStrafingTargetVector - transform.position;
-			if (directionVec.magnitude > circleStrafingTargetTolerence)
-			{
-				// Move.
-				transform.position += directionVec.normalized * circleStrafingMovementSpeed * Time.deltaTime;
-			}
-
+			transform.position = Vector3.MoveTowards(transform.position, circleStrafingTargetVector, circleStrafingMovementSpeed * Time.deltaTime);
 			directionVec = player.transform.position - transform.position; // For facing the player.
-			break;
 
+			break;
+			
 		default:
 			Debug.Log("ERROR: EnemyMovementStates out of range");
 			break;
 		}
-		
+
 		// Handle rotation of the enemy.
 		transform.rotation = Quaternion.Euler(0, 0, Utilities.DirectionVec2RotationZ(directionVec) % 360);
 	}
