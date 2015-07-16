@@ -7,3 +7,4 @@ SpawnFollow, 2, 13, 0
 SpawnFollow, 1, 0, 0
 SpawnFollow, 1, 6, 0
 SpawnFollow, 0, 8, 0
+SpawnSingleCircleStrafe, 0, 2, 90, 5

@@ -1,5 +1,6 @@
-SpawnFollow, 1, 5, 0
-SpawnFollow, 1, 9, 3
-SpawnFollow, 2, 1, 3
-SpawnFollow, 0, 11, 2
-SpawnFollow, 0, 7, 0
+SpawnStrafe, 0, 5, (16, 5), (-16, 5), 0
+SpawnStrafe, 0, 13, (-16, -5), (16, -5), 3
+SpawnFollow, 0, 5, 3
+SpawnFollow, 0, 9, 3
+SpawnStrafe, 0, 5, (16, 5), (-16, 5), 0
+SpawnStrafe, 0, 13, (-16, -5), (16, -5), 3

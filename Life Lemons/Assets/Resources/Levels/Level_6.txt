@@ -1,3 +1,5 @@
 SpawnSingleCircleStrafe, 0, 2, 90, 5
 SpawnSingleCircleStrafe, 0, 12, 270, 5
-SpawnSingleCircleStrafe, 0, 8, 0, 0
+SpawnFollow, 2, 3, 3
+SpawnFollow, 0, 1, 4
+SpawnFollow, 0, 12, 6
