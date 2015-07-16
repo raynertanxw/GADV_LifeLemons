@@ -279,7 +279,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 			ammoPercentage += ammoVolume;
 			UpdateAmmoUI();
 		}
-		else
+		else if (hasMalfunction == false)
 		{
 			ammoPercentage = 100f;
 			UpdateAmmoUI();
