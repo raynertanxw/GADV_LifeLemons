@@ -8,7 +8,7 @@ public class Enemy_Projectile : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == Constants.tagPlayer)
+		if (other.tag == Constants.tagPlayer && GameManager.instance.playerIsInvincible == false)
 		{
 			other.gameObject.GetComponent<Player_Combat>().TakeDamage(damage); // Damage the player.
 			if (destroySelfOnHit == true)

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 	public bool LastWaveHasSpawned;
 	public int currentLoadedLevel;
 	public bool paused = false;
+	public bool playerIsInvincible = false; // Used for invincibility frames.
 
 	// Stat related variables.
 	public float ammoConversionRate;

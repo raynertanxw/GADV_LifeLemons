@@ -206,6 +206,9 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	IEnumerator showHurt()
 	{
+		// Start invincibility frames.
+		GameManager.instance.playerIsInvincible = true;
+
 		chassisSpriteRen.color = Color.red;
 		glassSpriteRen.color = Color.red;
 		blasterSpriteRen.color = Color.red;
@@ -217,6 +220,37 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		blasterSpriteRen.color = Color.white;
 		funnelSpriteRen.color = Color.white;
 		lemonJuiceSpriteRen.color = Color.white;
+
+		chassisSpriteRen.enabled = false;
+		glassSpriteRen.enabled = false;
+		blasterSpriteRen.enabled = false;
+		funnelSpriteRen.enabled = false;
+		lemonJuiceSpriteRen.enabled = false;
+
+		for (int i = 0; i < 5; i++)
+		{
+			yield return new WaitForSeconds(0.1f);
+			chassisSpriteRen.enabled = true;
+			glassSpriteRen.enabled = true;
+			blasterSpriteRen.enabled = true;
+			funnelSpriteRen.enabled = true;
+			lemonJuiceSpriteRen.enabled = true;
+			yield return new WaitForSeconds(0.2f);
+			chassisSpriteRen.enabled = false;
+			glassSpriteRen.enabled = false;
+			blasterSpriteRen.enabled = false;
+			funnelSpriteRen.enabled = false;
+			lemonJuiceSpriteRen.enabled = false;
+		}
+
+		yield return new WaitForSeconds(0.1f);
+		chassisSpriteRen.enabled = true;
+		glassSpriteRen.enabled = true;
+		blasterSpriteRen.enabled = true;
+		funnelSpriteRen.enabled = true;
+		lemonJuiceSpriteRen.enabled = true;
+
+		GameManager.instance.playerIsInvincible = false;
 	}
 
 	public void CheckGameOver()
