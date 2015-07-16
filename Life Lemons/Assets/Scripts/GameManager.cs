@@ -439,6 +439,41 @@ public class GameManager : MonoBehaviour
 
 				break;
 
+			case "SpawnSingleCircleStrafe":
+				// Is the instruction 5 parameters long?
+				if (instructuion.Length == 5)
+				{
+					// Check for any invalid parameters.
+					try
+					{
+						int.Parse(instructuion[1]);
+						int.Parse(instructuion[2]);
+						float.Parse(instructuion[3]);
+					}
+					catch (FormatException fe)
+					{
+						legalSyntax = false;
+						Debug.Log(fe.Message + "\n found in instruction Line: " + (currentInstructuion + 1) + " for int/float typed parameter");
+						break;
+					}
+
+					if (int.Parse(instructuion[1]) < 0 || int.Parse(instructuion[1]) > 2) // Enemy int out of index range.
+						legalSyntax = false;
+					else if (int.Parse(instructuion[2]) < 0 || int.Parse(instructuion[2]) > 15) // Spawnpoint int out of index range.
+						legalSyntax = false;
+					else if (legalSyntax == true)
+					{
+						spawner.SpawnSingleCircleStrafe(int.Parse(instructuion[1]), int.Parse(instructuion[2]), float.Parse(instructuion[3]));
+						GameManager.instance.NumOfEnemiesRemaining++;
+					}
+				}
+				// Otherwise, illegal syntax.
+				else
+				{
+					legalSyntax = false;
+				}
+				break;
+
 			default:
 				Debug.Log("Error: No such spawn instruction exists\nError in instruction line: " + (currentInstructuion + 1));
 				break;

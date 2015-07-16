@@ -68,4 +68,12 @@ public class Enemy_Spawner : MonoBehaviour
 		enemy4.GetComponent<Enemy_Movement>().circleStrafingTargetAngle = 180;
 		enemy4.GetComponent<Enemy_Movement>().movementState = EnemyMovementStates.circleStrafing;
 	}
+
+	// Spawn a single circle strafing unit.
+	public void SpawnSingleCircleStrafe(int type, int spawnPoint, float startAngle)
+	{
+		GameObject enemy = (GameObject)Instantiate(EnemyPrefabs[type], spawnPoints[spawnPoint], Quaternion.identity);
+		enemy.GetComponent<Enemy_Movement>().circleStrafingTargetAngle = startAngle;
+		enemy.GetComponent<Enemy_Movement>().movementState = EnemyMovementStates.circleStrafing;
+	}
 }
