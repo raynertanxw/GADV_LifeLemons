@@ -1,3 +1,18 @@
-SpawnFollow, 0, 1, 5
-SpawnFollow, 0, 5, 0
-SpawnFollow, 0, 13, 0
+SpawnSingleCircleStrafe, 1, 2, 90, 0
+SpawnSingleCircleStrafe, 1, 10, 270, 10
+SpawnFollow, 2, 0, 2
+SpawnFollow, 2, 1, 2
+SpawnFollow, 2, 2, 2
+SpawnFollow, 2, 3, 2
+SpawnFollow, 2, 4, 2
+SpawnFollow, 2, 5, 2
+SpawnFollow, 2, 6, 2
+SpawnFollow, 2, 7, 10
+SpawnFollow, 0, 8, 0
+SpawnFollow, 2, 9, 2
+SpawnFollow, 2, 10, 2
+SpawnFollow, 2, 11, 10
+SpawnFollow, 0, 12, 0
+SpawnFollow, 2, 13, 2
+SpawnFollow, 2, 14, 2
+SpawnFollow, 2, 15, 10
