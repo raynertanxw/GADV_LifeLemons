@@ -1,3 +1,22 @@
-SpawnFollow, 0, 1, 5
-SpawnFollow, 0, 5, 0
-SpawnFollow, 0, 13, 0
+SpawnStrafe, 2, 15, (-16, 8), (16, 8), 0
+SpawnStrafe, 2, 13, (-16, 0), (16, 0), 0
+SpawnStrafe, 2, 11, (-16, -8), (16, -8), 0
+SpawnStrafe, 2, 4, (16, 4), (-16, 4), 0
+SpawnStrafe, 2, 6, (16, -4), (-16, -4), 0
+SpawnStrafe, 2, 15, (-16, 8), (-16, -8), 0
+SpawnStrafe, 2, 1, (0, 8), (0, -8), 0
+SpawnStrafe, 2, 3, (16, 8), (16, -8), 0
+SpawnStrafe, 2, 10, (-8, 8), (-8, -8), 0
+SpawnStrafe, 2, 8, (8, 8), (8, -8), 10
+SpawnSingleCircleStrafe, 1, 2, 90, 5
+SpawnSingleCircleStrafe, 0, 2, 90, 5
+SpawnSingleCircleStrafe, 1, 2, 90, 5
+SpawnStrafe, 2, 13, (-16, 0), (16, 0), 0
+SpawnStrafe, 2, 4, (16, 4), (-16, 4), 0
+SpawnStrafe, 2, 6, (16, -4), (-16, -4), 0
+SpawnStrafe, 2, 1, (0, 8), (0, -8), 0
+SpawnStrafe, 2, 10, (-8, 8), (-8, -8), 0
+SpawnStrafe, 2, 8, (8, 8), (8, -8), 10
+SpawnSingleCircleStrafe, 1, 2, 90, 5
+SpawnSingleCircleStrafe, 0, 2, 90, 5
+SpawnSingleCircleStrafe, 1, 2, 90, 5

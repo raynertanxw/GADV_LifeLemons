@@ -524,18 +524,18 @@ public class GameManager : MonoBehaviour
 					waypointArray[i] = new Vector3(UnityEngine.Random.Range(-16.0f, 16.0f), UnityEngine.Random.Range(-8.0f, 8.0f));
 				}
 
-				spawner.SpawnStrafe(UnityEngine.Random.Range(0, 2), UnityEngine.Random.Range(0, 16), waypointArray);
+				spawner.SpawnStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16), waypointArray);
 
 				waveDelay = 5.0f;
 				break;
 
 			case 2:
-				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 2));
+				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 3));
 				waveDelay = 10.0f;
 				break;
 
 			case 3:
-				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 2), UnityEngine.Random.Range(0, 2), UnityEngine.Random.Range(0, 2), UnityEngine.Random.Range(0, 2));
+				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3));
 				waveDelay = 15.0f;
 				break;
 
