@@ -10,7 +10,6 @@ SpawnStrafe, 2, 15, (-16, 8), (16, -8), 0
 SpawnStrafe, 2, 7, (16, -8), (-16, 8), 0
 SpawnStrafe, 2, 3, (16, 8), (-16, -8), 0
 SpawnStrafe, 2, 11, (-16, -8), (16, 8), 5
-
 SpawnSingleCircleStrafe, 0, 2, 90, 0.5
 SpawnSingleCircleStrafe, 1, 2, 90, 0.5
 SpawnSingleCircleStrafe, 1, 2, 90, 0.5

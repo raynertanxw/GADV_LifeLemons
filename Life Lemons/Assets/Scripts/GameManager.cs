@@ -147,9 +147,23 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "NEXT LEVEL";
+			if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
+			{
+				GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "NEXT LEVEL";
+			}
+			else
+			{
+				GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "REPLAY";
+			}
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
-			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "LEVEL CLEARED!";
+			if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
+			{
+				GameObject.Find("GameOver_Text").GetComponent<Text>().text = "LEVEL CLEARED!";
+			}
+			else
+			{
+				GameObject.Find("GameOver_Text").GetComponent<Text>().text = "GAME CLEARED!";
+			}
 
 			// Enable endless mode form level select after player cleared at least level 1.
 			if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
@@ -169,7 +183,10 @@ public class GameManager : MonoBehaviour
 			}
 
 			// Unlock the next level in level select.
-			GameObject.Find(Constants.LevelButtonNamePrefix + (GameManager.instance.currentLoadedLevel + 1).ToString()).GetComponent<Button>().interactable = true;
+			if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
+			{
+				GameObject.Find(Constants.LevelButtonNamePrefix + (GameManager.instance.currentLoadedLevel + 1).ToString()).GetComponent<Button>().interactable = true;
+			}
 		}
 		// Otherwise player failed level.
 		else
