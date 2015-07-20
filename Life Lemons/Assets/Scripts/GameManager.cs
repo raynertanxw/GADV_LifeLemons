@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
 	private Enemy_Spawner spawner;
 	private Animator anim;
 	private Text levelNameText;
+	private Text endlessSurvivalTime;
+	private Text endlessBestTime;
+	private float startTime = 0.0f;
+	private float endTime = 0.0f;
 
 	void Awake()
 	{
@@ -47,6 +51,12 @@ public class GameManager : MonoBehaviour
 		spawner = GameObject.Find("Enemy_Spawner").GetComponent<Enemy_Spawner>();
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
 		levelNameText = GameObject.Find("Level_Name_Text").GetComponent<Text>();
+		endlessSurvivalTime = GameObject.Find("Endless_Survival_Time").GetComponent<Text>();
+		endlessBestTime = GameObject.Find("Endless_Best_Survival_Time").GetComponent<Text>();
+
+		// Hide endless text.
+		endlessSurvivalTime.enabled = false;
+		endlessBestTime.enabled = false;
 	}
 
 	void Update()
@@ -114,10 +124,36 @@ public class GameManager : MonoBehaviour
 
 		if (Constants.gameMode == GameMode.endless)
 		{
+			GameManager.instance.endTime = Time.time;
+			GameManager.instance.StopCoroutine(Constants.SpawnEndless);
+
 			// Level can only end when player dies.
 			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "RETRY";
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
 			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "SOUR DEFEAT!";
+
+			GameManager.instance.endlessSurvivalTime.text = "TIME SURVIVED: " + (GameManager.instance.endTime - GameManager.instance.startTime).ToString("N2") + "s";
+			if (PlayerPrefs.HasKey(Constants.BEST_SURVIVAL_TIME))
+			{
+				if (GameManager.instance.endTime - GameManager.instance.startTime > PlayerPrefs.GetFloat(Constants.BEST_SURVIVAL_TIME))
+				{
+					GameManager.instance.endlessSurvivalTime.text = "NEW BEST TIME";
+					GameManager.instance.endlessBestTime.text = "BEST TIME: " + (GameManager.instance.endTime - GameManager.instance.startTime).ToString("N2") + "s";
+					PlayerPrefs.SetFloat(Constants.BEST_SURVIVAL_TIME, GameManager.instance.endTime - GameManager.instance.startTime); // Save new highscore.
+				}
+				else
+				{
+					GameManager.instance.endlessBestTime.text = "BEST TIME: " + PlayerPrefs.GetFloat(Constants.BEST_SURVIVAL_TIME).ToString("N2") + "s";
+				}
+			}
+			else
+			{
+				GameManager.instance.endlessSurvivalTime.text = "NEW BEST TIME";
+				GameManager.instance.endlessBestTime.text = "BEST TIME: " + (GameManager.instance.endTime - GameManager.instance.startTime).ToString("N2") + "s";
+				PlayerPrefs.SetFloat(Constants.BEST_SURVIVAL_TIME, GameManager.instance.endTime - GameManager.instance.startTime); // Save new highscore.
+			}
+			GameManager.instance.endlessBestTime.enabled = true;
+
 			return;
 		}
 
@@ -201,7 +237,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (Constants.gameMode == GameMode.endless)
 		{
-			StartCoroutine(SpawnEndless());
+			StartCoroutine(Constants.SpawnEndless);
 
 			// Set level name text.
 			levelNameText.text = "ENDLESS";
@@ -536,21 +572,32 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator SpawnEndless()
 	{
+		// Variables to track survival time.
+		startTime = Time.time;
+
+		// Enable endless UI.
+		endlessSurvivalTime.text = "TIME SURVIVED: " + (Time.time - startTime).ToString("N2") + "s";
+		endlessSurvivalTime.enabled = true;
+
 		float timeSinceLastSpawn;
 		float waveDelayReductionPercentage = 0.0f; // Percentage of wave delay subtraction.
 
 		// Spawn only follow type enemies for the first 15 seconds.
 		for (int i = 0; i < 5; i++)
 		{
-			spawner.SpawnFollow(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16));
-			GameManager.instance.NumOfEnemiesRemaining++;
-			timeSinceLastSpawn = Time.time;
-
-			while (Time.time - timeSinceLastSpawn < 5.0f)
+			if (GameManager.instance.GameOver == false)
 			{
-				if (GameManager.instance.NumOfEnemiesRemaining == 0)
-					break; // Break from the wait loop and spawn the next wave if there are no enemies left.
-				yield return null;
+				spawner.SpawnFollow(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16));
+				GameManager.instance.NumOfEnemiesRemaining++;
+				timeSinceLastSpawn = Time.time;
+
+				while (Time.time - timeSinceLastSpawn < 5.0f)
+				{
+					endlessSurvivalTime.text = "TIME SURVIVED: " + (Time.time - startTime).ToString("N2") + "s";
+					if (GameManager.instance.NumOfEnemiesRemaining == 0)
+						break; // Break from the wait loop and spawn the next wave if there are no enemies left.
+					yield return null;
+				}
 			}
 		}
 
@@ -625,6 +672,7 @@ public class GameManager : MonoBehaviour
 
 			while (Time.time - timeSinceLastSpawn < waveDelay)
 			{
+				endlessSurvivalTime.text = "TIME SURVIVED: " + (Time.time - startTime).ToString("N2") + "s";
 				if (GameManager.instance.NumOfEnemiesRemaining == 0)
 					break; // Break from the wait loop and spawn the next wave if there are no enemies left.
 				yield return null;

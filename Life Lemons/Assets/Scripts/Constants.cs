@@ -12,6 +12,7 @@ public static class Constants
 	public static string HIGHEST_CLEARED_LEVEL = "HIGHEST_CLEARED_LEVEL";
 	public static string NUM_OF_QUARTERS = "NUM_OF_QUARTERS";
 	public static string SELECTED_LEVEL = "SELECTED_LEVEL";
+	public static string BEST_SURVIVAL_TIME = "BEST_SURVIVAL_TIME";
 	
 	public static string UPGRADE_OFFENSE_BULLET_SPEED = "UPGRADE_OFFENSE_BULLET_SPEED";
 	public static string UPGRADE_OFFENSE_AMMO_COST = "UPGRADE_OFFENSE_AMMO_COST";
@@ -63,6 +64,7 @@ public static class Constants
 	public static string shootAtPlayer = "shootAtPlayer";
 	public static string punchAtPlayer = "punchAtPlayer";
 	public static string fadeOutLevelText = "fadeOutLevelText";
+	public static string SpawnEndless = "SpawnEndless";
 
 	// Sprite Renderer Sorting Layer Names.
 	public static string DeadEnemy = "DeadEnemy";
