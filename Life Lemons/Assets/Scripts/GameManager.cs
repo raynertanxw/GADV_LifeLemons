@@ -207,6 +207,15 @@ public class GameManager : MonoBehaviour
 			levelNameText.text = "ENDLESS";
 			StartCoroutine(Constants.fadeOutLevelText);
 
+			// Highlight the endless mode in level select as yellow.
+			Button endlessModeButton = GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>();
+			ColorBlock endlessCB = endlessModeButton.colors;
+			endlessCB.normalColor = new Color(0.98f, 0.98f, 0.0f, 1.0f);
+			endlessCB.highlightedColor = new Color(0.9f, 0.9f, 0.0f, 1.0f);
+			endlessCB.pressedColor = new Color(0.8f, 0.8f, 0.0f, 1.0f);
+			endlessCB.disabledColor = new Color(0.8f, 0.8f, 0.0f, 0.5f);
+			endlessModeButton.colors = endlessCB;
+
 			return;
 		}
 
@@ -527,16 +536,27 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator SpawnEndless()
 	{
+		float timeSinceLastSpawn;
+
 		// Spawn only follow type enemies for the first 15 seconds.
 		for (int i = 0; i < 5; i++)
 		{
 			spawner.SpawnFollow(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16));
-			yield return new WaitForSeconds(3.0f);
+			GameManager.instance.NumOfEnemiesRemaining++;
+			timeSinceLastSpawn = Time.time;
+
+			//yield return new WaitForSeconds(5.0f);
+			while (Time.time - timeSinceLastSpawn < 5.0f)
+			{
+				if (GameManager.instance.NumOfEnemiesRemaining == 0)
+					break; // Break from the wait loop and spawn the next wave if there are no enemies left.
+				yield return null;
+			}
 		}
 
 		while (GameManager.instance.GameOver == false)
 		{
-			int spawnType = UnityEngine.Random.Range(0, 4);
+			int spawnType = UnityEngine.Random.Range(0, 5);
 			float waveDelay = 0.0f;
 			switch (spawnType)
 			{
@@ -563,12 +583,17 @@ public class GameManager : MonoBehaviour
 
 			case 2:
 				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 3));
-				waveDelay = 10.0f;
+				waveDelay = 30.0f;
 				break;
 
 			case 3:
 				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3));
-				waveDelay = 15.0f;
+				waveDelay = 40.0f;
+				break;
+
+			case 4:
+				spawner.SpawnSingleCircleStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16), UnityEngine.Random.Range(0.0f, 360.0f));
+				waveDelay = 20.0f;
 				break;
 
 			default:
