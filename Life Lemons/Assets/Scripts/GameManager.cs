@@ -255,6 +255,15 @@ public class GameManager : MonoBehaviour
 		{
 			GameObject.Find("LevelSelectPanel").GetComponent<LevelSelectButtonActions>().ButtonNext();
 		}
+
+		// Highlight the current level in level select as yellow.
+		Button currentLevelButton = GameObject.Find("LevelButton_Level_" + GameManager.instance.currentLoadedLevel).GetComponent<Button>();
+		ColorBlock cb = currentLevelButton.colors;
+		cb.normalColor = new Color(0.98f, 0.98f, 0.0f, 1.0f);
+		cb.highlightedColor = new Color(0.9f, 0.9f, 0.0f, 1.0f);
+		cb.pressedColor = new Color(0.8f, 0.8f, 0.0f, 1.0f);
+		cb.disabledColor = new Color(0.8f, 0.8f, 0.0f, 0.5f);
+		currentLevelButton.colors = cb;
 	}
 
 	void LoadLevelEnemies(string levelName)
