@@ -537,6 +537,7 @@ public class GameManager : MonoBehaviour
 	IEnumerator SpawnEndless()
 	{
 		float timeSinceLastSpawn;
+		float waveDelayReductionPercentage = 0.0f; // Percentage of wave delay subtraction.
 
 		// Spawn only follow type enemies for the first 15 seconds.
 		for (int i = 0; i < 5; i++)
@@ -545,7 +546,6 @@ public class GameManager : MonoBehaviour
 			GameManager.instance.NumOfEnemiesRemaining++;
 			timeSinceLastSpawn = Time.time;
 
-			//yield return new WaitForSeconds(5.0f);
 			while (Time.time - timeSinceLastSpawn < 5.0f)
 			{
 				if (GameManager.instance.NumOfEnemiesRemaining == 0)
@@ -554,6 +554,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
+		timeSinceLastSpawn = Time.time;
 		while (GameManager.instance.GameOver == false)
 		{
 			int spawnType = UnityEngine.Random.Range(0, 5);
@@ -562,6 +563,9 @@ public class GameManager : MonoBehaviour
 			{
 			case 0:
 				spawner.SpawnFollow(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16));
+				GameManager.instance.NumOfEnemiesRemaining++;
+
+				timeSinceLastSpawn = Time.time;
 				waveDelay = 3.0f;
 				break;
 
@@ -577,22 +581,33 @@ public class GameManager : MonoBehaviour
 				}
 
 				spawner.SpawnStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16), waypointArray);
+				GameManager.instance.NumOfEnemiesRemaining++;
 
+				timeSinceLastSpawn = Time.time;
 				waveDelay = 5.0f;
 				break;
 
 			case 2:
 				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 3));
+				GameManager.instance.NumOfEnemiesRemaining += 4;
+
+				timeSinceLastSpawn = Time.time;
 				waveDelay = 30.0f;
 				break;
 
 			case 3:
 				spawner.SpawnQuadCircleStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3));
+				GameManager.instance.NumOfEnemiesRemaining += 4;
+				
+				timeSinceLastSpawn = Time.time;
 				waveDelay = 40.0f;
 				break;
 
 			case 4:
 				spawner.SpawnSingleCircleStrafe(UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 16), UnityEngine.Random.Range(0.0f, 360.0f));
+				GameManager.instance.NumOfEnemiesRemaining++;
+				
+				timeSinceLastSpawn = Time.time;
 				waveDelay = 20.0f;
 				break;
 
@@ -600,7 +615,20 @@ public class GameManager : MonoBehaviour
 				Debug.Log("RANDOM GEN FOR SPAWN TYPE IN ENDLESS OUT OF RANGE");
 				break;
 			}
-			yield return new WaitForSeconds(waveDelay);
+
+			waveDelay -= (waveDelay * waveDelayReductionPercentage);
+			if (waveDelayReductionPercentage < 0.5f)
+			{
+				waveDelayReductionPercentage += 0.02f;
+			}
+			Debug.Log(waveDelay);
+
+			while (Time.time - timeSinceLastSpawn < waveDelay)
+			{
+				if (GameManager.instance.NumOfEnemiesRemaining == 0)
+					break; // Break from the wait loop and spawn the next wave if there are no enemies left.
+				yield return null;
+			}
 		}
 	}
 }
