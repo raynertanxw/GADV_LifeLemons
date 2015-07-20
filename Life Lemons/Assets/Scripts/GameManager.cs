@@ -249,6 +249,12 @@ public class GameManager : MonoBehaviour
 		// Set level name text.
 		levelNameText.text = "Level " + currentLoadedLevel;
 		StartCoroutine(Constants.fadeOutLevelText);
+
+		// If the level is >15, set the level select to load the next page of levels.
+		if (GameManager.instance.currentLoadedLevel > 15)
+		{
+			GameObject.Find("LevelSelectPanel").GetComponent<LevelSelectButtonActions>().ButtonNext();
+		}
 	}
 
 	void LoadLevelEnemies(string levelName)
