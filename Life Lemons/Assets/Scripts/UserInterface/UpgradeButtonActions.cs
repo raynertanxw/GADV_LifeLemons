@@ -8,7 +8,6 @@ public class UpgradeButtonActions : MonoBehaviour
 
 	private Animator anim;
 	private Animator upgradeAnim;
-	private bool offenseMenuActive = true;
 	private int totalQuarterCount;
 	private Text totalQuarterCountText;
 	private int[] statCost;
@@ -17,6 +16,7 @@ public class UpgradeButtonActions : MonoBehaviour
 	private Text upgradeConfirmText;
 	private string confirmKeyName; // Key name for the confirm upgrade panel.
 	private int confirmStatNum; // Stat number for the confirm upgrade panel.
+	private Button offenseButton, defenseButton; // Buttons to switch between the modes.
 
 	void Awake()
 	{
@@ -27,6 +27,10 @@ public class UpgradeButtonActions : MonoBehaviour
 		upgradeConfirmPanel = GameObject.Find("Upgrade_Confirm_Panel").GetComponent<RectTransform>();
 		upgradeConfirmText = GameObject.Find("Upgrade_Confirm_Text").GetComponent<Text>();
 		dismissConfirmPanel();
+
+		offenseButton = GameObject.Find("Upgrade_Offense_Button").GetComponent<Button>();
+		defenseButton = GameObject.Find("Upgrade_Defense_Button").GetComponent<Button>();
+		offenseButton.interactable = false;
 
 		statCost = new int[6];
 
@@ -45,18 +49,18 @@ public class UpgradeButtonActions : MonoBehaviour
 
 	public void TransitionFromOffense2Defense()
 	{
-		if (offenseMenuActive == false) return; // If already Defense, return to avoid doing anything.
+		defenseButton.interactable = false;
+		offenseButton.interactable = true;
 
 		upgradeAnim.SetTrigger(Constants.OffenseToDefense);
-		offenseMenuActive = false;
 	}
 
 	public void TransitionFromDefense2Offense()
 	{
-		if (offenseMenuActive == true) return; // If already Offense, return to avoid doing anything.
+		offenseButton.interactable = false;
+		defenseButton.interactable = true;
 
 		upgradeAnim.SetTrigger(Constants.DefenseToOffense);
-		offenseMenuActive = true;
 	}
 
 	void updateQuarterCount()
