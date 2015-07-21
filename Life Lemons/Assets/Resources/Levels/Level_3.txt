@@ -3,4 +3,4 @@ SpawnStrafe, 0, 13, (-16, -5), (16, -5), 3
 SpawnFollow, 0, 5, 3
 SpawnFollow, 0, 9, 3
 SpawnStrafe, 0, 5, (16, 5), (-16, 5), 0
-SpawnStrafe, 0, 13, (-16, -5), (16, -5), 3
+SpawnStrafe, 0, 13, (-16, -5), (16, -5), 0

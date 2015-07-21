@@ -19,4 +19,4 @@ SpawnStrafe, 2, 10, (-8, 8), (-8, -8), 0
 SpawnStrafe, 2, 8, (8, 8), (8, -8), 10
 SpawnSingleCircleStrafe, 1, 2, 90, 5
 SpawnSingleCircleStrafe, 0, 2, 90, 5
-SpawnSingleCircleStrafe, 1, 2, 90, 5
+SpawnSingleCircleStrafe, 1, 2, 90, 0

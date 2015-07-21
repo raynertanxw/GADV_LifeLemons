@@ -14,4 +14,4 @@ SpawnFollow, 0, 11, 3
 SpawnFollow, 1, 12, 3
 SpawnFollow, 0, 13, 3
 SpawnFollow, 0, 14, 3
-SpawnFollow, 0, 15, 3
+SpawnFollow, 0, 15, 0
