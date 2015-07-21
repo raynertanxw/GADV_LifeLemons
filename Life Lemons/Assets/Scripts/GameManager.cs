@@ -345,6 +345,9 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator SpawnWaveSet(string[] waveSet)
 	{
+		float timeSinceLastSpawn;
+		timeSinceLastSpawn = Time.time;
+
 		for (int currentInstructuion = 0; currentInstructuion < waveSet.Length; currentInstructuion++)
 		{
 			string[] instructuion = waveSet[currentInstructuion].Split(',');
@@ -395,6 +398,7 @@ public class GameManager : MonoBehaviour
 				{
 					spawner.SpawnFollow(int.Parse(instructuion[1]), int.Parse(instructuion[2]));
 					GameManager.instance.NumOfEnemiesRemaining++;
+					timeSinceLastSpawn = Time.time;
 				}
 				break;
 
@@ -445,6 +449,7 @@ public class GameManager : MonoBehaviour
 
 					spawner.SpawnStrafe(int.Parse(instructuion[1]), int.Parse(instructuion[2]), waypoints);
 					GameManager.instance.NumOfEnemiesRemaining++;
+					timeSinceLastSpawn = Time.time;
 				}
 				break;
 
@@ -472,6 +477,7 @@ public class GameManager : MonoBehaviour
 					{
 						spawner.SpawnQuadCircleStrafe(int.Parse(instructuion[1]));
 						GameManager.instance.NumOfEnemiesRemaining += 4;
+						timeSinceLastSpawn = Time.time;
 					}
 				}
 				// Second Method Overload variant, where the individual types are specified.
@@ -506,6 +512,7 @@ public class GameManager : MonoBehaviour
 					{
 						spawner.SpawnQuadCircleStrafe(int.Parse(instructuion[1]), int.Parse(instructuion[2]), int.Parse(instructuion[3]), int.Parse(instructuion[4]));
 						GameManager.instance.NumOfEnemiesRemaining += 4;
+						timeSinceLastSpawn = Time.time;
 					}
 				}
 				// Otherwise, illegal syntax.
@@ -542,6 +549,7 @@ public class GameManager : MonoBehaviour
 					{
 						spawner.SpawnSingleCircleStrafe(int.Parse(instructuion[1]), int.Parse(instructuion[2]), float.Parse(instructuion[3]));
 						GameManager.instance.NumOfEnemiesRemaining++;
+						timeSinceLastSpawn = Time.time;
 					}
 				}
 				// Otherwise, illegal syntax.
@@ -563,7 +571,13 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-				yield return new WaitForSeconds(float.Parse(instructuion[instructuion.Length-1]));
+				float waveDelay = float.Parse(instructuion[instructuion.Length-1]);
+				while (Time.time - timeSinceLastSpawn < waveDelay)
+				{
+					if (GameManager.instance.NumOfEnemiesRemaining == 0)
+						break; // Break from the wait loop and spawn the next wave if there are no enemies left.
+					yield return null;
+				}
 			}
 		}
 
