@@ -6,6 +6,11 @@ public class SettingsButtonActions : MonoBehaviour
 {
 	private Animator anim;
 	private bool fullscreen; // Boolean used to sync the toggle to fullscreen value.
+	private int screenResolutionID = 0;
+	private Vector2 screenResolution;
+	private int numOfResolutions = 11;
+
+	private Text resolutionText;
 	
 	void Awake()
 	{
@@ -22,6 +27,23 @@ public class SettingsButtonActions : MonoBehaviour
 		if (Screen.fullScreen == true)
 		{
 			transform.FindChild("Fullscreen_Toggle").GetComponent<Toggle>().isOn = true;
+		}
+		resolutionText = GameObject.Find("Resolution_Text").GetComponent<Text>();
+
+		screenResolution = new Vector2(Screen.width, Screen.height);
+
+		// Just to set the initial resolution display.
+		if (PlayerPrefs.HasKey(Constants.SETTINGS_RESOLUTION_ID) == true)
+		{
+			screenResolutionID = PlayerPrefs.GetInt(Constants.SETTINGS_RESOLUTION_ID);
+			changeResolutionID(screenResolutionID);
+			applyResolutionChange();
+		}
+		else
+		{
+			PlayerPrefs.SetInt(Constants.SETTINGS_RESOLUTION_ID, 0);
+			changeResolutionID(0);
+			applyResolutionChange();
 		}
 	}
 
@@ -62,5 +84,162 @@ public class SettingsButtonActions : MonoBehaviour
 		}
 		// If they are, don't do anything to flip only one of the booleans. This WILL sync the toggle to the actual fullscreen state.
 		fullscreen = !fullscreen;
+	}
+
+	public void changeResolutionID(bool IncreaseID)
+	{
+		if (IncreaseID == true)
+		{
+			screenResolutionID++;
+			if (screenResolutionID == numOfResolutions)
+				screenResolutionID = 0;
+		}
+		else
+		{
+			screenResolutionID--;
+			if (screenResolutionID == -1)
+				screenResolutionID = numOfResolutions - 1;
+		}
+
+		string aspectRatio = "";
+
+		switch (screenResolutionID)
+		{
+		case 0:
+			screenResolution.x = 1280;
+			screenResolution.y = 720;
+			aspectRatio = "(16:9)";
+			break;
+		case 1:
+			screenResolution.x = 1366;
+			screenResolution.y = 768;
+			aspectRatio = "(16:9)";
+			break;
+		case 2:
+			screenResolution.x = 1920;
+			screenResolution.y = 1080;
+			aspectRatio = "(16:9)";
+			break;
+		case 3:
+			screenResolution.x = 2560;
+			screenResolution.y = 1440;
+			aspectRatio = "(16:9)";
+			break;
+		case 4:
+			screenResolution.x = 1280;
+			screenResolution.y = 800;
+			aspectRatio = "(16:10)";
+			break;
+		case 5:
+			screenResolution.x = 1440;
+			screenResolution.y = 900;
+			aspectRatio = "(16:10)";
+			break;
+		case 6:
+			screenResolution.x = 1680;
+			screenResolution.y = 1050;
+			aspectRatio = "(16:10)";
+			break;
+		case 7:
+			screenResolution.x = 1920;
+			screenResolution.y = 1200;
+			aspectRatio = "(16:10)";
+			break;
+		case 8:
+			screenResolution.x = 640;
+			screenResolution.y = 480;
+			aspectRatio = "(4:3)";
+			break;
+		case 9:
+			screenResolution.x = 800;
+			screenResolution.y = 600;
+			aspectRatio = "(4:3)";
+			break;
+		case 10:
+			screenResolution.x = 1024;
+			screenResolution.y = 768;
+			aspectRatio = "(4:3)";
+			break;
+		default:
+			Debug.Log("Screen Resolution ID out of range");
+			break;
+		}
+
+		resolutionText.text = screenResolution.x + " x " + screenResolution.y + " " + aspectRatio;
+	}
+
+	public void changeResolutionID(int resolutionID)
+	{
+		string aspectRatio = "";
+		
+		switch (resolutionID)
+		{
+		case 0:
+			screenResolution.x = 1280;
+			screenResolution.y = 720;
+			aspectRatio = "(16:9)";
+			break;
+		case 1:
+			screenResolution.x = 1366;
+			screenResolution.y = 768;
+			aspectRatio = "(16:9)";
+			break;
+		case 2:
+			screenResolution.x = 1920;
+			screenResolution.y = 1080;
+			aspectRatio = "(16:9)";
+			break;
+		case 3:
+			screenResolution.x = 2560;
+			screenResolution.y = 1440;
+			aspectRatio = "(16:9)";
+			break;
+		case 4:
+			screenResolution.x = 1280;
+			screenResolution.y = 800;
+			aspectRatio = "(16:10)";
+			break;
+		case 5:
+			screenResolution.x = 1440;
+			screenResolution.y = 900;
+			aspectRatio = "(16:10)";
+			break;
+		case 6:
+			screenResolution.x = 1680;
+			screenResolution.y = 1050;
+			aspectRatio = "(16:10)";
+			break;
+		case 7:
+			screenResolution.x = 1920;
+			screenResolution.y = 1200;
+			aspectRatio = "(16:10)";
+			break;
+		case 8:
+			screenResolution.x = 640;
+			screenResolution.y = 480;
+			aspectRatio = "(4:3)";
+			break;
+		case 9:
+			screenResolution.x = 800;
+			screenResolution.y = 600;
+			aspectRatio = "(4:3)";
+			break;
+		case 10:
+			screenResolution.x = 1024;
+			screenResolution.y = 768;
+			aspectRatio = "(4:3)";
+			break;
+		default:
+			Debug.Log("Screen Resolution ID out of range");
+			break;
+		}
+		
+		resolutionText.text = screenResolution.x + " x " + screenResolution.y + " " + aspectRatio;
+	}
+
+	public void applyResolutionChange()
+	{
+		PlayerPrefs.SetInt(Constants.SETTINGS_RESOLUTION_ID, screenResolutionID);
+		Screen.SetResolution((int)screenResolution.x, (int)screenResolution.y, Screen.fullScreen);
 	}
 }

@@ -21,6 +21,8 @@ public static class Constants
 	public static string UPGRADE_DEFENSE_MOVEMENT_SPEED = "UPGRADE_DEFENSE_MOVEMENT_SPEED";
 	public static string UPGRADE_DEFENSE_REPAIR_TIME = "UPGRADE_DEFENSE_REPAIR_TIME";
 
+	public static string SETTINGS_RESOLUTION_ID = "SETTINGS_RESOLUTION_ID";
+
 	// Scene filename strings.
 	public static string MainMenuScene = "Main_Menu";
 	public static string LevelScene = "Level_Scene";
