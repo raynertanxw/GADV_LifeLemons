@@ -11,6 +11,9 @@ public class SettingsButtonActions : MonoBehaviour
 	private int numOfResolutions = 11;
 
 	private Text resolutionText;
+	private RectTransform resetDataConfirmPanel;
+	private Button confirmDeleteDataButton;
+	private Text confirmPanelText;
 	
 	void Awake()
 	{
@@ -29,6 +32,9 @@ public class SettingsButtonActions : MonoBehaviour
 			transform.FindChild("Fullscreen_Toggle").GetComponent<Toggle>().isOn = true;
 		}
 		resolutionText = GameObject.Find("Resolution_Text").GetComponent<Text>();
+		resetDataConfirmPanel = GameObject.Find("ResetData_Confirm_Panel").GetComponent<RectTransform>();
+		confirmDeleteDataButton = GameObject.Find("ResetData_Confirm_Yes_Button").GetComponent<Button>();
+		confirmPanelText = GameObject.Find("ResetData_Confirm_Text").GetComponent<Text>();
 
 		screenResolution = new Vector2(Screen.width, Screen.height);
 
@@ -52,11 +58,11 @@ public class SettingsButtonActions : MonoBehaviour
 		anim.SetTrigger(Constants.SettingsToMainMenu);
 	}
 
-	public void ButtonResetData()
+	public void DeleteData()
 	{
 		PlayerPrefs.DeleteAll();
 		GameObject.Find("Upgrade Panel").GetComponent<UpgradeButtonActions>().resetAllUpgradeUI();
-
+		
 		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
 		{
 			GameObject.Find("Button_Endless").GetComponent<Button>().interactable = false;
@@ -72,6 +78,19 @@ public class SettingsButtonActions : MonoBehaviour
 				GameObject.Find("Button_Endless").GetComponent<Button>().interactable = true;
 			}
 		}
+
+		confirmDeleteDataButton.interactable = false;
+		confirmPanelText.text = "Data has been deleted";
+	}
+
+	public void presentConfirmPanel()
+	{
+		resetDataConfirmPanel.localScale = new Vector3(1,1,1);
+	}
+
+	public void dismissConfirmPanel()
+	{
+		resetDataConfirmPanel.localScale = new Vector3(0,1,1);
 	}
 
 	public void ToggleFullScreen()
