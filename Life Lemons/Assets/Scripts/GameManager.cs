@@ -246,8 +246,8 @@ public class GameManager : MonoBehaviour
 			// Highlight the endless mode in level select as yellow.
 			Button endlessModeButton = GameObject.Find("LevelSelect_Button_Endless").GetComponent<Button>();
 			ColorBlock endlessCB = endlessModeButton.colors;
-			endlessCB.normalColor = new Color(0.98f, 0.98f, 0.0f, 1.0f);
-			endlessCB.highlightedColor = new Color(0.9f, 0.9f, 0.0f, 1.0f);
+			endlessCB.normalColor = new Color(1.0f, 0.879f, 0.152f, 1.0f);
+			endlessCB.highlightedColor = new Color(0.9f, 0.869f, 0.142f, 1.0f);
 			endlessCB.pressedColor = new Color(0.8f, 0.8f, 0.0f, 1.0f);
 			endlessCB.disabledColor = new Color(0.8f, 0.8f, 0.0f, 0.5f);
 			endlessModeButton.colors = endlessCB;
@@ -304,8 +304,8 @@ public class GameManager : MonoBehaviour
 		// Highlight the current level in level select as yellow.
 		Button currentLevelButton = GameObject.Find("LevelButton_Level_" + GameManager.instance.currentLoadedLevel).GetComponent<Button>();
 		ColorBlock cb = currentLevelButton.colors;
-		cb.normalColor = new Color(0.98f, 0.98f, 0.0f, 1.0f);
-		cb.highlightedColor = new Color(0.9f, 0.9f, 0.0f, 1.0f);
+		cb.normalColor = new Color(1.0f, 0.879f, 0.152f, 1.0f);
+		cb.highlightedColor = new Color(0.9f, 0.869f, 0.142f, 1.0f);
 		cb.pressedColor = new Color(0.8f, 0.8f, 0.0f, 1.0f);
 		cb.disabledColor = new Color(0.8f, 0.8f, 0.0f, 0.5f);
 		currentLevelButton.colors = cb;
