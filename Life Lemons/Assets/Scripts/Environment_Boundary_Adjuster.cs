@@ -33,18 +33,20 @@ public class Environment_Boundary_Adjuster : MonoBehaviour
 
 
 		// Set up UITriggers
-		
-		// AmmoLevelIndicator is size 75x75 pivot at -55 -55 from top right.
-		float pixelToWorldSpaceEquivilent = 1f/800f * (maxX - minX);
-		UITrigger_AmmoLevelIndicator.offset = new Vector2(maxX - (55f * pixelToWorldSpaceEquivilent), maxY - (55f * pixelToWorldSpaceEquivilent));
-		UITrigger_AmmoLevelIndicator.size = new Vector2(75f * pixelToWorldSpaceEquivilent, 75f * pixelToWorldSpaceEquivilent);
+		if (Application.loadedLevelName == Constants.LevelScene)
+		{
+			// AmmoLevelIndicator is size 75x75 pivot at -55 -55 from top right.
+			float pixelToWorldSpaceEquivilent = 1f/800f * (maxX - minX);
+			UITrigger_AmmoLevelIndicator.offset = new Vector2(maxX - (55f * pixelToWorldSpaceEquivilent), maxY - (55f * pixelToWorldSpaceEquivilent));
+			UITrigger_AmmoLevelIndicator.size = new Vector2(75f * pixelToWorldSpaceEquivilent, 75f * pixelToWorldSpaceEquivilent);
 
-		// Hearts is size 30x30 and first heart pivot is 30x from left and -30y from top
-		// Hearts are spaced 5 pixels apart.
-		int numHearts = 5 + PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_HEALTH);
-		float heartSizeX = numHearts * (30f * pixelToWorldSpaceEquivilent) + ((numHearts-1) * (5f * pixelToWorldSpaceEquivilent));
-		float heartOffsetX = (heartSizeX / 2.0f) + (30f * pixelToWorldSpaceEquivilent);
-		UITrigger_Hearts.offset = new Vector2(minX + heartOffsetX, maxY - (30f * pixelToWorldSpaceEquivilent));
-		UITrigger_Hearts.size = new Vector2(heartSizeX, 30f * pixelToWorldSpaceEquivilent);
+			// Hearts is size 30x30 and first heart pivot is 30x from left and -30y from top
+			// Hearts are spaced 5 pixels apart.
+			int numHearts = 5 + PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_HEALTH);
+			float heartSizeX = numHearts * (30f * pixelToWorldSpaceEquivilent) + ((numHearts-1) * (5f * pixelToWorldSpaceEquivilent));
+			float heartOffsetX = (heartSizeX / 2.0f) + (30f * pixelToWorldSpaceEquivilent);
+			UITrigger_Hearts.offset = new Vector2(minX + heartOffsetX, maxY - (30f * pixelToWorldSpaceEquivilent));
+			UITrigger_Hearts.size = new Vector2(heartSizeX, 30f * pixelToWorldSpaceEquivilent);
+		}
 	}
 }
