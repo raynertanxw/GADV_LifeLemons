@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 	private Enemy_Spawner spawner;
 	private Animator anim;
 	private Text levelNameText;
+	private Image levelNameTextBackground;
 	private Text endlessSurvivalTime;
 	private Text endlessBestTime;
 	private float startTime = 0.0f;
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
 		spawner = GameObject.Find("Enemy_Spawner").GetComponent<Enemy_Spawner>();
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
 		levelNameText = GameObject.Find("Level_Name_Text").GetComponent<Text>();
+		levelNameTextBackground = GameObject.Find("Level_Name_Text_Background").GetComponent<Image>();
 		endlessSurvivalTime = GameObject.Find("Endless_Survival_Time").GetComponent<Text>();
 		endlessBestTime = GameObject.Find("Endless_Best_Survival_Time").GetComponent<Text>();
 
@@ -76,6 +78,10 @@ public class GameManager : MonoBehaviour
 					Color orgColor = levelNameText.color;
 					orgColor.a = 1.0f;
 					levelNameText.color = orgColor;
+					Color backgroundOrgColor = levelNameTextBackground.color;
+					backgroundOrgColor = levelNameTextBackground.color;
+					backgroundOrgColor.a = 1.0f;
+					levelNameTextBackground.color = backgroundOrgColor;
 				}
 			}
 		}
@@ -330,17 +336,23 @@ public class GameManager : MonoBehaviour
 		yield return new WaitForSeconds(1.0f);
 
 		Color orgColor = levelNameText.color;
+		Color backgroundOrgColor = levelNameTextBackground.color;
 
 		while (levelNameText.color.a != 0)
 		{
 			orgColor.a -= Time.deltaTime / 0.5f;
 			levelNameText.color = orgColor;
+			backgroundOrgColor.a -= Time.deltaTime / 0.5f;
+			levelNameTextBackground.color = backgroundOrgColor;
 			yield return null;
 		}
 
 		levelNameText.gameObject.SetActive(false);
 		orgColor.a = 1.0f;
 		levelNameText.color = orgColor;
+		levelNameTextBackground.gameObject.SetActive(false);
+		backgroundOrgColor.a = 1.0f;
+		levelNameTextBackground.color = backgroundOrgColor;
 	}
 
 	IEnumerator SpawnWaveSet(string[] waveSet)
