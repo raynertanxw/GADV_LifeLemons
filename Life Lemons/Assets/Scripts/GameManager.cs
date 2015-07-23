@@ -26,15 +26,13 @@ public class GameManager : MonoBehaviour
 	private float startTime = 0.0f;
 	private float endTime = 0.0f;
 
+	// UI Elements
+	private RectTransform levelProgressionBar;
+	private RectTransform levelProgressionFill;
+	private Text levelProgressionText;
+
 	void Awake()
 	{
-		ammoConversionRate = 5.0f;
-		if (PlayerPrefs.HasKey(Constants.UPGRADE_OFFENSE_CONVERSION_RATE))
-		{
-			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_CONVERSION_RATE);
-			ammoConversionRate += statPoint;
-		}
-
 		if (instance == null)
 		{
 			instance = this;
@@ -42,6 +40,13 @@ public class GameManager : MonoBehaviour
 		else if (instance != this)
 		{
 			Destroy(gameObject);
+		}
+
+		ammoConversionRate = 5.0f;
+		if (PlayerPrefs.HasKey(Constants.UPGRADE_OFFENSE_CONVERSION_RATE))
+		{
+			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_CONVERSION_RATE);
+			ammoConversionRate += statPoint;
 		}
 
 		GameManager.instance.GameOver = false;
@@ -56,9 +61,16 @@ public class GameManager : MonoBehaviour
 		endlessSurvivalTime = GameObject.Find("Endless_Survival_Time").GetComponent<Text>();
 		endlessBestTime = GameObject.Find("Endless_Best_Survival_Time").GetComponent<Text>();
 
+		levelProgressionBar = GameObject.Find("Level_Progression_Bar").GetComponent<RectTransform>();
+		levelProgressionFill = GameObject.Find("Level_Progression_Bar_Fill").GetComponent<RectTransform>();
+		levelProgressionText = GameObject.Find("Level_Progression_Text").GetComponent<Text>();
+
 		// Hide endless text.
 		endlessSurvivalTime.enabled = false;
 		endlessBestTime.enabled = false;
+
+		// Hide Level Progression Bar.
+		levelProgressionBar.localScale = new Vector3(0f, 1f, 1f);
 	}
 
 	void Update()
@@ -166,6 +178,11 @@ public class GameManager : MonoBehaviour
 		// Check if player has cleared the level.
 		if (GameManager.instance.NumOfEnemiesRemaining == 0)
 		{
+			// Update Level progression bar
+			GameManager.instance.StopCoroutine(Constants.increaseProgressionBarFill);
+			GameManager.instance.StartCoroutine(Constants.increaseProgressionBarFill, 1.0f);
+			GameManager.instance.levelProgressionText.text = "All Enemies E-lemonated";
+
 			if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
 			{
 				if (GameManager.instance.currentLoadedLevel > PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL))
@@ -355,8 +372,25 @@ public class GameManager : MonoBehaviour
 		levelNameTextBackground.color = backgroundOrgColor;
 	}
 
+	IEnumerator increaseProgressionBarFill(float percentage)
+	{
+		float currentFill = levelProgressionFill.localScale.x;
+		float maxDelta = (percentage - currentFill) / 2.0f;
+		while (levelProgressionFill.localScale.x != percentage)
+		{
+			levelProgressionFill.localScale = new Vector3(Mathf.MoveTowards(currentFill, percentage, maxDelta * Time.deltaTime), 1f, 1f);
+			currentFill = levelProgressionFill.localScale.x;
+			yield return null;
+		}
+	}
+
 	IEnumerator SpawnWaveSet(string[] waveSet)
 	{
+		// Enable level progression UI.
+		levelProgressionFill.localScale = new Vector3(0f, 1f, 1f);
+		levelProgressionBar.localScale = new Vector3(1f, 1f, 1f);
+		float levelProgressionBarFillPercentage = 0f;
+
 		float timeSinceLastSpawn;
 		timeSinceLastSpawn = Time.time;
 
@@ -584,6 +618,14 @@ public class GameManager : MonoBehaviour
 			else
 			{
 				float waveDelay = float.Parse(instructuion[instructuion.Length-1]);
+
+				// Update level progression bar.
+				levelProgressionBarFillPercentage = (float)(currentInstructuion) / (float)waveSet.Length;
+				StopCoroutine(Constants.increaseProgressionBarFill);
+				StartCoroutine(Constants.increaseProgressionBarFill, levelProgressionBarFillPercentage);
+				if (currentInstructuion + 1 == waveSet.Length)
+					levelProgressionText.text = "Last Wave Remaining";
+
 				while (Time.time - timeSinceLastSpawn < waveDelay)
 				{
 					if (GameManager.instance.NumOfEnemiesRemaining == 0)
@@ -694,7 +736,6 @@ public class GameManager : MonoBehaviour
 			{
 				waveDelayReductionPercentage += 0.02f;
 			}
-			Debug.Log(waveDelay);
 
 			while (Time.time - timeSinceLastSpawn < waveDelay)
 			{

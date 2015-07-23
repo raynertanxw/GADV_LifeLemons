@@ -67,6 +67,7 @@ public static class Constants
 	public static string punchAtPlayer = "punchAtPlayer";
 	public static string fadeOutLevelText = "fadeOutLevelText";
 	public static string SpawnEndless = "SpawnEndless";
+	public static string increaseProgressionBarFill = "increaseProgressionBarFill";
 
 	// Sprite Renderer Sorting Layer Names.
 	public static string DeadEnemy = "DeadEnemy";
