@@ -6,7 +6,7 @@ public class Environment_Boundary_Adjuster : MonoBehaviour
 	private float minX, maxX, minY, maxY;
 	private float boundaryThickness = 1.0f;
 	public BoxCollider2D boundaryTop, boundaryRight, boundaryBottom, boundaryLeft;
-	public BoxCollider2D UITrigger_AmmoLevelIndicator, UITrigger_Hearts;
+	public BoxCollider2D UITrigger_AmmoLevelIndicator, UITrigger_Hearts, UITrigger_LevelProgressionBar;
 	
 	void Start()
 	{
@@ -47,6 +47,10 @@ public class Environment_Boundary_Adjuster : MonoBehaviour
 			float heartOffsetX = (heartSizeX / 2.0f) + (30f * pixelToWorldSpaceEquivilent);
 			UITrigger_Hearts.offset = new Vector2(minX + heartOffsetX, maxY - (30f * pixelToWorldSpaceEquivilent));
 			UITrigger_Hearts.size = new Vector2(heartSizeX, 30f * pixelToWorldSpaceEquivilent);
+
+			// LevelProgressionBar is size 300x50 starting from bottom right + (-5, 5).
+			UITrigger_LevelProgressionBar.offset = new Vector2(245f * pixelToWorldSpaceEquivilent, -200f * pixelToWorldSpaceEquivilent);
+			UITrigger_LevelProgressionBar.size = new Vector2(300f * pixelToWorldSpaceEquivilent, 50f * pixelToWorldSpaceEquivilent);
 		}
 	}
 }
