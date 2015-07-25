@@ -79,7 +79,7 @@ public static class Constants
 	// Tip Text
 	public static string[] tips = {
 		"Having trouble? Remember that you can upgrade your stats by going to the main menu.",
-		"Duel weilding lemons won't hit you if you stay still.",
+		"Duel weilding lemons won't hurt you if you stay still. The lemons will fly past you",
 		"To deal with single shooting lemons, just use your funnel and directly face them.",
 		"When enemies circle around you, stay calm! Lead your shots in a circular fashion.",
 		"Melee units don't shoot lemons, sometimes it's best to leave one or two shooters alive."
