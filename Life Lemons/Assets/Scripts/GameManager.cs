@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 	private RectTransform levelProgressionBar;
 	private RectTransform levelProgressionFill;
 	private Text levelProgressionText;
+	private Text gameOverTipText;
 
 	void Awake()
 	{
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
 		levelProgressionBar = GameObject.Find("Level_Progression_Bar").GetComponent<RectTransform>();
 		levelProgressionFill = GameObject.Find("Level_Progression_Bar_Fill").GetComponent<RectTransform>();
 		levelProgressionText = GameObject.Find("Level_Progression_Text").GetComponent<Text>();
+		gameOverTipText = GameObject.Find("GameOver_Tip_Text").GetComponent<Text>();
 
 		// Hide endless text.
 		endlessSurvivalTime.enabled = false;
@@ -145,6 +147,9 @@ public class GameManager : MonoBehaviour
 			GameManager.instance.endTime = Time.time;
 			GameManager.instance.StopCoroutine(Constants.SpawnEndless);
 
+			// Set tip text.
+			GameManager.instance.gameOverTipText.text = Constants.tips[UnityEngine.Random.Range(0, Constants.tips.Length)];
+
 			// Level can only end when player dies.
 			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "RETRY";
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
@@ -214,6 +219,12 @@ public class GameManager : MonoBehaviour
 			{
 				GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "REPLAY";
 			}
+
+			// Set tip text.
+			GameManager.instance.gameOverTipText.text = Constants.tips[UnityEngine.Random.Range(1, Constants.tips.Length)];
+			// Why the first tip is ommited when player clears the game is because player should be given other tips.
+			// Upgrading is adviced when players have difficulty with a particular level.
+
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
 			if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
 			{
@@ -250,6 +261,13 @@ public class GameManager : MonoBehaviour
 		// Otherwise player failed level.
 		else
 		{
+			// Set tip text.
+			if (UnityEngine.Random.Range(0, 2) == 1)
+				GameManager.instance.gameOverTipText.text = Constants.tips[UnityEngine.Random.Range(1, Constants.tips.Length)];
+			else
+				GameManager.instance.gameOverTipText.text = Constants.tips[0];
+			// If player fails, the best advice to give is to upgrade, followed by game player stratergies.
+
 			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "RETRY";
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
 			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "SOUR DEFEAT!";
