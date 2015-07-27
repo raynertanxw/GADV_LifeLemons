@@ -102,7 +102,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 		if (hasMalfunction == false)
 		{
-			if (Input.GetKeyDown(KeyCode.Q))
+			if (Input.GetMouseButtonDown(1))
 			{
 				switch (playerState)
 				{

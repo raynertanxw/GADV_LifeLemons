@@ -190,7 +190,7 @@ public class Tutorial_GameManager : MonoBehaviour
 		nextButtonClicked = false; // Reset the button clicked status.
 		nextButton.gameObject.SetActive(false); // Hide the button again.
 
-		tutText.text = "Alternatively, you can try catching his lemons with your funnel.\n Caught lemons convert into your ammunition.\nClick next to try catching one.";
+		tutText.text = "Alternatively, you can try catching his lemons\nwith your funnel.\n Caught lemons convert\ninto your ammunition.\nClick next to try catching one.";
 
 		nextButton.gameObject.SetActive(true);
 		
@@ -234,16 +234,16 @@ public class Tutorial_GameManager : MonoBehaviour
 		nextButtonClicked = false; // Reset the button clicked status.
 		nextButton.gameObject.SetActive(false); // Hide the button again.
 
-		tutText.text = "Now to retaliate! However, you still cannot shoot.\nYou are now in collect mode. Press Q to switch to shooting mode.";
+		tutText.text = "Now to retaliate! However, you still cannot shoot.\nYou are now in collect mode. Right click to switch to shooting mode.";
 
 		player.GetComponent<Tutorial_Player_Combat>().canSwitch = true;
 
-		while (Input.GetKeyDown(KeyCode.Q) == false)
+		while (Input.GetMouseButtonDown(1) == false)
 		{
 			yield return null;
 		}
 
-		tutText.text = "Great! Now you are in shooting mode.\nYou can toggle between collect and shoot by pressing Q.";
+		tutText.text = "Great! Now you are in shooting mode.\nYou can toggle between collect and shoot by right clicking.";
 
 		nextButton.gameObject.SetActive(true);
 		
@@ -255,7 +255,7 @@ public class Tutorial_GameManager : MonoBehaviour
 		nextButtonClicked = false; // Reset the button clicked status.
 		nextButton.gameObject.SetActive(false); // Hide the button again.
 
-		tutText.text = "Click the left mouse button to fire.\nMake sure you are in shooting mode!\nRemember, you face where your mouse is pointing.\nNow... ATTACK!";
+		tutText.text = "Left click to fire.\nMake sure you are in\nshooting mode!\nRemember, you face where\nyour mouse is pointing.\nNow... ATTACK!";
 		player.GetComponent<Tutorial_Player_Combat>().canShoot = true;
 
 		Debug.Log("Ended Segment 4");

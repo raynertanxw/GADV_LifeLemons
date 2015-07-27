@@ -46,7 +46,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Q) && canSwitch == true)
+		if (Input.GetMouseButtonDown(1) && canSwitch == true)
 		{
 			switch (playerState)
 			{
