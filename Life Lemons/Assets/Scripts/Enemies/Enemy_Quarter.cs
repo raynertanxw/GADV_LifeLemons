@@ -28,6 +28,7 @@ public class Enemy_Quarter : MonoBehaviour
 			{
 				PlayerPrefs.SetInt(Constants.NUM_OF_QUARTERS, 1);
 			}
+			GameManager.instance.IncrementQuarterCount();
 			Destroy(gameObject); // Despawn self.
 		}
 	}

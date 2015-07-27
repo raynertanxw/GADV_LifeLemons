@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
 	private RectTransform levelProgressionFill;
 	private Text levelProgressionText;
 	private Text gameOverTipText;
+	private Text quarterCountText;
+
+	private int quarterCount = 0;
 
 	void Awake()
 	{
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviour
 		levelProgressionFill = GameObject.Find("Level_Progression_Bar_Fill").GetComponent<RectTransform>();
 		levelProgressionText = GameObject.Find("Level_Progression_Text").GetComponent<Text>();
 		gameOverTipText = GameObject.Find("GameOver_Tip_Text").GetComponent<Text>();
+		quarterCountText = GameObject.Find("QuarterAmount_Text").GetComponent<Text>();
 
 		// Hide endless text.
 		endlessSurvivalTime.enabled = false;
@@ -73,6 +77,13 @@ public class GameManager : MonoBehaviour
 
 		// Hide Level Progression Bar.
 		levelProgressionBar.localScale = new Vector3(0f, 1f, 1f);
+
+		// Update QuarterCount.
+		if (PlayerPrefs.HasKey(Constants.NUM_OF_QUARTERS))
+			quarterCount = PlayerPrefs.GetInt(Constants.NUM_OF_QUARTERS);
+		else
+			quarterCount = 0;
+		quarterCountText.text = GameManager.instance.quarterCount.ToString();
 	}
 
 	void Update()
@@ -117,6 +128,12 @@ public class GameManager : MonoBehaviour
 		{
 			EndGame();
 		}
+	}
+
+	public void IncrementQuarterCount()
+	{
+		GameManager.instance.quarterCount++;
+		GameManager.instance.quarterCountText.text = GameManager.instance.quarterCount.ToString();
 	}
 
 	public static void EndGame()
