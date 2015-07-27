@@ -20,6 +20,13 @@ public class GameOverButtonActions : MonoBehaviour
 		anim.SetTrigger(Constants.GameOverToLevelSelect);
 	}
 
+	public void ButtonUpgrade()
+	{
+		Constants.toggledUpgradeFromLevel = true;
+
+		Application.LoadLevel(Constants.MainMenuScene);
+	}
+
 	public void ButtonMainMenu()
 	{
 		Application.LoadLevel(Constants.MainMenuScene);

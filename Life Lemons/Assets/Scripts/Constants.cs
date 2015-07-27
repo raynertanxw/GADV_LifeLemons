@@ -7,6 +7,7 @@ public static class Constants
 {
 	public static int NumOfLevels = 30;
 	public static GameMode gameMode = GameMode.normal;
+	public static bool toggledUpgradeFromLevel = false;
 
 	// Save data strings.
 	public static string HIGHEST_CLEARED_LEVEL = "HIGHEST_CLEARED_LEVEL";
@@ -33,6 +34,7 @@ public static class Constants
 	public static string SettingsToMainMenu = "SettingsToMainMenu";
 	public static string MainMenuToUpgrade = "MainMenuToUpgrade";
 	public static string UpgradeToMainMenu = "UpgradeToMainMenu";
+	public static string toggleUpgradeFromLevel = "toggleUpgradeFromLevel";
 
 	public static string FadeInGameOver = "FadeInGameOver";
 	public static string GameOverToLevelSelect = "GameOverToLevelSelect";

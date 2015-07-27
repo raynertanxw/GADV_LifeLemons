@@ -44,7 +44,17 @@ public class UpgradeButtonActions : MonoBehaviour
 	
 	public void TransitionBackToMainMenu()
 	{
-		anim.SetTrigger(Constants.UpgradeToMainMenu);
+		if (Constants.toggledUpgradeFromLevel == true)
+		{
+			Constants.toggledUpgradeFromLevel = false; // Reset the variable.
+
+			// Load Level Scene and return to game.
+			Application.LoadLevel(Constants.LevelScene);
+		}
+		else
+		{
+			anim.SetTrigger(Constants.UpgradeToMainMenu);
+		}
 	}
 
 	public void TransitionFromOffense2Defense()

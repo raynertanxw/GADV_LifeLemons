@@ -9,11 +9,6 @@ public class MainMenuButtonActions : MonoBehaviour
 	void Awake()
 	{
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
-		PlayerPrefs.DeleteKey(Constants.SELECTED_LEVEL); // Ensure that select level key is deleted everytime player starts game of moves back to menu.
-		if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL) == false)
-		{
-			Debug.Log("SELECTED_LEVEL key successfully deleted");
-		}
 
 		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
 		{
@@ -28,6 +23,22 @@ public class MainMenuButtonActions : MonoBehaviour
 			else
 			{
 				GameObject.Find("Button_Endless").GetComponent<Button>().interactable = true;
+			}
+		}
+
+		// If loaded upgrade from main menu, load the main menu.
+		if (Constants.toggledUpgradeFromLevel == true)
+		{
+			anim.enabled = false;
+			GameObject.Find("Initial Panel").GetComponent<CanvasGroup>().alpha = 0f;
+			GameObject.Find("Upgrade Panel").GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 0f);
+		}
+		else
+		{
+			PlayerPrefs.DeleteKey(Constants.SELECTED_LEVEL); // Ensure that select level key is deleted everytime player starts game of moves back to menu.
+			if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL) == false)
+			{
+				Debug.Log("SELECTED_LEVEL key successfully deleted");
 			}
 		}
 	}
