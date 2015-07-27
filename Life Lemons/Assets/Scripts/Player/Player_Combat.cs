@@ -143,11 +143,9 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		ammoLevelLemonjuice.localScale = new Vector3(newScale, ammoSpriteMaxScale, 1f);
 
 		// Update UI ammo indicator.
-		if (ammoPercentage % 1 != 0)
-			textPlayerAmmo.text = ammoPercentage + "%";
-		else
-			textPlayerAmmo.text = ammoPercentage + ".0%";
 		imagePlayerAmmoRectTransform.localScale = new Vector3(1f, ammoPercentage / 100.0f, 1f);
+		int numShotsLeft = (int) (ammoPercentage / ammoCostPerShot);
+		textPlayerAmmo.text = numShotsLeft + "\n------\n" + (int)(100.0f / ammoCostPerShot);
 	}
 
 	void Shoot()
