@@ -15,6 +15,7 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	private Animator anim;
 	private SpriteRenderer spriteRen;
 	private float quarterSpawnPosOffset = 1.0f;
+	private Color colorTint;
 
 	void Awake()
 	{
@@ -32,6 +33,21 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	void Start()
 	{
 		StartCoroutine(Constants.shootAtPlayer);
+
+		// Determine the color tint.
+		EnemyMovementStates movementType = gameObject.GetComponent<Enemy_Movement>().movementState;
+		switch (movementType)
+		{
+		case EnemyMovementStates.follow:
+			colorTint = Color.white;
+			break;
+		case EnemyMovementStates.strafing:
+			colorTint = new Color(1f, 0.625f, 0f);
+			break;
+		case EnemyMovementStates.circleStrafing:
+			colorTint = new Color(0.5f, 1f, 0f);
+			break;
+		}
 	}
 	
 	private IEnumerator shootAtPlayer()
@@ -125,6 +141,6 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 	{
 		spriteRen.color = Color.red;
 		yield return new WaitForSeconds(0.1f);
-		spriteRen.color = Color.white;
+		spriteRen.color = colorTint;
 	}
 }
