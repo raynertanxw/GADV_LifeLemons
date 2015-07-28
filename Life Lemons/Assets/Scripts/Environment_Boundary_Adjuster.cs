@@ -49,7 +49,7 @@ public class Environment_Boundary_Adjuster : MonoBehaviour
 			UITrigger_Hearts.size = new Vector2(heartSizeX, 30f * pixelToWorldSpaceEquivilent);
 
 			// Quarter count is 30x95 starting from top left x = 15, y = -50
-			UITrigger_QuarterCount.offset = new Vector2(minX + (62.5f * pixelToWorldSpaceEquivilent), maxY - (50f * pixelToWorldSpaceEquivilent));
+			UITrigger_QuarterCount.offset = new Vector2(minX + (62.5f * pixelToWorldSpaceEquivilent), maxY - (65f * pixelToWorldSpaceEquivilent));
 			UITrigger_QuarterCount.size = new Vector2(95f * pixelToWorldSpaceEquivilent, 30f * pixelToWorldSpaceEquivilent);
 
 			// LevelProgressionBar is size 300x50 starting from bottom right + (-5, 5).

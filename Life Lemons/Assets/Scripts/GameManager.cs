@@ -659,7 +659,7 @@ public class GameManager : MonoBehaviour
 				StopCoroutine(Constants.increaseProgressionBarFill);
 				StartCoroutine(Constants.increaseProgressionBarFill, levelProgressionBarFillPercentage);
 				if (currentInstructuion + 1 == waveSet.Length)
-					levelProgressionText.text = "Last Wave Remaining";
+					levelProgressionText.text = "Last Wave";
 
 				while (Time.time - timeSinceLastSpawn < waveDelay)
 				{
