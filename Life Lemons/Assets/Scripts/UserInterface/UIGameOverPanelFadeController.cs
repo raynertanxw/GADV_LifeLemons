@@ -4,6 +4,8 @@ using System.Collections;
 
 public class UIGameOverPanelFadeController : MonoBehaviour
 {
+	// Arrays of components with color properties to be changed in their alpha.
+	// Set through the editor.
 	public Text[] textComponents;
 	public Image[] imageComponents;
 	

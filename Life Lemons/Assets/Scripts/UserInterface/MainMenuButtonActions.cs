@@ -10,6 +10,7 @@ public class MainMenuButtonActions : MonoBehaviour
 	{
 		anim = GameObject.Find("Canvas").GetComponent<Animator>();
 
+		// Enable Endless ONLY if player has cleared at least the first level.
 		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
 		{
 			GameObject.Find("Button_Endless").GetComponent<Button>().interactable = false;
@@ -26,10 +27,10 @@ public class MainMenuButtonActions : MonoBehaviour
 			}
 		}
 
-		// If loaded upgrade from main menu, load the main menu.
+		// If loaded upgrade from level menu, load the upgrade menu directly and skip the selection of selected level keys.
 		if (Constants.toggledUpgradeFromLevel == true)
 		{
-			anim.enabled = false;
+			anim.enabled = false; // Disable the animator canvas as we do not need it since we are only using the upgrade panel.
 			GameObject.Find("Initial Panel").GetComponent<CanvasGroup>().alpha = 0f;
 			GameObject.Find("Upgrade Panel").GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 0f);
 		}
@@ -45,6 +46,7 @@ public class MainMenuButtonActions : MonoBehaviour
 
 	public void ButtonStart()
 	{
+		// Ensure gamemode is normal.
 		Constants.gameMode = GameMode.normal;
 
 		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
@@ -61,6 +63,7 @@ public class MainMenuButtonActions : MonoBehaviour
 
 	public void ButtonEndless()
 	{
+		// Set gamemode to endless.
 		Constants.gameMode = GameMode.endless;
 		// Load Level Scene.
 		Application.LoadLevel(Constants.LevelScene);

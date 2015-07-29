@@ -12,6 +12,7 @@ public class PauseButtonActions : MonoBehaviour
 	
 	public void ButtonResume()
 	{
+		// Reset timescale.
 		GameManager.Resume();
 		anim.SetTrigger(Constants.TransitionFromPause);
 	}

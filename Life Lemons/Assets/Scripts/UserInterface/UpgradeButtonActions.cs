@@ -90,6 +90,7 @@ public class UpgradeButtonActions : MonoBehaviour
 
 	int calculateCost(int statPoint)
 	{
+		// Cost of stat upgrades are in increments of 25 per level.
 		return (25 + (25 * statPoint));
 	}
 
@@ -256,9 +257,10 @@ public class UpgradeButtonActions : MonoBehaviour
 
 	public void confirmStatUpgrade()
 	{
+		// Actual saving of upgraded stat data.
 		PlayerPrefs.SetInt(confirmKeyName, (PlayerPrefs.GetInt(confirmKeyName) + 1));
 		PlayerPrefs.SetInt(Constants.NUM_OF_QUARTERS, totalQuarterCount - statCost[confirmStatNum]);
-		resetAllUpgradeUI();
+		resetAllUpgradeUI(); // Update the UI to reflect the changes in stats.
 
 		dismissConfirmPanel();
 	}
@@ -273,6 +275,7 @@ public class UpgradeButtonActions : MonoBehaviour
 		upgradeConfirmPanel.localScale = new Vector3(0,1,1);
 	}
 
+	// Used when player hits the reset data button in settings.
 	public void resetAllUpgradeUI()
 	{
 		updateQuarterCount();

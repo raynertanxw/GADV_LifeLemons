@@ -38,13 +38,14 @@ public class SettingsButtonActions : MonoBehaviour
 
 		screenResolution = new Vector2(Screen.width, Screen.height);
 
-		// Just to set the initial resolution display.
+		// Just to set the initial resolution display to player prefs.
 		if (PlayerPrefs.HasKey(Constants.SETTINGS_RESOLUTION_ID) == true)
 		{
 			screenResolutionID = PlayerPrefs.GetInt(Constants.SETTINGS_RESOLUTION_ID);
 			changeResolutionID(screenResolutionID);
 			applyResolutionChange();
 		}
+		// Otherwise, set to the default.
 		else
 		{
 			PlayerPrefs.SetInt(Constants.SETTINGS_RESOLUTION_ID, 0);
@@ -61,6 +62,8 @@ public class SettingsButtonActions : MonoBehaviour
 	public void DeleteData()
 	{
 		PlayerPrefs.DeleteAll();
+
+		// Ensure UI consistency after all keys deleted. (e.g. endless button needs to be disabled since player will lost progress on all levels.
 		GameObject.Find("Upgrade Panel").GetComponent<UpgradeButtonActions>().resetAllUpgradeUI();
 		
 		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL) == false)
@@ -79,6 +82,7 @@ public class SettingsButtonActions : MonoBehaviour
 			}
 		}
 
+		// Tell player that data has been delete and prevent them from deleting data again.
 		confirmDeleteDataButton.interactable = false;
 		confirmPanelText.text = "Data has been deleted";
 	}
@@ -105,6 +109,7 @@ public class SettingsButtonActions : MonoBehaviour
 		fullscreen = !fullscreen;
 	}
 
+	// Used in UI to increment or decrement the resolutionID using the UI arrow buttons.
 	public void changeResolutionID(bool IncreaseID)
 	{
 		if (IncreaseID == true)
@@ -187,6 +192,7 @@ public class SettingsButtonActions : MonoBehaviour
 		resolutionText.text = screenResolution.x + " x " + screenResolution.y + " " + aspectRatio;
 	}
 
+	// Used to change to a specific resolutionID.
 	public void changeResolutionID(int resolutionID)
 	{
 		string aspectRatio = "";
@@ -256,6 +262,7 @@ public class SettingsButtonActions : MonoBehaviour
 		resolutionText.text = screenResolution.x + " x " + screenResolution.y + " " + aspectRatio;
 	}
 
+	// ACTUALLY applying the resolution.
 	public void applyResolutionChange()
 	{
 		PlayerPrefs.SetInt(Constants.SETTINGS_RESOLUTION_ID, screenResolutionID);
