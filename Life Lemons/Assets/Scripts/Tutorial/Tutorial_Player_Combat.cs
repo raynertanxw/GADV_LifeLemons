@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 {
+	// Used for Tutorial control. Limits player's controls until certain point in tutorial.
 	public bool canSwitch = false;
 	public bool canShoot = false;
 	public bool caughtLemonOnce = false;
@@ -46,7 +47,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(1) && canSwitch == true)
+		if (Input.GetMouseButtonDown(1) && canSwitch == true) // Right Click.
 		{
 			switch (playerState)
 			{
@@ -74,6 +75,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 		}
 	}
 
+	// Note: This only updates the ammo indicator on the player's body itself. Tutorial does not have main UI to update.
 	void UpdateAmmoUI()
 	{
 		float newScale = ammoSpriteMaxScale * ammoPercentage / 100.0f;
@@ -86,6 +88,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 
 	void Shoot()
 	{
+		// If enough ammo, shoot.
 		if (ammoPercentage - ammoCostPerShot >= 0f)
 		{
 			ammoPercentage -= ammoCostPerShot;
@@ -102,6 +105,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 			GameObject projectile = (GameObject)Instantiate(playerProjectile, projectileSpawn.position, Quaternion.Euler(playerRotation));
 			projectile.GetComponent<Rigidbody2D>().velocity = velocity;
 		}
+		// Else, since it's tutorial, let the player shoot to their heart's content! REFILL AMMO!
 		else
 		{
 			Debug.Log("TUTORIAL_REFILLING_AMMO");
@@ -138,6 +142,7 @@ public class Tutorial_Player_Combat : MonoBehaviour, IDamagable
 		blasterSpriteRen.sprite = blasterDamageStates[healthState];
 		funnelSpriteRen.sprite = funnelDamageStates[healthState];
 
+		// Since it's tutorial, MAKE PLAYER IMMORTAL!!!
 		if (health < 10)
 		{
 			health = 500;

@@ -13,7 +13,6 @@ public class Tutorial_GameManager : MonoBehaviour
 	private Button nextButton;
 
 	// Coroutine variables
-	//Universal.
 	private bool nextButtonClicked = false;
 	public GameObject EnemeyPrefab;
 	public GameObject PlayerPrefab;
@@ -38,7 +37,8 @@ public class Tutorial_GameManager : MonoBehaviour
 		// Disable next button.
 		nextButton.gameObject.SetActive(false);
 	}
-	
+
+	// To be called by the tutorial enemy unit once it has been killed.
 	public void EndTutorial()
 	{
 		StartCoroutine(TutorialEndingSequence());
@@ -50,6 +50,7 @@ public class Tutorial_GameManager : MonoBehaviour
 		StartCoroutine(TutorialSequence());
 	}
 
+	// For the tutorial next button to call.
 	public void NextButtonClicked()
 	{
 		nextButtonClicked = true;
@@ -292,7 +293,7 @@ public class Tutorial_GameManager : MonoBehaviour
 		nextButtonClicked = false; // Reset the button clicked status.
 		nextButton.gameObject.SetActive(false); // Hide the button again.
 
-		// if have save data load main menu.
+		// if has save data load main menu.
 		if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
 		{
 			Application.LoadLevel(Constants.MainMenuScene);

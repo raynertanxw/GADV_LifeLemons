@@ -59,14 +59,14 @@ public class Tutorial_NormalHenchCombat : MonoBehaviour, IDamagable
 		CheckGameOver();
 	}
 
-	// For animation to call.
+	// For death animation clip to call.
 	public void DestroySelf()
 	{
 		// Destroy the enemy object.
 		Destroy(gameObject);
 	}
 
-	// For animation to call.
+	// For death animation clip to call at the end.
 	public void SpawnQuarters()
 	{
 		for (int i = 0; i < numQuarters; i++)
@@ -78,6 +78,7 @@ public class Tutorial_NormalHenchCombat : MonoBehaviour, IDamagable
 	
 	public void CheckGameOver()
 	{
+		// If enemy unit has no more health, kill it.
 		if (health == 0)
 		{
 			// Stop shooting coroutine.

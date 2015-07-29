@@ -17,6 +17,7 @@ public class Tutorial_Enemy_Quarter : MonoBehaviour
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
+		// If collide with player, add to quarter count and then despawn self.
 		if (other.tag == Constants.tagPlayer)
 		{
 			// Add to total quarter count.
