@@ -6,7 +6,7 @@ public class Environment_Boundary_Adjuster : MonoBehaviour
 	private float minX, maxX, minY, maxY;
 	private float boundaryThickness = 1.0f;
 	public BoxCollider2D boundaryTop, boundaryRight, boundaryBottom, boundaryLeft;
-	public BoxCollider2D UITrigger_AmmoLevelIndicator, UITrigger_Hearts, UITrigger_LevelProgressionBar, UITrigger_QuarterCount;
+	public BoxCollider2D UITrigger_AmmoLevelIndicator, UITrigger_Hearts, UITrigger_LevelProgressionBar, UITrigger_QuarterCount, UITrigger_GameOverPanel;
 	
 	void Start()
 	{
@@ -55,6 +55,11 @@ public class Environment_Boundary_Adjuster : MonoBehaviour
 			// LevelProgressionBar is size 300x50 starting from bottom right + (-5, 5).
 			UITrigger_LevelProgressionBar.offset = new Vector2(245f * pixelToWorldSpaceEquivilent, -200f * pixelToWorldSpaceEquivilent);
 			UITrigger_LevelProgressionBar.size = new Vector2(300f * pixelToWorldSpaceEquivilent, 50f * pixelToWorldSpaceEquivilent);
+
+			// GameOver Panel is from center of the screen. center is (centerx, centery + 7.5)
+			// Size is (320, 395);
+			UITrigger_GameOverPanel.offset = new Vector2(0f * pixelToWorldSpaceEquivilent, 7.5f * pixelToWorldSpaceEquivilent);
+			UITrigger_GameOverPanel.size = new Vector2(335f * pixelToWorldSpaceEquivilent, 335f * pixelToWorldSpaceEquivilent);
 		}
 	}
 }
