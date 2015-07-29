@@ -10,7 +10,7 @@ public class Player_Movement : MonoBehaviour
 
 	void Awake()
 	{
-		// Setting up of values affected by upgrade.
+		// Setting up of values affected by upgrade stats.
 		if (PlayerPrefs.HasKey(Constants.UPGRADE_DEFENSE_MOVEMENT_SPEED))
 		{
 			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_DEFENSE_MOVEMENT_SPEED);
@@ -35,6 +35,11 @@ public class Player_Movement : MonoBehaviour
 			// Calculate out the angle of which the player turns to face the mouse cursor.
 			directionVec = (Utilities.MousePosInWorldSpace() - transform.position);
 			transform.rotation = Quaternion.Euler(0, 0, Utilities.DirectionVec2RotationZ(directionVec) % 360);
+		}
+		// If malfunction, kill the player's velocity and freeze them in position.
+		else
+		{
+			gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
 		}
 	}
 }

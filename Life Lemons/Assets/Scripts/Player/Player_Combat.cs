@@ -35,7 +35,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	void Awake()
 	{
-		// Setting up of values affected by upgrade.
+		// Setting up of values affected by upgrade stats.
 		if (PlayerPrefs.HasKey(Constants.UPGRADE_OFFENSE_BULLET_SPEED))
 		{
 			int statPoint = PlayerPrefs.GetInt(Constants.UPGRADE_OFFENSE_BULLET_SPEED);
@@ -74,6 +74,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 		imagePlayerAmmoRectTransform = GameObject.Find("Ammo_Indicator_LemonJuice_Level").GetComponent<RectTransform>();
 		UpdateAmmoUI();
 
+		// Handle initialization of UI heart related variables.
 		List<Image> heartsList = new List<Image>();
 		Transform health_hearts = GameObject.Find("Health_Hearts").transform;
 		foreach (Transform heart in health_hearts)
@@ -94,15 +95,16 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	void Update()
 	{
-		// If the game is paused, immediately return to do nothing.
+		// If the game is paused, immediately return the method to do nothing.
 		if(Time.timeScale == 0)return;
 
-		// If the game is over don't do anything.
+		// If the game is over don't do anything either, so player cannot shoot or switch modes.
 		if(GameManager.instance.GameOver == true)return;
 
+		// Only allow player to shoot or switch when there is no malfunction.
 		if (hasMalfunction == false)
 		{
-			if (Input.GetMouseButtonDown(1))
+			if (Input.GetMouseButtonDown(1)) // Right Click.
 			{
 				switch (playerState)
 				{
@@ -133,6 +135,7 @@ public class Player_Combat : MonoBehaviour, IDamagable
 
 	void UpdateAmmoUI()
 	{
+		// Update ammo levels on the player itself.
 		float newScale = ammoSpriteMaxScale * ammoPercentage / 100.0f;
 		if (newScale < 0)
 		{
