@@ -5,6 +5,7 @@ public enum GameMode {normal, endless};
 
 public static class Constants
 {
+	// Non string constants.
 	public static int NumOfLevels = 30;
 	public static GameMode gameMode = GameMode.normal;
 	public static bool toggledUpgradeFromLevel = false;
@@ -59,7 +60,7 @@ public static class Constants
 	public static string PunchLeft = "PunchLeft";
 	public static string PunchRight = "PunchRight";
 
-	// Tag strings.
+	// GameObject Tags.
 	public static string tagEnemy = "Enemy";
 	public static string tagPlayer = "Player";
 	public static string tagProjectile = "Projectile";
@@ -74,11 +75,11 @@ public static class Constants
 	// Sprite Renderer Sorting Layer Names.
 	public static string DeadEnemy = "DeadEnemy";
 
-	// Other strings.
+	// Prefix strings.
 	public static string LevelFileNamePrefix = "Level_";
 	public static string LevelButtonNamePrefix = "LevelButton_Level_";
 
-	// Tip Text
+	// Tips text
 	public static string[] tips = {
 		"Having trouble? Remember that you can upgrade your stats by going to the main menu.",
 		"Dual wielding lemons won't hurt you if you stay still. The lemons will fly past you",

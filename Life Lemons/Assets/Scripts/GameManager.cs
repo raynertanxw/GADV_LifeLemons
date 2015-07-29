@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 
+		// Set up ammoConversionRate stat based on save data if any.
 		ammoConversionRate = 5.0f;
 		if (PlayerPrefs.HasKey(Constants.UPGRADE_OFFENSE_CONVERSION_RATE))
 		{
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
 			ammoConversionRate += statPoint;
 		}
 
+		// Initialise game control variables and other variables.
 		GameManager.instance.GameOver = false;
 		NumOfEnemiesRemaining = 0;
 		totalNumEnemies = 0;
@@ -88,6 +90,7 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{
+		// Pause the game.
 		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
 		{
 			if (GameManager.instance.GameOver == false)
@@ -159,6 +162,8 @@ public class GameManager : MonoBehaviour
 			Destroy(projectile);
 		}
 
+		// If the gamemode is endless, no need to process highest cleared level and all that.
+		// Only need to process survival time scores and display the best score.
 		if (Constants.gameMode == GameMode.endless)
 		{
 			GameManager.instance.endTime = Time.time;
@@ -172,6 +177,7 @@ public class GameManager : MonoBehaviour
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
 			GameObject.Find("GameOver_Text").GetComponent<Text>().text = "SOUR DEFEAT!";
 
+			// Handle logic of best times and displaying of best and current survival times.
 			GameManager.instance.endlessSurvivalTime.text = "TIME SURVIVED: " + (GameManager.instance.endTime - GameManager.instance.startTime).ToString("N2") + "s";
 			if (PlayerPrefs.HasKey(Constants.BEST_SURVIVAL_TIME))
 			{
@@ -197,6 +203,7 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		// Otherwise gamemode is normal mode.
 		// Check if player has cleared the level.
 		if (GameManager.instance.NumOfEnemiesRemaining == 0)
 		{
@@ -205,6 +212,7 @@ public class GameManager : MonoBehaviour
 			GameManager.instance.StartCoroutine(Constants.increaseProgressionBarFill, 1.0f);
 			GameManager.instance.levelProgressionText.text = "All Enemies E-lemonated";
 
+			// Handle logic of highest cleared levels.
 			if (PlayerPrefs.HasKey(Constants.HIGHEST_CLEARED_LEVEL))
 			{
 				if (GameManager.instance.currentLoadedLevel > PlayerPrefs.GetInt(Constants.HIGHEST_CLEARED_LEVEL))
@@ -220,6 +228,7 @@ public class GameManager : MonoBehaviour
 				PlayerPrefs.SetInt(Constants.HIGHEST_CLEARED_LEVEL, 1);
 			}
 
+			// Handle logic of selected level in the case where player selected another level instead.
 			if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL))
 			{
 				if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
@@ -228,6 +237,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
+			// Handle special case where player cleared last level. There is no next level so prompt player to replay the last level.
 			if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
 			{
 				GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "NEXT LEVEL";
@@ -240,8 +250,9 @@ public class GameManager : MonoBehaviour
 			// Set tip text.
 			GameManager.instance.gameOverTipText.text = Constants.tips[UnityEngine.Random.Range(1, Constants.tips.Length)];
 			// Why the first tip is ommited when player clears the game is because player should be given other tips.
-			// Upgrading is adviced when players have difficulty with a particular level.
+			// Upgrading is adviced when players have difficulty with a particular level they are constantly failing.
 
+			// Handle UI elements.
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
 			if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
 			{
@@ -269,7 +280,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-			// Unlock the next level in level select.
+			// Unlock the next level (if any) in level select.
 			if (GameManager.instance.currentLoadedLevel != Constants.NumOfLevels)
 			{
 				GameObject.Find(Constants.LevelButtonNamePrefix + (GameManager.instance.currentLoadedLevel + 1).ToString()).GetComponent<Button>().interactable = true;
@@ -282,8 +293,8 @@ public class GameManager : MonoBehaviour
 			if (UnityEngine.Random.Range(0, 2) == 1)
 				GameManager.instance.gameOverTipText.text = Constants.tips[UnityEngine.Random.Range(1, Constants.tips.Length)];
 			else
+				// If player fails, the best advice to give is to upgrade(tip[0]), followed by game player stratergies.
 				GameManager.instance.gameOverTipText.text = Constants.tips[0];
-			// If player fails, the best advice to give is to upgrade, followed by game player stratergies.
 
 			GameObject.Find("GameOver_Button_RetryORNextLevel_Text").GetComponent<Text>().text = "RETRY";
 			GameManager.instance.anim.SetTrigger(Constants.FadeInGameOver);
@@ -293,6 +304,7 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+		// If gamemode is endless, start the endless coroutine.
 		if (Constants.gameMode == GameMode.endless)
 		{
 			StartCoroutine(Constants.SpawnEndless);
@@ -313,6 +325,7 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		// If player is selecting a level rather that the next highest level, then load the player specified level.
 		if (PlayerPrefs.HasKey(Constants.SELECTED_LEVEL))
 		{
 			int selectedLevel = PlayerPrefs.GetInt(Constants.SELECTED_LEVEL);
@@ -321,6 +334,7 @@ public class GameManager : MonoBehaviour
 			currentLoadedLevel = selectedLevel;
 			Debug.Log("Loaded Level " + (selectedLevel));
 		}
+		// Otherwise load the next highest level that the player has unlocked.
 		else
 		{
 			int highestClearedLevel;
@@ -353,7 +367,7 @@ public class GameManager : MonoBehaviour
 		levelNameText.text = "Level " + currentLoadedLevel;
 		StartCoroutine(Constants.fadeOutLevelText);
 
-		// If the level is >15, set the level select to load the next page of levels.
+		// If the level is >15, set the level select UI to load the next page of levels.
 		if (GameManager.instance.currentLoadedLevel > 15)
 		{
 			GameObject.Find("LevelSelectPanel").GetComponent<LevelSelectButtonActions>().ButtonNext();
@@ -369,6 +383,7 @@ public class GameManager : MonoBehaviour
 		currentLevelButton.colors = cb;
 	}
 
+	// Call this function to load the waves of enemies from specified levelName.
 	void LoadLevelEnemies(string levelName)
 	{
 		string[] testLevelArray = Utilities.getLevelTxtInstructions(levelName);
@@ -383,6 +398,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	// Fade out the level text after 1 second.
 	IEnumerator fadeOutLevelText()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -407,6 +423,7 @@ public class GameManager : MonoBehaviour
 		levelNameTextBackground.color = backgroundOrgColor;
 	}
 
+	// Increase the level progression bar to specified percentage fill.
 	IEnumerator increaseProgressionBarFill(float percentage)
 	{
 		float currentFill = levelProgressionFill.localScale.x;
@@ -419,6 +436,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	// Coroutine that spawns the whole level. Specify all the instructions through a string array: waveSet. Each index is one wave.
 	IEnumerator SpawnWaveSet(string[] waveSet)
 	{
 		// Enable level progression UI.
@@ -429,8 +447,10 @@ public class GameManager : MonoBehaviour
 		float timeSinceLastSpawn;
 		timeSinceLastSpawn = Time.time;
 
+		// For loop going through ALL waves in specified waveSet array.
 		for (int currentInstructuion = 0; currentInstructuion < waveSet.Length; currentInstructuion++)
 		{
+			// Parsing the string for processing.
 			string[] instructuion = waveSet[currentInstructuion].Split(',');
 
 			for (int i = 0; i < instructuion.Length; i++)
@@ -451,6 +471,7 @@ public class GameManager : MonoBehaviour
 				Debug.Log(fe.Message + "\n found in instruction Line: " + (currentInstructuion + 1) + " for delay parameter");
 			}
 
+			// Switch statement that process the wave TYPE.
 			switch (instructuion[0])
 			{
 			case "SpawnFollow":
@@ -506,10 +527,10 @@ public class GameManager : MonoBehaviour
 					legalSyntax = false;
 				else if (int.Parse(instructuion[2]) < 0 || int.Parse(instructuion[2]) > 15) // Spawnpoint int out of index range.
 					legalSyntax = false;
-				// Else, safe to execute.
+				// Else, proceed to other checks.
 				else
 				{
-					// Convert values at index 3 to second before end of instruction array into array of Vector3s.
+					// Convert values at index 3 to the 2nd last index of instruction array into array of Vector3s.
 					int numOfWaypoints = (instructuion.Length - 4) / 2;
 					Vector3[] waypoints = new Vector3[numOfWaypoints];
 
@@ -528,6 +549,7 @@ public class GameManager : MonoBehaviour
 						break;
 					}
 
+					// Else safe to execute.
 					spawner.SpawnStrafe(int.Parse(instructuion[1]), int.Parse(instructuion[2]), waypoints);
 					GameManager.instance.NumOfEnemiesRemaining++;
 					timeSinceLastSpawn = Time.time;
@@ -626,6 +648,7 @@ public class GameManager : MonoBehaviour
 						legalSyntax = false;
 					else if (int.Parse(instructuion[2]) < 0 || int.Parse(instructuion[2]) > 15) // Spawnpoint int out of index range.
 						legalSyntax = false;
+					// If syntax has been tested to be legal, then safe to execute.
 					else if (legalSyntax == true)
 					{
 						spawner.SpawnSingleCircleStrafe(int.Parse(instructuion[1]), int.Parse(instructuion[2]), float.Parse(instructuion[3]));
@@ -650,6 +673,7 @@ public class GameManager : MonoBehaviour
 			{
 				Debug.Log("Illegal Spawn Syntax in instruction line: " + (currentInstructuion + 1));
 			}
+			// Else if the syntax is legal, spawn the wave and handle the UI elements.
 			else
 			{
 				float waveDelay = float.Parse(instructuion[instructuion.Length-1]);
@@ -661,10 +685,11 @@ public class GameManager : MonoBehaviour
 				if (currentInstructuion + 1 == waveSet.Length)
 					levelProgressionText.text = "Last Wave";
 
+				// While the spawn delay is not over.
 				while (Time.time - timeSinceLastSpawn < waveDelay)
 				{
 					if (GameManager.instance.NumOfEnemiesRemaining == 0)
-						break; // Break from the wait loop and spawn the next wave if there are no enemies left.
+						break; // Break from the wait loop and spawn the next wave if there are no enemies left, spawning the next wave immediately.
 					yield return null;
 				}
 			}
@@ -705,6 +730,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		timeSinceLastSpawn = Time.time;
+		// Spawn random enemy waves.
 		while (GameManager.instance.GameOver == false)
 		{
 			int spawnType = UnityEngine.Random.Range(0, 5);
@@ -766,6 +792,7 @@ public class GameManager : MonoBehaviour
 				break;
 			}
 
+			// Slowly reduce the wave delays over time to increase frequency of waves and thus inrease difficulty over time.
 			waveDelay -= (waveDelay * waveDelayReductionPercentage);
 			if (waveDelayReductionPercentage < 0.5f)
 			{

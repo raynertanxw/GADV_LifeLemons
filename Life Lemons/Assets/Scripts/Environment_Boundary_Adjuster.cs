@@ -3,22 +3,26 @@ using System.Collections;
 
 public class Environment_Boundary_Adjuster : MonoBehaviour
 {
-	private float minX, maxX, minY, maxY;
+	private float minX, maxX, minY, maxY; // World space min and max as seen by the camera.
 	private float boundaryThickness = 1.0f;
 	public BoxCollider2D boundaryTop, boundaryRight, boundaryBottom, boundaryLeft;
 	public BoxCollider2D UITrigger_AmmoLevelIndicator, UITrigger_Hearts, UITrigger_LevelProgressionBar, UITrigger_QuarterCount, UITrigger_GameOverPanel;
 	
 	void Start()
 	{
+		// Get the corners of the camera and convert to world space.
 		float camDistance = Vector3.Distance(transform.position, Camera.main.transform.position);
 		Vector2 bottomCorner = Camera.main.ViewportToWorldPoint(new Vector3(0,0, camDistance));
 		Vector2 topCorner = Camera.main.ViewportToWorldPoint(new Vector3(1,1, camDistance));
-		
+
+		// Cache the corners into the min and max values.
 		minX = bottomCorner.x;
 		maxX = topCorner.x;
 		minY = bottomCorner.y;
 		maxY = topCorner.y;
 
+		// Set up the edge boundaries based on the camera's min and max values.
+		// This makes the boundary adjust according to the aspect ratio that the player has set.
 		boundaryTop.offset = new Vector2(0f, maxY + boundaryThickness/2.0f);
 		boundaryTop.size = new Vector2(maxX - minX + boundaryThickness * 2, boundaryThickness);
 
@@ -32,7 +36,8 @@ public class Environment_Boundary_Adjuster : MonoBehaviour
 		boundaryLeft.size = new Vector2(boundaryThickness, maxY - minY);
 
 
-		// Set up UITriggers
+		// Set up UITriggers collider size and offsets only for the level scene.
+		// If its tutorial scene don't do anything as there are no UI elements to fade away.
 		if (Application.loadedLevelName == Constants.LevelScene)
 		{
 			// AmmoLevelIndicator is size 75x75 pivot at -55 -55 from top right.
@@ -56,8 +61,8 @@ public class Environment_Boundary_Adjuster : MonoBehaviour
 			UITrigger_LevelProgressionBar.offset = new Vector2(245f * pixelToWorldSpaceEquivilent, -200f * pixelToWorldSpaceEquivilent);
 			UITrigger_LevelProgressionBar.size = new Vector2(300f * pixelToWorldSpaceEquivilent, 50f * pixelToWorldSpaceEquivilent);
 
-			// GameOver Panel is from center of the screen. center is (centerx, centery + 7.5)
-			// Size is (320, 395);
+			// GameOver Panel is from center of the screen. center is (centerX, centerY + 7.5)
+			// Size is (335, 335);
 			UITrigger_GameOverPanel.offset = new Vector2(0f * pixelToWorldSpaceEquivilent, 7.5f * pixelToWorldSpaceEquivilent);
 			UITrigger_GameOverPanel.size = new Vector2(335f * pixelToWorldSpaceEquivilent, 335f * pixelToWorldSpaceEquivilent);
 		}
