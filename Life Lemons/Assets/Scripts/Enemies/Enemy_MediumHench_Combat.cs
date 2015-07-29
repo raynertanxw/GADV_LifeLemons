@@ -36,6 +36,8 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 
 		// Determine the color tint.
 		EnemyMovementStates movementType = gameObject.GetComponent<Enemy_Movement>().movementState;
+
+		// Put here because movement state is only confirmed after Awake (due to how it is set in Enemy_Spawner).
 		switch (movementType)
 		{
 		case EnemyMovementStates.follow:
@@ -65,6 +67,7 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 		// Play the shooting animation.
 		anim.SetTrigger(Constants.Shoot);
 
+		// Shoot both guns on Medium Unit.
 		ShootLeft();
 		ShootRight();
 	}
@@ -120,14 +123,14 @@ public class Enemy_MediumHench_Combat : MonoBehaviour, IDamagable
 		}
 	}
 
-	// For animation to call.
+	// For death animation clip to call.
 	public void DestroySelf()
 	{
 		// Destroy the enemy object.
 		Destroy(gameObject);
 	}
 
-	// For animation to call.
+	// For death animation clip to call.
 	public void SpawnQuarters()
 	{
 		for (int i = 0; i < numQuarters; i++)

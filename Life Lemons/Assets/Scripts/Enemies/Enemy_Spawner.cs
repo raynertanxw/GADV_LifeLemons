@@ -12,6 +12,7 @@ public class Enemy_Spawner : MonoBehaviour
 
 	void Awake()
 	{
+		// Initialize all the spawn transforms.
 		childTransforms = new List<Vector3>();
 		foreach (Transform child in transform)
 		{

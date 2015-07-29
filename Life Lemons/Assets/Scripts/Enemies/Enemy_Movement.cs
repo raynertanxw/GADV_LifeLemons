@@ -40,6 +40,7 @@ public class Enemy_Movement : MonoBehaviour
 		// Handling movement of the enemy.
 		switch (movementState)
 		{
+		// Direct following of player.
 		case EnemyMovementStates.follow:
 			directionVec = player.transform.position - transform.position;
 			if (directionVec.magnitude > followMinDistanceFromPlayer)
@@ -47,7 +48,8 @@ public class Enemy_Movement : MonoBehaviour
 				transform.position += directionVec.normalized * followMovementSpeed * Time.deltaTime;
 			}
 			break;
-			
+
+		// Strafe between specified array of waypoints.
 		case EnemyMovementStates.strafing:
 			directionVec = strafingWaypoints[strafingWaypointIndex] - transform.position;
 			if (directionVec.magnitude < strafingWaypointTolerence)
@@ -66,7 +68,8 @@ public class Enemy_Movement : MonoBehaviour
 			
 			directionVec = player.transform.position - transform.position; // For facing the player.
 			break;
-			
+
+		// Circle around the player constantly.
 		case EnemyMovementStates.circleStrafing:
 			circleStrafingTargetAngle = (circleStrafingTargetAngle + circleStrafingTargetIncrement * Time.deltaTime) % 360.0f;
 			circleStrafingTargetVector = Utilities.RotationZ2DirectionVec(circleStrafingTargetAngle) * circleStrafingRadius;
