@@ -83,4 +83,10 @@ public class MainMenuButtonActions : MonoBehaviour
 	{
 		Application.Quit();
 	}
+
+	public void ButtonCredits()
+	{
+		anim.SetTrigger(Constants.MainMenuToCredits);
+		GameObject.Find("Credits Panel").GetComponent<CreditButtonActions>().StartCoroutine(Constants.ScrollCredits);
+	}
 }

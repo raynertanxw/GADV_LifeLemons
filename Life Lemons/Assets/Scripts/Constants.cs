@@ -35,6 +35,8 @@ public static class Constants
 	public static string SettingsToMainMenu = "SettingsToMainMenu";
 	public static string MainMenuToUpgrade = "MainMenuToUpgrade";
 	public static string UpgradeToMainMenu = "UpgradeToMainMenu";
+	public static string MainMenuToCredits = "MainMenuToCredits";
+	public static string CreditsToMainMenu = "CreditsToMainMenu";
 	public static string toggleUpgradeFromLevel = "toggleUpgradeFromLevel";
 
 	public static string FadeInGameOver = "FadeInGameOver";
@@ -71,6 +73,7 @@ public static class Constants
 	public static string fadeOutLevelText = "fadeOutLevelText";
 	public static string SpawnEndless = "SpawnEndless";
 	public static string increaseProgressionBarFill = "increaseProgressionBarFill";
+	public static string ScrollCredits = "ScrollCredits";
 
 	// Sprite Renderer Sorting Layer Names.
 	public static string DeadEnemy = "DeadEnemy";
