@@ -13,14 +13,18 @@ public class UIGameOverPanelFadeController : MonoBehaviour
 	{
 		if (col.tag == Constants.tagPlayer)
 		{
-			// Fade to 0.5 alpha.
-			foreach (Text text in textComponents)
+			// Ensure that the player cleared the level. Else if player died, don't need to fade at all.
+			if (GameManager.instance.GameOver == true && GameManager.instance.NumOfEnemiesRemaining == 0)
 			{
-				text.color = new Color(text.color.r, text.color.g, text.color.b, 0.5f);
-			}
-			foreach (Image image in imageComponents)
-			{
-				image.color = new Color(image.color.r, image.color.g, image.color.b, 0.5f);
+				// Fade to 0.5 alpha.
+				foreach (Text text in textComponents)
+				{
+					text.color = new Color(text.color.r, text.color.g, text.color.b, 0.5f);
+				}
+				foreach (Image image in imageComponents)
+				{
+					image.color = new Color(image.color.r, image.color.g, image.color.b, 0.5f);
+				}
 			}
 		}
 	}
