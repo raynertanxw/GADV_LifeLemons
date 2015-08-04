@@ -66,6 +66,7 @@ public static class Constants
 	public static string tagEnemy = "Enemy";
 	public static string tagPlayer = "Player";
 	public static string tagProjectile = "Projectile";
+	public static string FallingObject = "Falling Object";
 
 	// Couroutine names.
 	public static string shootAtPlayer = "shootAtPlayer";
